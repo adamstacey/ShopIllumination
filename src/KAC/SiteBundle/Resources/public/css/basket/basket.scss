@@ -13,8 +13,8 @@
     padding: $spacingSmall $spacingMedium;
 
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 15px;
 
     @include equalBorderRadius($radiusSize);
     @include verticalGradientWhiteToGreyLight;

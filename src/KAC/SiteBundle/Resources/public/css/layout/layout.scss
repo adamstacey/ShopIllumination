@@ -3,12 +3,12 @@
 $containerWidth: 980px;
 
 html {
-    background: $colourWhite;
+    background: $colourGreyExtraLight;
     font-size: 62.5%;
 }
 
 body {
-    background: $backgroundColour;
+    background: $colourGreyExtraLight;
     font-family: $primaryFontFamily;
     @include fontSize($fontSizeMedium);
     color: $textColour;
@@ -23,9 +23,11 @@ html.modal body > section {
 }
 
 .document {
-    position: relative;
+    width: $containerWidth;
+    margin: 0 auto;
 
-    background: $colourWhite;
+    position: relative;
+    overflow: visible;
 }
 
 .container {
@@ -34,19 +36,22 @@ html.modal body > section {
 }
 
 .header {
-    padding: $spacingMedium 0;
-    height: 60px;
+    padding: 0;
+    width: $containerWidth;
+    margin: 0 auto;
+    height: 80px;
 
     @include verticalGradientGreyToGreyDark;
-    @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
 }
 
 .header-contents {
-    width: $containerWidth;
-    margin: 0 auto;
-    height: 60px;
+    padding: 0;
+    margin: 0;
+    height: 80px;
 
     position: relative;
+    @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
 }
 
 .header-contents .logo {
@@ -54,8 +59,8 @@ html.modal body > section {
     height: 60px;
 
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 15px;
 }
 
 .header-contents .logo a {
@@ -72,8 +77,8 @@ html.modal body > section {
 
 .content {
     min-height: 300px;
-    padding: $spacingSmall $spacingExtraLarge $spacingExtraLarge $spacingExtraLarge;
-    margin: -#{$spacingSmall} 0 0 0;
+    padding: 0 $spacingExtraLarge $spacingExtraLarge $spacingExtraLarge;
+    margin: 0;
 
     position: relative;
 
@@ -208,28 +213,33 @@ table.listing td a {
 }
 
 .footer {
-    padding: $spacingMedium 0;
+    padding: 0;
 
     position: relative;
 
     @include verticalGradientGreyToGreyDark;
-    @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
-    border-top: 3px solid $colourGrey;
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
+    @include borderRadius(0, 0, 8px, 8px);
+}
+
+.footer > div {
+    padding: $spacingMedium $spacingLarge;
+
+    border-top: 3px solid $colourGreyDark;
 }
 
 .footer h4 {
     margin: 0 0 $spacingMedium 0;
-    padding: 0 0 $spacingMedium 0;
+    padding: 0;
 
     color: $colourGreyExtraExtraLight;
     @include fontSize($fontSizeLarge);
-    border-bottom: 1px solid $colourGreyLight;
 }
 
 .footer span {
     line-height: 150%;
     color: $colourGreyLight;
-    @include fontSize($fontSizeSmall);
+    @include fontSize($fontSizeExtraExtraSmall);
 }
 
 .footer ul,
@@ -245,12 +255,14 @@ table.listing td a {
 }
 
 .footer ul li {
-    line-height: 150%;
+    line-height: 120%;
 }
 
 .footer a {
-    color: $colourGreyMedium;
+    color: $colourGreyLight;
     text-decoration: none;
+    font-weight: normal;
+    @include fontSize($fontSizeSmall);
 }
 
 .footer a:hover {
@@ -262,16 +274,15 @@ table.listing td a {
   min-height: 300px;
 
   position: absolute;
-  top: 204px;
-  left: 50%;
+  top: 10px;
 }
 
 .floating-advert-container-left {
-  margin: 0 0 0 -662px;
+    left: -180px;
 }
 
 .floating-advert-container-right {
-  margin: 0 0 0 502px;
+    right: -180px;
 }
 
 .background-grey-extra-extra-light {
@@ -413,6 +424,17 @@ table.listing td a {
 .stuck {
     position: fixed !important;
     top: 0;
+}
+
+.copyright {
+    padding: 0;
+    margin: $spacingMedium 0 $spacingExtraLarge 0;
+
+    @include fontSize($fontSizeExtraExtraSmall);
+    color: $colourGrey;
+    text-align: center;
+    line-height: 150%;
+    @include textShadow($colourWhite, 0, 1px);
 }
 
 @media

@@ -1,56 +1,61 @@
-<footer class="footer">
-    <div class="container">
-        <div class="widget-group clearfix mbl">
+<footer class="container footer">
+    <div>
+        <div class="widget-group clearfix">
             <div class="widget widget-1-of-4">
-                <h4>Help &amp; Advice</h4>
+                <h4>Community</h4>
+                <ul>
+                    <li><a target="_blank" title="Read our Blog" href="http://www.kitchenappliancecentre.co.uk/blog/">Read our Blog</a></li>
+                </ul>
+                <div>
+                    <a target="_blank" href="https://www.facebook.com/kitchenappliancecentre" class="social-icon facebook"></a>
+                    <a target="_blank" href="https://twitter.com/appliancecentre" class="social-icon twitter"></a>
+                    <a target="_blank" href="https://plus.google.com/111689609675686000673" class="social-icon google-plus"></a>
+                    <a target="_blank" href="http://www.youtube.com/user/kacentre/" class="social-icon youtube"></a>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="widget widget-1-of-4">
+                <h4>General</h4>
+                <ul>
+                    <li><a title="Find out all about Kitchen Appliance Centre" href="{{ path('content_about_us_long') }}">About Us</a></li>
+                    <li><a title="Find out directions to get to our showroom in Nottingham" href="{{ path('content_how_to_find_us') }}">How to Find Us</a></li>
+                    <li><a title="Find out all about our showroom based in Nottingham" href="{{ path('content_the_shop') }}">The Showroom</a></li>
+                    <li><a target="_blank" title="Hear what our customers have to say about us" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">Excellent Feedback Rating</a></li>
+                    <li><a target="_blank" title="View our site map - search engines go crazy" href="http://www.kitchenappliancecentre.co.uk/sitemap.xml">Site Map</a></li>
+                </ul>
+            </div>
+            <div class="widget widget-1-of-4">
+                <h4>Information</h4>
                 <ul>
                     <li><a title="Find out all about our delivery" href="{{ path('content_delivery') }}">Delivery Information</a></li>
                     <li><a title="Do you need to return something?" href="{{ path('content_terms_and_conditions') }}#cancellationAndReturns">Need to return something?</a></li>
-                    <li><a title="Find out how you can contact us" href="{{ path('content_contact_us') }}">Contact Us</a></li>
-                    <li><a title="Find out all about our showroom based in Nottingham" href="{{ path('content_the_shop') }}">The Showroom</a></li>
-                    <li><a title="Find out directions to get to our showroom in Nottingham" href="{{ path('content_how_to_find_us') }}">How to Find Us</a></li>
-                    <li><a title="Before buying a tap make sure you have the right water pressure" href="{{ path('content_water_pressure_information') }}">What is my water pressure?</a></li>
                     <li><a title="Learn what information we may use from you to store in cookies" href="{{ path('content_cookie_policy') }}">Cookie Policy</a></li>
+                    <li><a title="Find out how we look after your privacy" href="{{ path('content_privacy_policy') }}">Privacy Policy</a></li>
+                    <li><a title="View our terms and conditions" href="{{ path('content_terms_and_conditions') }}">Terms &amp; Conditions</a></li>
                 </ul>
             </div>
             <div class="widget widget-1-of-4">
-                <h4>What our Customers Say</h4>
-                <div class="tac">
-                    <a href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk" target="_blank"><img class="mbm" src="{{ asset('/bundles/kacshop/images/logos/trust-pilot-rating.png') }}" width="214" height="64" border="0" alt="Kitchen Appliance Centre feedback from Trust Pilot" /></a>
-                    <a href="http://www.reviewcentre.com/reviews240740.html" target="_blank"><img class="mbm" src="{{ asset('/bundles/kacshop/images/logos/review-centre-rating.png') }}" width="214" height="64" border="0" alt="Kitchen Appliance Centre feedback from Review Centre" /></a>
-                    <a href="http://feedback.ebay.co.uk/ws/eBayISAPI.dll?ViewFeedback2&userid=kitchenappliancecentre&ftab=AllFeedback" target="_blank"><img src="{{ asset('/bundles/kacshop/images/logos/ebay-top-rated-seller.png') }}" width="214" height="64" border="0" alt="Kitchen Appliance Centre is an eBay Top-rated Seller" /></a>
-                </div>
-            </div>
-            <div class="widget widget-1-of-4">
-                <h4>Security</h4>
+                <h4>Help</h4>
                 <ul>
-                    <li><a title="Find out how we keep your details safe and secure" href="{{ path('content_security') }}">Security</a></li>
-                    <li><a title="Find out how we look after your privacy" href="{{ path('content_privacy_policy') }}">Privacy</a></li>
+                    <li><a title="Find out how you can contact us" href="{{ path('content_contact_us') }}">Contact Us</a></li>
+                    <li><a title="Before buying a tap make sure you have the right water pressure" href="{{ path('content_water_pressure_information') }}">What is my water pressure?</a></li>
+                    <li><a title="Find out about collecting in store" href="{{ path('content_delivery') }}">Collect In Store</a></li>
                     <li><a title="We use 3D secure on all payments to prevent fraud" href="{{ path('content_fraud_prevention') }}">3D Secure &amp; Fraud Prevention</a></li>
+                    <li><a title="Find out how we keep your details safe and secure" href="{{ path('content_security') }}">Security</a></li>
                 </ul>
-                <div class="tac">
-                    <img class="mbm" src="{{ asset('/bundles/kacshop/images/3d-secure-payments.png') }}" width="214" height="82" border="0" alt="3D Secure Payments" />
-                    <a target="_blank" title="Click here to verify Kitchen Appliance Centre is an accredited retailer" href="http://isisaccreditation.imrg.org/8025745000669E37/isisAccredited?readform&unid=99EB7990D942C669802575CB003EABE2&type=1certificateisis"><img class="mbm" src="{{ asset('/bundles/kacshop/images/logos/internet-shopping-is-safe.png') }}" width="214" height="38" border="0" alt="Internet Shopping Is Safe (ISIS) - Accredited Retailer" /></a>
-                    <a target="_blank" title="Click here to verify Kitchen Appliance Centre is an accredited retailer" href="http://isisaccreditation.imrg.org/8025745000669E37/isisAccredited?readform&unid=99EB7990D942C669802575CB003EABE2&type=1&idis=1certificateisis"><img src="{{ asset('/bundles/kacshop/images/logos/internet-delivery-is-safe.png') }}" width="214" height="38" border="0" alt="Internet Delivery Is Safe (IDIS) - Accredited Retailer" /></a>
-                </div>
             </div>
-            <div class="widget widget-1-of-4">
-                <h4>Secure Payments by</h4>
-                <div class="tac">
-                    <img src="{{ asset('/bundles/kacshop/images/sage-pay-google-paypal.png') }}" width="214" height="92" border="0" alt="Secure Payments by Sage Pay, Google Checkout and PayPal" />
-                </div>
-                <h4 class="ptm">Accepted Cards</h4>
-                <div class="tac">
-                    <img src="{{ asset('/bundles/kacshop/images/accepted-credit-and-debit-cards.png') }}" width="214" height="91" border="0" alt="Accepted Credit and Debit Cards" />
-                </div>
+            <div class="clear"></div>
+            <div class="widget widget-1-of-1">
+                {{ render_esi(controller('KACSiteBundle:System:socialMediaInteractions')) }}
+            </div>
+            <div class="clear"></div>
+            <div class="widget widget-1-of-1 mtm">
+                <a class="fl mrm" title="Trusted Shops Guarentee - The trustmark with buyer protection" target="_blank" href="https://www.trustedshops.co.uk/shop/certificate.php?shop_id=X8575556777F6ADF0D6A223246D624724&tb"><img src="{{ asset('/bundles/kacsite/images/icons/trusted-shops.png') }}" border="0" width="136" height="30" alt="Trusted Shops Guarentee - The trustmark with buyer protection" /></a>
+                <img class="fl mrm" src="{{ asset('/bundles/kacsite/images/icons/payment-methods.png') }}" border="0" width="336" height="30" alt="Accepted Payment Methods and Cards" />
+                <a class="fl mrm" title="Trustpilot - see what our customers have been saying" target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk"><img src="{{ asset('/bundles/kacsite/images/icons/trustpilot.png') }}" border="0" width="294" height="30" alt="Trustpilot - see what our customers have been saying" /></a>
+                <div class="clear"></div>
             </div>
         </div>
     </div>
-    <div class="container">
-    	<span>
-    		&copy; {{ "now"|date("Y") }} All Rights Reserved <strong>Kitchen Appliance Centre</strong><br />
-    		<a title="View our terms and conditions" href="{{ path('content_terms_and_conditions') }}">Terms &amp; Conditions</a>{#&nbsp;|&nbsp;#}
-    		{#<a title="View our site map - search engines go crazy" href="{{ path('data_sitemap') }}">Site Map</a>&nbsp;|&nbsp;#}
-    	</span>
-    </div>
 </footer>
+<p class="copyright">&copy; {{ "now"|date("Y") }} All Rights Reserved <strong>Kitchen Appliance Centre</strong><br />Kitchen Appliance Centre is a trading company of Onefit Ltd. Company No.: 4605369. VAT No.: 728345716. Registered Office: Unit 3 Pentrich Road, Giltbrook Industrial Park, Giltbrook, Nottinghamshire, NG16 2UZ</p>

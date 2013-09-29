@@ -1,14 +1,9 @@
 {% macro menuItem(parentId, departments) %}
-    <ul id="submenu-department-{{ parentId }}" class="menu-vertical">
+    <ul>
         {% for department in departments %}
             {% if department.url %}
-                <li {% if department.children|length > 0 %}data-submenu="submenu-department-{{ department.id }}"{% endif %}>
-                    <a class="dropdown-toggle" href="{{ path('routing', {'url': department.url}) }}">
-                        {% if department.children|length > 0 %}
-                            <span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-471"></span>
-                        {% endif %}
-                        {{ department.description.name|raw }}
-                    </a>
+                <li>
+                    <a href="{{ path('routing', {'url': department.url}) }}">{{ department.description.name|raw }}</a>
                     {% if department.children|length > 0 %}
                         {{ _self.menuItem(department.id, department.children) }}
                     {% endif %}
@@ -18,23 +13,19 @@
     </ul>
 {% endmacro %}
 
-<div class="main-menu">
-    <nav class="container clearfix">
-        <ul class="clearfix menu-horizontal">
+<div class="main-menu container">
+    <nav class="pr clearfix">
+        <ul class="sf-menu">
             {% for department in departments %}
                 {% if department.url %}
-                    <li data-submenu="submenu-department-{{ department.id }}">
-                        <a class="{% if loop.last %}highlighted{% endif %} dropdown-toggle" href="{{ path('routing', {'url': department.url}) }}">
-                            {{ department.menuTitle|raw }}
-                        </a>
-                        <div class="submenu-container">
-                            {{ _self.menuItem(department.id, department.children) }}
-                        </div>
+                    <li>
+                        <a class="{% if loop.last %}highlighted{% endif %}" href="{{ path('routing', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a>
+                        {{ _self.menuItem(department.id, department.children) }}
                     </li>
                 {% endif %}
             {% endfor %}
         </ul>
-        <a data-submenu="submenu-department-brands" class="ui-button button button-turquoise uppercase" href="{{ path('listing_products') }}">Brands</a>
+        <a data-submenu="submenu-department-brands" class="ui-button button button-turquoise uppercase mrs" href="{{ path('listing_products') }}">Brands</a>
         <div class="submenu-container submenu-container-brands">
             <div id="submenu-department-brands">
                 {% for brand in brands %}

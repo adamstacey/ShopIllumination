@@ -58,12 +58,22 @@
                     <div class="product-listing-name">
                         <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">{{ product.header|raw }}</a>
                     </div>
-                    <div class="product-listing-colour mbs">
+                    <div class="product-listing-colour">
                         {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
                             {{ product.attr_feature_Colour[0] }}
                         {% endif %}
                     </div>
-                    <div>
+                    <div class="product-listing-bullets">
+                        <ul>
+                            {% for featureGroup in product.features|slice(0, 4) %}
+                                {% set feature = product['attr_feature_'~featureGroup|replace({" ": ""})][0] %}
+                                {% if (feature != '') and (feature != '*** NOT SET ***') %}
+                                    <li>{{ featureGroup }}: <strong>{{ feature }}</strong></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="pts">
                         <button type="button" class="fl actionQuickAddToBasket button mbl mrs button-small button-green icon-white uppercase" data-quantity="1" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids.0 }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}" data-icon-secondary="icon-472">Buy</button>
                         <a class="button button-small fl icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">View</a>
                         <div id="purchasingLoading{{ product.variant_ids.0 }}" class="ui-helper-hidden fl pam tac"><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="10" border="0" alt="loading" /></div>
