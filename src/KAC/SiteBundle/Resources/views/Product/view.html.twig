@@ -230,10 +230,22 @@
                                             {% endfor %}
                                         </ul>
                                         <p class="mtm"><a class="actionViewFullTechnicalSpecification" href="#tabs">View full technical specification</a></p>
-                                        {% if guarantees|length > 0 %}
-                                            {% for guarantee in guarantees %}
-                                                <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>{{ guarantee.length.displayName }}:</strong> {{ guarantee.type.guaranteeType }}</button>
-                                            {% endfor %}
+                                        {% if (product.variants[0].productCode == 'ISE45') or (product.variants[0].productCode == 'ISE45AS') %}
+                                            <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>2 Years:</strong> Parts &amp; Labour Guarantee</button>
+                                        {% elseif (product.variants[0].productCode == 'ISE55') %}
+                                            <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>3 Years:</strong> Parts &amp; Labour Guarantee</button>
+                                        {% elseif (product.variants[0].productCode == 'ISE65') %}
+                                            <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>4 Years:</strong> Parts &amp; Labour Guarantee</button>
+                                        {% elseif (product.variants[0].productCode == 'EVOLUTION 100') %}
+                                            <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>5 Years:</strong> Parts &amp; Labour Guarantee</button>
+                                        {% elseif (product.variants[0].productCode == 'EVOLUTION 200') %}
+                                            <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>6 Years:</strong> Parts &amp; Labour Guarantee</button>
+                                        {% else %}
+                                            {% if guarantees|length > 0 %}
+                                                {% for guarantee in guarantees %}
+                                                    <button type="button" class="fill button icon-turquoise" data-icon-primary="icon-826"><strong>{{ guarantee.length.displayName }}:</strong> {{ guarantee.type.guaranteeType }}</button>
+                                                {% endfor %}
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                 </section>
