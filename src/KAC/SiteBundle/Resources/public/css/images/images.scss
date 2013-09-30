@@ -18,7 +18,7 @@
 
     background: $colourWhite url("#{$cssPath}/resources/images/loaders/loader.gif") center no-repeat;
     border: 1px solid $colourGreyExtraLight;
-    @include boxGlow($colourGreyDark, 10px, 0, 1);
+    @include boxGlow($colourGreyDark, 10px, 0, 0.5);
 }
 
 .etalage .etalage_small_thumbs li {
@@ -165,6 +165,15 @@ div.etalage_description {
 div.etalage_description.rtl {
     direction: rtl;
     text-align: right;
+}
+
+img.etalage_thumb_image {
+    display: block;
+}
+
+ul.etalage,
+ul.etalage ul {
+    margin: 0 !important;
 }
 
 .jquery-lightbox-overlay {
