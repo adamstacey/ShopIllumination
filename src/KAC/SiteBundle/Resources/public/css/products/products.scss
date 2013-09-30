@@ -10,10 +10,9 @@
 }
 
 .product h1 {
-    padding: 0 $spacingMedium $spacingMedium $spacingMedium;
-    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+    padding: 0;
+    margin: 0 0 $spacingMedium 0;
 
-    border-bottom: 1px solid $colourGreyExtraLight;
     @include fontSize($fontSizeExtraLarge);
 }
 
@@ -28,6 +27,17 @@
     color: $colourGreyDark;
     font-weight: bold;
     margin: 0;
+}
+
+.product h5 {
+    padding: 0 $spacingMedium;
+    line-height: 30px;
+    @include fontSize(12);
+    @include highlightedVerticalGradientGreyLight;
+    font-weight: bold;
+    color: $colourBlack;
+    @include textShadow($colourWhite, 0, 1px);
+    @include equalBorderRadius($radiusSize);
 }
 
 .product ul {
@@ -53,10 +63,6 @@
 .product .price-small,
 .product .price-smaller {
     color: $colourRed !important;
-}
-
-.product .price {
-    text-align: right;
 }
 
 .product .price-small,
@@ -300,9 +306,10 @@ table.data-table .price .currency-tax {
     padding: $spacingSmall 0 0 0;
 }
 
-.product p, .product-description p {
-    margin: 0 0 $spacingMedium 0;
-    padding: 0px;
+.product p,
+.product-description p {
+    padding: 0 0 $spacingMedium 0;
+    margin: 0;
 
     line-height: 120%;
     @include fontSize($fontSizeExtraSmall);
@@ -796,8 +803,8 @@ screen and (min-resolution: 2dppx) {
 
 .add-to-basket {
     width: 136px;
-    height: 40px;
-    margin: $spacingSmall;
+    height: 38px;
+    margin: 0;
 
     display: block;
     position: relative;
@@ -805,6 +812,7 @@ screen and (min-resolution: 2dppx) {
 
 .add-to-basket input.quantity {
     width: 40px;
+    height: 38px;
 
     position: absolute;
     top: 0;
@@ -962,4 +970,11 @@ screen and (min-resolution: 2dppx) {
 .product-cheaper-alternative .price-small span.currency-decimal {
     @include fontSize(9);
     line-height: 9px;
+}
+
+.summary-specification li {
+    margin: 0 0 0 20px !important;
+    font-size: 12px !important;
+    font-size: 1.2rem !important;
+    line-height: 150% !important;
 }
