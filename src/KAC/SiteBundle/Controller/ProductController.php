@@ -147,15 +147,23 @@ class ProductController extends Controller {
             }
         }
 
-        $guarantees = array();
-        if ($product->getBrand())
+        $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
+            'objectId' => $product->getId(),
+            'objectType' => 'product'
+        ), array(
+            'displayOrder' => 'ASC'
+        ));
+        if (!$guarantees)
         {
-            $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
-                'objectId' => $product->getBrand()->getId(),
-                'objectType' => 'brand'
-            ), array(
-                'displayOrder' => 'ASC'
-            ));
+            if ($product->getBrand())
+            {
+                $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
+                    'objectId' => $product->getBrand()->getId(),
+                    'objectType' => 'brand'
+                ), array(
+                    'displayOrder' => 'ASC'
+                ));
+            }
         }
 
         // Get all images
@@ -231,6 +239,49 @@ class ProductController extends Controller {
             $variants[] = $array;
         }
 
+        // Work out the related products
+        $relatedProductTotal = 10;
+        $relatedProducts = array();
+        foreach ($product->getRelatedProducts() as $relatedProduct)
+        {
+            $relatedProducts[] = $relatedProduct;
+        }
+        $relatedProductTotal = 10 - count($relatedProducts);
+        if ($relatedProductTotal > 0)
+        {
+            $brandDepartmentProductsQuery = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.departments pd WHERE p.brand = :brand AND pd.department = :department")
+                ->setParameter('brand', $product->getBrand())
+                ->setParameter('department', $product->getDepartment()->getDepartment())
+                ->setMaxResults($relatedProductTotal);
+            $brandDepartmentProducts = $brandDepartmentProductsQuery->getResult();
+            if ($brandDepartmentProducts)
+            {
+                foreach ($brandDepartmentProducts as $brandDepartmentProduct)
+                {
+                    $relatedProducts[] = $brandDepartmentProduct;
+                }
+                $relatedProductTotal = 10 - count($relatedProducts);
+                if ($relatedProductTotal > 0)
+                {
+                    $departmentProductsQuery = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.departments pd WHERE pd.department = :department")
+                        ->setParameter('department', $product->getDepartment()->getDepartment())
+                        ->setMaxResults($relatedProductTotal);
+                    $departmentProducts = $departmentProductsQuery->getResult();
+                    if ($departmentProducts)
+                    {
+                        foreach ($departmentProducts as $departmentProduct)
+                        {
+                            $relatedProducts[] = $departmentProduct;
+                        }
+                    }
+                } elseif ($relatedProductTotal < 0) {
+                    $relatedProducts = array_slice($relatedProducts, 0, 10);
+                }
+            }
+        } elseif ($relatedProductTotal < 0) {
+            $relatedProducts = array_slice($relatedProducts, 0, 10);
+        }
+
         return $this->render('KACSiteBundle:Product:Templates/'.$template.'.html.twig', array(
             'product' => $product,
             'departments' => $departments,
@@ -242,6 +293,7 @@ class ProductController extends Controller {
             'common_features' => $commonFeatures,
             'variant_features' => $variantFeatures,
             'differentiating_features' => $differentiatingFeatures,
+            'related_products' => $relatedProducts,
             'variants' => $variants,
             'variant' => $variant,
         ));
