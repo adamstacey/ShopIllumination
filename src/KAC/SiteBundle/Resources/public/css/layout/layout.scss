@@ -437,6 +437,32 @@ table.listing td a {
     @include textShadow($colourWhite, 0, 1px);
 }
 
+.ksp {
+    height: 55px;
+    padding: $spacingSmall;
+    margin: $spacingMedium 0 0 0;
+
+    @include equalBorderRadius($radiusSize);
+    @include verticalGradientWhiteToGreyExtraLight;
+    border: 3px solid $colourGreyExtraLight;
+}
+
+.ksp h4 {
+    padding: 0 !important;
+    margin: 0 !important;
+
+    line-height: 24px !important;
+    color: $colourTurquoise !important;
+}
+
+.ksp p {
+    padding: 0 !important;
+    margin: 0 !important;
+
+    line-height: 16px !important;
+    color: $colourTurquoise !important;
+}
+
 @media
 screen and (-webkit-min-device-pixel-ratio: 1.25),
 screen and (-webkit-min-device-pixel-ratio: 1.3),
