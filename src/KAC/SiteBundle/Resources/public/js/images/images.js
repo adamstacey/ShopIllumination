@@ -3,20 +3,20 @@ $(document).ready(function() {
 
     $(".etalage").etalage({
         autoplay: false,
-        smallthumbs_position: 'left',
-        thumb_image_width: 376,
-        thumb_image_height: 376,
+        smallthumbs_position: 'bottom',
+        thumb_image_width: 271,
+        thumb_image_height: 271,
         source_image_width: 800,
         source_image_height: 800,
         small_thumbs: 3,
-        zoom_area_width: 398,
-        zoom_area_height: 398,
+        zoom_area_width: 293,
+        zoom_area_height: 293,
         smallthumb_hide_single: false
     });
 
     $(".etalage-inset").etalage({
         autoplay: false,
-        smallthumbs_position: 'left',
+        smallthumbs_position: 'bottom',
         thumb_image_width: 200,
         thumb_image_height: 200,
         source_image_width: 400,
