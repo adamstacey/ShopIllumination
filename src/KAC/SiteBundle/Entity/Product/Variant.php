@@ -1155,4 +1155,44 @@ class Variant implements DescribableInterface
     {
         $this->type = $type;
     }
+
+    public function getPriceRange()
+    {
+        $lowestPrice = -1;
+        $highestPrice = -1;
+
+        foreach ($this->getPrices() as $price) {
+            if ($lowestPrice === -1 || $price->getListPrice() < $lowestPrice) {
+                $lowestPrice = $price->getListPrice();
+            }
+            if ($highestPrice === -1 || $price->getListPrice() > $highestPrice) {
+                $highestPrice = $price->getListPrice();
+            }
+        }
+
+        return array(
+            'low' => $lowestPrice,
+            'high' => $highestPrice,
+        );
+    }
+
+    public function getRecommendedRetailPriceRange()
+    {
+        $lowestPrice = -1;
+        $highestPrice = -1;
+
+        foreach ($this->getPrices() as $price) {
+            if ($lowestPrice === -1 || $price->getRecommendedRetailPrice() < $lowestPrice) {
+                $lowestPrice = $price->getRecommendedRetailPrice();
+            }
+            if ($highestPrice === -1 || $price->getRecommendedRetailPrice() > $highestPrice) {
+                $highestPrice = $price->getRecommendedRetailPrice();
+            }
+        }
+
+        return array(
+            'low' => $lowestPrice,
+            'high' => $highestPrice,
+        );
+    }
 }
