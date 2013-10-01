@@ -45,4 +45,36 @@ class ReviewsController extends Controller
         $response->setSharedMaxAge(86400);
         return $response;
     }
+
+    /**
+     * @Route("/trustpilotSmall", name="reviews_trustpilot_small")
+     * @Method({"GET"})
+     */
+    public function trustpilotSmallAction(Request $request)
+    {
+        $url = "http://s.trustpilot.com/tpelements/283177/f.json.gz";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+        $file = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        // Check on the status of the HTTP code
+        if (($httpCode >= 200) && ($httpCode < 300))
+        {
+            // Get the JSON feed and gz unpack
+            $file = gzdecode($file);
+
+            // JSON decode the string
+            $result = json_decode($file, true);
+        } else {
+            $result = false;
+        }
+
+        $response = $this->render('KACSiteBundle:Reviews:trustpilotSmall.html.twig', array('result' => $result));
+        $response->setSharedMaxAge(86400);
+        return $response;
+    }
 }

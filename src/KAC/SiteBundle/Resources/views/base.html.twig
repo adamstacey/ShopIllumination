@@ -82,6 +82,9 @@
                             </div>
                         </div>
                     </div>
+                    {% block reviews %}
+                        {{ render_esi(url('reviews_trustpilot_small')) }}
+                    {% endblock %}
                 </header>
                 {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
                 <section class="container">
