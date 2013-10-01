@@ -15,7 +15,7 @@
                     <div class="pts pr">
                         {% if not brand %}
                             {% if product.brand.description.logoImage.publicPath != '' %}
-                                <img class="small-brand-logo-image" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand.description.name }}" height="25" />
+                                <img class="small-brand-logo-image mts" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand.description.name }}" height="25" />
                             {% endif %}
                         {% endif %}
                         <div itemprop="offers" itemscope itemtype="{% if product.priceRange.low == product.priceRange.high %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
@@ -73,7 +73,7 @@
                     <div class="pts pr">
                         {% if not brand %}
                             {% if product.brand.description.logoImage.publicPath != '' %}
-                                <img class="small-brand-logo-image" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand.description.name }}" height="25" />
+                                <img class="small-brand-logo-image mts" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand.description.name }}" height="25" />
                             {% endif %}
                         {% endif %}
                         <div itemprop="offers" itemscope itemtype="{% if product.priceRange.low == product.priceRange.high %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
