@@ -9,4 +9,18 @@ $(document).ready(function() {
         controlsMousewheel: false,
         controlsKeyboard: false
     });
+
+    $(".slider-small").rhinoslider({
+        showTime: 10000,
+        effect: 'turnOver',
+        randomOrder: true,
+        controlsMousewheel: false,
+        controlsKeyboard: false,
+        controlsPlayPause: false,
+        autoPlay: true,
+        showBullets: 'never',
+        showControls: 'always',
+        slidePrevDirection: 'toTop',
+        slideNextDirection: 'toBottom'
+    });
 });
