@@ -1,33 +1,37 @@
 {% if result %}
-    <div class="trustpilot-reviews-border">
-        <div class="trustpilot-reviews-container">
-            <div class="trustpilot-reviews">
-                <h2>Our customers love us!</h2>
-                <div class="trustpilot-overall-rating">
-                    {% for rating in 1..result.TrustScore.Stars %}
-                        <span class="trustpilot-review-star trustpilot-review-star-large"></span>
-                    {% endfor %}
-                    <div class="clear"></div>
-                </div>
-                {% for review in result.Reviews | slice(0,3) %}
-                    <div class="trustpilot-review">
-                        <div class="trustpilot-review-content">
-                            <h4><a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">{{ review.Title }}</a></h4>
-                            <div class="trustpilot-rating">
-                                <div class="trustpilot-review-user-name">by <a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk"><strong>{{ review.User.Name }}</strong></a></div>
+    <div class="customer-reviews">
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-4 tac">
+                <a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk"><img alt="Trustpilot: 5 out of 5 rating" class="mrm mlm" src="{{ asset('/bundles/kacsite/images/icons/trustpilot-cropped.png') }}" border="0" width="220" /></a>
+                <p class="trustpilot-review-count" itemscope="" itemtype="http://schema.org/Organization"><span itemprop="name"><strong>Kitchen Appliance Centre</strong></span> <span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">rated <span itemprop="ratingValue">{{ result.TrustScore.Stars }}</span>/5<br />based on <span itemprop="reviewCount">{{ result.ReviewCount.Total|number_format }}</span> <a target="_blank" rel="nofollow" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">reviews</a></span> on TrustPilot.co.uk</p>
+            </div>
+            <div class="widget widget-3-of-4">
+                <div class="slider-wrapper slider-customer-reviews">
+                    <ul class="slider-small">
+                    {% for review in result.Reviews|slice(0, 5) %}
+                        <li>
+                            <div class="customer-review">
                                 <div>
-                                    {% for rating in 1..review.TrustScore.Stars %}
-                                        <span class="trustpilot-review-star trustpilot-review-star-small"></span>
-                                    {% endfor %}
+                                    <div class="customer-review-rating">
+                                        <a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">
+                                            {% for rating in 1..review.TrustScore.Stars %}
+                                                <span class="trustpilot-review-star trustpilot-review-star-small"></span>
+                                            {% endfor %}
+                                        </a>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <h4 class="fl"><a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">{{ review.Title }}</a></h4>
+                                    <div class="clear"></div>
                                 </div>
+                                <div class="customer-review-content">
+                                    <a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk"><strong>{{ review.User.Name }}:</strong> "{{ review.Content }}"</a>
+                                </div>
+                                <div class="clear"></div>
                             </div>
-                            <div class="clear"></div>
-                            <p class="trustpilot-review-rating">{{ review.Content }}</p>
-                            <a class="trustpilot-review-read-more" target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk"><strong>Read More</strong></a>
-                        </div>
-                    </div>
-                {% endfor %}
-                <p class="trustpilot-review-count" itemscope="" itemtype="http://schema.org/Organization"><span itemprop="name"><strong>Kitchen Appliance Centre</strong></span><br /><span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">rated <span itemprop="ratingValue">{{ result.TrustScore.Stars }}</span>/5<br />based on <span itemprop="reviewCount">{{ result.ReviewCount.Total|number_format }}</span> <a target="_blank" rel="nofollow" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">reviews</a></span><br />on TrustPilot.co.uk</p>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
