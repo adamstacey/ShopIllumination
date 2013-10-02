@@ -82,8 +82,8 @@
                             </div>
                         </div>
                     </div>
-                    {% block reviews %}
-                        {{ render_esi(url('reviews_trustpilot_small')) }}
+                    {% block top_reviews %}
+                        {{ render_esi(url('reviews_trustpilot')) }}
                     {% endblock %}
                 </header>
                 {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
@@ -96,6 +96,9 @@
             {#% include 'KACSiteBundle:Includes:loading.html.twig' %#}
         {% if app.request.query.get('modal') != true %}
                     </div>
+                    {% block bottom_reviews %}
+                        {{ render_esi(url('reviews_trustpilot')) }}
+                    {% endblock %}
                 </section>
             </div>
         {% endif %}
@@ -124,5 +127,21 @@
                 };
             }());
         </script>
+        <script type="text/javascript">
+            (function () {
+                var _tsid = 'X8575556777F6ADF0D6A223246D624724';
+                _tsConfig = {
+                    'yOffset': '0', //offset from page bottom
+                    'variant': 'default' //text, default, small
+                };
+                var _ts = document.createElement('script');
+                _ts.type = 'text/javascript';
+                _ts.async = true;
+                _ts.src = '//widgets.trustedshops.com/js/' + _tsid + '.js';
+                var __ts = document.getElementsByTagName('script')[0];
+                __ts.parentNode.insertBefore(_ts, __ts);
+            })();
+        </script>
+        <noscript><a href="https://www.trustedshops.de/shop/certificate.php?shop_id=X8575556777F6ADF0D6A223246D624724"><img title="Trusted Shops trustmark - click to verify." src="//widgets.trustedshops.com/images/badge.png" style="position:fixed;bottom:0;right:0;" /></a></noscript>
     </body>
 </html>
