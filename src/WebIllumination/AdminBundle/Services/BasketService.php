@@ -973,6 +973,7 @@ class BasketService {
                     $nextDay++;
                 }
 
+                /*
                 // Check if delivery date start does not fall on a Saturday or Sunday
                 $weekendDaysToAdd = 0;
                 for ($deliveryDateCount = 1; $deliveryDateCount <= $nextDay; $deliveryDateCount++)
@@ -991,9 +992,10 @@ class BasketService {
                 } elseif (date("l", strtotime("+$nextDay day")) == 'Sunday') {
                     $nextDay++;
                 }
+                */
 
                 $deliveryStartDate = $nextDay;
-                $estimatedDeliveryDaysStart = date("D, jS M Y", strtotime("+$nextDay day"));
+                $estimatedDeliveryDaysStart = date("D jS F", strtotime("+$nextDay Weekday"));
                 $nextDay = $nextDay + ($deliveryOption['estimatedDeliveryDaysEnd'] - 1);
                 $weekendDaysToAdd = 0;
                 for ($deliveryDateCount = $deliveryStartDate; $deliveryDateCount <= $nextDay; $deliveryDateCount++)
@@ -1013,7 +1015,7 @@ class BasketService {
                     $nextDay++;
                 }
 
-                $estimatedDeliveryDaysEnd = date("D, jS M Y", strtotime("+$nextDay day"));
+                $estimatedDeliveryDaysEnd = date("D jS F", strtotime("+$nextDay day"));
                 $estimatedDeliveryDays['start'] = $estimatedDeliveryDaysStart;
                 $estimatedDeliveryDays['end'] = $estimatedDeliveryDaysEnd;
                 $nextDay++;
@@ -1059,7 +1061,7 @@ class BasketService {
         $basket['donations']['company']['description'] = '';
         $basket['donations']['company']['donation'] = 0;
 
-        if(!isset($basket['voucherCodes']) || !is_array($basket['voucherCodes']))
+        if (!isset($basket['voucherCodes']) || !is_array($basket['voucherCodes']))
         {
             $basket['voucherCodes'] = array();
         }
@@ -1288,7 +1290,7 @@ class BasketService {
             $uSaveVoucherActive = false;
             foreach($basket['voucherCodes'] as $voucherCode)
             {
-                if($voucherCode === 'YOUSAVE' || $voucherCode === 'USAVE')
+                if ($voucherCode === 'YOUSAVE' || $voucherCode === 'USAVE')
                 {
                     $uSaveVoucherActive = true;
                 }
@@ -1296,104 +1298,99 @@ class BasketService {
 
             // Discount the order if the user entered either the YOUSAVE or USAVE voucher code
             $totalUSaveDiscount = 0;
-            if($uSaveVoucherActive)
+            if ($uSaveVoucherActive)
             {
                 // Only discount the order if it was not part of the CDA discount
-                if($totalCdaDiscount <= 0)
+                if ($totalCdaDiscount <= 0)
                 {
                     foreach ($basket['products'] as $product)
                     {
                         $skipProduct = false;
 
-                        if ($product['validProduct'] > 0)
+                        $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+
+                        // Ensure that the product is not in the discount department
+                        if ($productEntity)
                         {
-                            /**
-                             * @var Product $productEntity
-                             * @var Product\Variant $variantEntity
-                             */
-                            $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
-                            $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
-
-                            if ($productEntity && $variantEntity)
+                            foreach ($productEntity->getDepartments() as $department)
                             {
-                                // Ensure that the product is not in the discount department
-                                foreach($productEntity->getDepartments() as $department)
+                                if ($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
                                 {
-                                    if($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
-                                    {
-                                        $skipProduct = true;
-                                    }
+                                    $skipProduct = true;
                                 }
+                            }
+                        }
 
+                        if (!$skipProduct)
+                        {
+                            $discountPercent = 0;
 
-                                if (!$skipProduct)
+                            // 10% discount for ducting
+                            $ductingDepartmentIds = array(
+                                93,
+                                    94,
+                                        929,
+                                        930,
+                                        931,
+                                    95,
+                                        924,
+                                            1133,
+                                            1136,
+                                            1137,
+                                            1138,
+                                        925,
+                                            1134,
+                                            1139,
+                                            1140,
+                                            1141,
+                                        926,
+                                            1135,
+                                            1142,
+                                            1143,
+                                            1144,
+                                        927,
+                                        988,
+                                    97,
+                                    928,
+                            );
+                            if ($productEntity)
+                            {
+                                foreach ($productEntity->getDepartments() as $ptd)
                                 {
-                                    $discountPercent = 0;
-
-                                    // 10% discount for ducting
-                                    $ductingDepartmentIds = array(
-                                        93,
-                                            94,
-                                                929,
-                                                930,
-                                                931,
-                                            95,
-                                                924,
-                                                    1133,
-                                                    1136,
-                                                    1137,
-                                                    1138,
-                                                925,
-                                                    1134,
-                                                    1139,
-                                                    1140,
-                                                    1141,
-                                                926,
-                                                    1135,
-                                                    1142,
-                                                    1143,
-                                                    1144,
-                                                927,
-                                                988,
-                                            97,
-                                            928,
-                                    );
-                                    foreach($productEntity->getDepartments() as $ptd)
+                                    if (in_array($ptd->getDepartment()->getId(), $ductingDepartmentIds))
                                     {
-                                        if(in_array($ptd->getDepartment()->getId(), $ductingDepartmentIds))
-                                        {
-                                            $discountPercent = 0.1;
-                                            break;
-                                        }
-                                    }
-
-                                    // 5% discount for maia products
-                                    if($discountPercent === 0 && $productEntity->getBrand()->getId() === 15)
-                                    {
-                                        $discountPercent = 0.05;
-                                    }
-
-                                    // 2% discount for anything else
-                                    if($discountPercent === 0)
-                                    {
-                                        $discountPercent = 0.02;
-                                    }
-
-                                    $prices = $variantEntity->getPrices();
-                                    if(count($prices) > 0) {
-                                        $price = $prices[0];
-                                        $discount = $price->getListPrice() * $discountPercent;
-                                        if ($price->getListPrice() < $price->getRecommendedRetailPrice())
-                                        {
-                                            $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getListPrice();
-                                        }
-                                        $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $discount;
-                                        $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-                                        $totalDiscount += ($discount * $product['quantity']);
-                                        $totalUSaveDiscount += ($discount * $product['quantity']);
+                                        $discountPercent = 0.1;
+                                        break;
                                     }
                                 }
                             }
+
+                            // 5% discount for maia products
+                            if ($productEntity)
+                            {
+                                if ($discountPercent === 0 && $productEntity->getBrand()->getId() === 15)
+                                {
+                                    $discountPercent = 0.05;
+                                }
+                            } else {
+                                if ($discountPercent === 0 && (strtolower($product['brand']) == 'maia'))
+                                {
+                                    $discountPercent = 0.05;
+                                }
+                            }
+
+                            // 2% discount for anything else
+                            if ($discountPercent === 0)
+                            {
+                               $discountPercent = 0.02;
+                            }
+
+                            $discount = $basket['products'][$product['basketItemId']]['unitCost'] * $discountPercent;
+                            $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $basket['products'][$product['basketItemId']]['unitCost'];
+                            $basket['products'][$product['basketItemId']]['unitCost'] = $basket['products'][$product['basketItemId']]['unitCost'] - $discount;
+                            $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                            $totalDiscount += ($discount * $product['quantity']);
+                            $totalUSaveDiscount += ($discount * $product['quantity']);
                         }
                     }
                 }
