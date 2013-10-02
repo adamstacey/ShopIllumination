@@ -1,5 +1,6 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 {% block title %}Secure Checkout{% endblock %}
+{% block top_reviews %}{% endblock %}
 {% block body %}
     <section class="clearfix">
         <div class="widget-group clearfix ptl">
@@ -260,7 +261,7 @@
                                         <div id="checkout-requested-delivery-date" class="form-element widget-group clearfix">
                                             <span title="Select a week commencing date." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                             <div class="widget widget-1-of-3">
-                                                <label id="label-requested-delivery-date" for="form-requested-delivery-date">Week Commencing Date</label>
+                                                <label id="label-requested-delivery-date" for="form-requested-delivery-date">Week Commencing</label>
                                             </div>
                                             <div class="widget widget-2-of-3">
                                                 <input type="text" id="form-requested-delivery-date" data-message="Enter the address." name="requested-delivery-date" class="fill" value="{% if (basket.delivery.requestedDeliveryDate != "") and (basket.delivery.requestedDeliveryDate != "Deliver ASAP") and (basket.delivery.requestedDeliveryDate != "Collect ASAP") %}{{ basket.delivery.requestedDeliveryDate|date("l j F Y") }}{% else %}{% if basket.delivery.service == 'Collection' %}Collect{% else %}Deliver{% endif %} ASAP{% endif %}" />
