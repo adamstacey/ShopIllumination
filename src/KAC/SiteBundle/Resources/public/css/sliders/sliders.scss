@@ -188,6 +188,15 @@
     height: 250px;
 }
 
+.slider-customer-reviews,
+.slider-customer-reviews .rhino-container,
+.slider-customer-reviews .rhino-container ul,
+.slider-customer-reviews .rhino-container ul li,
+.slider-customer-reviews .rhino-container ul li img {
+    width: 730px;
+    height: 42px;
+}
+
 .slider-gallery {
     border-bottom: 3px solid $colourGreyDark;
     margin: -#{$spacingMedium} -#{$spacingMedium} $spacingExtraLarge -#{$spacingMedium};

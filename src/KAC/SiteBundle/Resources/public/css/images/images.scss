@@ -6,9 +6,13 @@
     margin-bottom: 50px;
 }
 
+.etalage,
+.etalage ul {
+    margin: 0 !important;
+}
+
 .etalage-inset {
-    margin-top: -95px !important;
-    margin-left: 38px !important;
+    margin: -95px 0 0 38px !important;
 }
 
 .etalage .etalage_thumb,
@@ -169,11 +173,6 @@ div.etalage_description.rtl {
 
 img.etalage_thumb_image {
     display: block;
-}
-
-ul.etalage,
-ul.etalage ul {
-    margin: 0 !important;
 }
 
 .jquery-lightbox-overlay {
