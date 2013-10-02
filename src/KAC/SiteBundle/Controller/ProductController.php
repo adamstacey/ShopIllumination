@@ -176,7 +176,7 @@ class ProductController extends Controller {
             'displayOrder' => 'ASC'
         ));
 
-        if($variant)
+        if ($variant)
         {
             $images = array_merge($em->getRepository("KAC\SiteBundle\Entity\Product\Variant\Image")->findBy(array(
                 'objectId' => $variant->getId()
@@ -185,10 +185,40 @@ class ProductController extends Controller {
             )), $images);
         }
 
+        if ($variant) {
+            $deliveryBand = intval($variant->getDeliveryBand());
+        } else {
+            $deliveryBand = intval($product->getVariant()->getDeliveryBand());
+        }
+        switch ($deliveryBand) {
+            case 1:
+                $deliveryDays = 1;
+                break;
+            case 2:
+                $deliveryDays = 2;
+                break;
+            case 3:
+            case 4:
+            case 5:
+                $deliveryDays = 1;
+                break;
+            case 6:
+            default:
+                $deliveryDays = 5;
+                break;
+        }
+
+        if (date("G") > 12)
+        {
+            $deliveryDays++;
+        }
+        $deliveryFromDate = date('Y-m-d', strtotime("+".$deliveryDays." Weekday"));
+        $deliveryFromDate = date('D jS F', strtotime($deliveryFromDate));
+
         /**
          * @var Image $image
          */
-        foreach($images as $image)
+        foreach ($images as $image)
         {
             // Get the gallery images
             if($image->getImageType() === 'gallery')
@@ -203,7 +233,8 @@ class ProductController extends Controller {
         // Find template from the departments
         $template = 'standard';
         $departments = array();
-        if($product->getTemplate() && $product->getTemplate() !== 'default') {
+        if ($product->getTemplate() && $product->getTemplate() !== 'default')
+        {
             $template = $product->getTemplate();
         } elseif($product->getDepartment()) {
             // Check the department tree
@@ -229,9 +260,9 @@ class ProductController extends Controller {
                 'url' => $entity->getUrl(),
                 'features' => $commonFeatures,
             );
-            foreach($entity->getFeatures() as $vtf)
+            foreach ($entity->getFeatures() as $vtf)
             {
-                if($vtf && $vtf->getFeatureGroup() && $vtf->getFeature())
+                if ($vtf && $vtf->getFeatureGroup() && $vtf->getFeature())
                 {
                     $array['features'][$vtf->getFeatureGroup()->getName()] = $vtf->getFeature()->getName();
                 }
@@ -296,6 +327,8 @@ class ProductController extends Controller {
             'related_products' => $relatedProducts,
             'variants' => $variants,
             'variant' => $variant,
+            'delivery_band' => $deliveryBand,
+            'delivery_from_date' => $deliveryFromDate,
         ));
     }
 
