@@ -35,6 +35,8 @@
     <meta name="keywords" content="{{ metaKeywords }}">
 {% endblock %}
 
+{% block top_reviews %}{% endblock %}
+
 {% block admin_submenu %}
     <a class="button button-small icon-grey mrs" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
     <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
@@ -136,9 +138,6 @@
                                                             {% endif %}
                                                             {{ variant.priceRange.low|currency('GBP', true, true, '')|raw }}
                                                         </span>
-                                                        <span class="price-tax">
-                                                            <span class="currency-tax">(inc. VAT)</span>
-                                                        </span>
                                                         <meta itemprop="priceCurrency" content="{{ variant.price.currencyCode | raw }}"/>
                                                     {% endif %}
                                                 </div>
@@ -146,7 +145,7 @@
                                                     <span class="currency-tax">(inc. VAT)</span>
                                                 </div>
                                             </div>
-                                            <p class="pts pbs man">Item in Stock&nbsp;&nbsp;|&nbsp;&nbsp;<strong>FREE Delivery</strong> to most UK areas</p>
+                                            <p class="pts pbs man"><span class="colour-green">Item in Stock</span> | <span class="colour-turquoise">Earliest delivery from <strong>{{ delivery_from_date }}</strong></span> | <span class="colour-grey"><strong>FREE Delivery</strong> to most UK areas</span></p>
                                             <p class="summary man pbs">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                             <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="20" border="0" alt="loading" /></div>
                                             <div class="basket-product-info pbm" data-variantId="{{ variant.id }}">
@@ -161,7 +160,7 @@
                                                         {% if features|length > 0 %}<li><a href="#specification">Specification</a></li>{% endif %}
                                                         <li><a href="#delivery">Delivery</a></li>
                                                         <li><a href="#security">Security</a></li>
-                                                        <li><a href="#reviews">Reviews</a></li>
+                                                        <li><a href="#whyBuyFromUs">Why buy from us?</a></li>
                                                     </ul>
                                                     <div id="overview">
                                                         <section>
@@ -219,23 +218,19 @@
                                                     {% endif %}
                                                     <div id="delivery">
                                                         <section>
-                                                            <h5>Free and Fast Delivery to most areas in the UK</h5>
-                                                            <ul class="pll pbm">
-                                                                <li>We process all orders placed before 4pm Mon-Fri the same day.</li>
-                                                                <li>For orders sent by Royal Mail we supply a tracking number in the confirmation of dispatch email, meaning you can track your order each step of the way.</li>
-                                                                <li>For orders sent using our parcel delivery service if you provide your mobile phone number, you will receive a text just before delivery and another text to confirm delivery.</li>
-                                                                <li>You can specify special delivery instructions like a Safeplace or a more convenient delivery address (for example, a work address).</li>
-                                                                <li>If you are waiting for a kitchen to be fitted and need us to hold onto your items in our secure warehouses you can tell us when you want the items delivering.</li>
-                                                            </ul>
-                                                            <h5>Returns &amp; Exchanges on UK orders</h5>
-                                                            <ul class="pll pbm">
-                                                                <li>We want your new purchase to be absolutely perfect for you! If it's not right and you need a refund or you would like an exchange please <a href="{{ path('content_contact_us') }}">contact us</a> and we will be happy to arrange that with you.</li>
-                                                                <li>We try to make online shopping simple by making it easy to return items. For more information please see our <a href="{{ path('content_terms_and_conditions') }}#cancellationAndReturns">returns</a> page.</li>
-                                                            </ul>
-                                                            <h5>International Delivery</h5>
-                                                            <ul class="pll pbm">
-                                                                <li>Unlike a lot of our competitors we do deliver to Ireland on most of the items we sell.</li>
-                                                            </ul>
+                                                            <h5>FAST Delivery</h5>
+                                                            <p>Earliest delivery from {{ delivery_from_date }}.</p>
+                                                            <h5>FREE Delivery</h5>
+                                                            <p>Delivery is FREE on most orders to the majority of the UK.</p>
+                                                            <h5>We Deliver Anywhere</h5>
+                                                            <p>We deliver nationwide across the UK and most of our products can also be delivered to Ireland and the Channel Islands.</p>
+                                                            <h5>DON'T Wait in all day!</h5>
+                                                            <p>We can deliver anywhere to suit you; to your work place, friend or neighbour, (not always wise on bulky items).</p>
+                                                            <h5>Delivery Instructions</h5>
+                                                            <p>You can add in your special delivery instructions within the check-out process.</p>
+                                                            <h5>Forward Order Now &amp; Save £££</h5>
+                                                            <p>If you're ordering large bulky items, but don't want a big delivery too soon, then we will store them in our secure warehouse for you. Simply order now at today's low prices and within our check-out process you can select a future week commencing date to suit you.</p>
+                                                            <p class="mtl small colour-grey"><strong>Note:</strong> Worktops are excluded from our free delivery and delivery is restricted to some areas.<br /><strong>Note:</strong> Estimated dates are subject to availability, selected delivery options and locations.</p>
                                                         </section>
                                                     </div>
                                                     <div id="security">
@@ -248,9 +243,20 @@
                                                             <p>We take pride in offering a high level of customer service. This can be evidenced in obtaining a 5 out of 5 feedback rating from over 1,000 independent customer reviews. These are all customers who have used our service and have been asked independently by Trustpilot to provide feedback on our service. You can see a selection of our feedback in the reviews section.</p>
                                                         </section>
                                                     </div>
-                                                    <div id="reviews">
+                                                    <div id="whyBuyFromUs">
                                                         <section>
-                                                            {{ render_esi(url('reviews_trustpilot')) }}
+                                                            <ul class="pll pbm">
+                                                                <li>Family business with committed staff that care.</li>
+                                                                <li>Staff have monthly manufacturers product training to help you.</li>
+                                                                <li>We are NOT your average e-seller. We always go the extra mile.</li>
+                                                                <li>Guaranteed best all-round prices online.</li>
+                                                                <li>Our 5 star customer reviews say it all...</li>
+                                                            </ul>
+                                                            <p>
+                                                                <strong><a target="_blank" href="http://www.trustpilot.co.uk/review/www.kitchenappliancecentre.co.uk">See our Trustpilot reviews</a></strong><br />
+                                                                <strong><a target="_blank" href="http://www.amazon.co.uk/gp/aag/details/ref=aag_m_ss?ie=UTF8&asin=B002OHTQJ8&isAmazonFulfilled=0&isCBA=&marketplaceID=A1F83G8C2ARO7P&seller=A1VS6OP0OJ7K3J#aag_legalInfo">See our Amazon reviews</a></strong><br />
+                                                                <strong><a target="_blank" href="http://feedback.ebay.co.uk/ws/eBayISAPI.dll?ViewFeedback2&userid=kitchenappliancecentre&ftab=AllFeedback">See our eBay reviews</a></strong>
+                                                            </p>
                                                         </section>
                                                     </div>
                                                 </div>
