@@ -78,7 +78,7 @@
 {% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
 	<div class="estimated-delivery ui-corner-all clearfix">
 		<p class="tac mbn">
-            <span><strong>Estimated Delivery:</strong></span> <span class="colour-red">{{ basket.estimatedDeliveryDays.start }}</span> - <span class="colour-red">{{ basket.estimatedDeliveryDays.end }}</span>
+            <span><strong>Earliest Delivery From:</strong></span> <span class="colour-green">{{ basket.estimatedDeliveryDays.start }}</span>
         </p>
 		<p class="colour-grey mbn tac small"><em>Estimated dates are subject to availability, selected delivery options and locations.</em></p>
 	</div>
