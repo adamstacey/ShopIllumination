@@ -978,3 +978,16 @@ screen and (min-resolution: 2dppx) {
     font-size: 1.2rem !important;
     line-height: 150% !important;
 }
+
+.tick-list,
+.tick-list li {
+    list-style: none;
+}
+
+.tick-list li {
+    padding: 0 0 0 26px;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    background-image: url("#{$cssPath}/resources/images/icons/green-tick.png");
+    line-height: 16px;
+}

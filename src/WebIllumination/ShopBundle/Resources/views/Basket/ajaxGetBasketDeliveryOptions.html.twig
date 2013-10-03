@@ -29,10 +29,11 @@
                 <option value="GG"{% if basket.delivery.countryCode == 'GG' %} selected="selected"{% endif %}>Deliver to Guernsey</option>
                 <option value="IM"{% if basket.delivery.countryCode == 'IM' %} selected="selected"{% endif %}>Deliver to Isle of Man</option>
                 <option value="JE"{% if basket.delivery.countryCode == 'JE' %} selected="selected"{% endif %}>Deliver to Jersey</option>
+                <option value="IE"{% if basket.delivery.countryCode == 'IE' %} selected="selected"{% endif %}>Deliver to Republic of Ireland</option>
 			</select>
 		</div>
 	</div>
-    <div id="delivery-post-zip-code-container" class="clearfix">
+    <div id="delivery-post-zip-code-container" class="clearfix{% if basket.delivery.countryCode != 'GB' %} ui-helper-hidden{% endif %}">
         <div class="mtm form-input pr">
             <input class="fill" data-validation-type="postcode" placeholder="Delivery Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" required="required" value="{% if basket.delivery.countryCode == 'IE' %}000{% else %}{{ basket.delivery.postZipCode|default('') }}{% endif %}" />
             <button type="button" class="action-update-delivery-options ui-corner-none-left button icon-grey" data-icon-only="true" data-icon-primary="icon-1113">Update Delivery Options</button>
@@ -75,7 +76,7 @@
 <div class="clear"></div>
 <img src="{{ asset('bundles/kacsite/images/icons/small-cards.png') }}" class="fr mts" border="0" alt="Cards we accept" />
 <div class="clear"></div>
-{% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
+{% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.start != '') %}
 	<div class="estimated-delivery ui-corner-all clearfix">
 		<p class="tac mbn">
             <span><strong>Earliest Delivery From:</strong></span> <span class="colour-green">{{ basket.estimatedDeliveryDays.start }}</span>

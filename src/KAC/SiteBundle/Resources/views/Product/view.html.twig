@@ -145,8 +145,11 @@
                                                     <span class="currency-tax">(inc. VAT)</span>
                                                 </div>
                                             </div>
-                                            <p class="pts pbs man"><span class="colour-green">Item in Stock</span> | <span class="colour-turquoise">Earliest delivery from <strong>{{ delivery_from_date }}</strong></span> | <span class="colour-grey"><strong>FREE Delivery</strong> to most UK areas</span></p>
-                                            <p class="summary man pbs">Product Code: <strong>{{ variant.productCode }}</strong></p>
+                                            <ul class="tick-list mbm">
+                                                <li><span class="colour-turquoise">Earliest delivery from <strong>{{ delivery_from_date }}</strong></span></li>
+                                                <li><span class="colour-grey"><strong>FREE Delivery</strong> to most UK areas</span></li>
+                                            </ul>
+                                            <p class="summary pan">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                             <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="20" border="0" alt="loading" /></div>
                                             <div class="basket-product-info pbm" data-variantId="{{ variant.id }}">
                                                 {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'productId': product.id, 'variantId': variant.id} %}
