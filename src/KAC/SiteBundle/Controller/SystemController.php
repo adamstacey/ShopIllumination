@@ -18,6 +18,7 @@ class SystemController extends Controller
     /**
      * @Route("/", name="homepage")
      * @Route("/index.php", name="indexphp")
+     * @Route("/index.html", name="indexhtml")
      * @Template()
      */
 	public function indexAction()
