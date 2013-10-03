@@ -1385,12 +1385,15 @@ class BasketService {
                                $discountPercent = 0.02;
                             }
 
-                            $discount = $basket['products'][$product['basketItemId']]['unitCost'] * $discountPercent;
-                            $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $basket['products'][$product['basketItemId']]['unitCost'];
-                            $basket['products'][$product['basketItemId']]['unitCost'] = $basket['products'][$product['basketItemId']]['unitCost'] - $discount;
-                            $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-                            $totalDiscount += ($discount * $product['quantity']);
-                            $totalUSaveDiscount += ($discount * $product['quantity']);
+                            if ($basket['products'][$product['basketItemId']]['recommendedRetailPrice'] == $basket['products'][$product['basketItemId']]['unitCost'])
+                            {
+                                $discount = $basket['products'][$product['basketItemId']]['unitCost'] * $discountPercent;
+                                $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $basket['products'][$product['basketItemId']]['unitCost'];
+                                $basket['products'][$product['basketItemId']]['unitCost'] = $basket['products'][$product['basketItemId']]['unitCost'] - $discount;
+                                $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                $totalDiscount += ($discount * $product['quantity']);
+                                $totalUSaveDiscount += ($discount * $product['quantity']);
+                            }
                         }
                     }
                 }
