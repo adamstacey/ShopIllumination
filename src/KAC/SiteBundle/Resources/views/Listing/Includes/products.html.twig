@@ -60,7 +60,9 @@
                     </div>
                     <div class="product-listing-colour">
                         {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
-                            {{ product.attr_feature_Colour[0] }}
+                            {% if product.attr_feature_Colour[0] != 'N/A' %}
+                                {{ product.attr_feature_Colour[0] }}
+                            {% endif %}
                         {% endif %}
                     </div>
                     <div class="product-listing-bullets">

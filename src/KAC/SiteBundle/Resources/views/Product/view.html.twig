@@ -120,7 +120,7 @@
                                             </p>
                                         </div>
                                         <div class="widget widget-1-of-2">
-                                            <h1 itemprop="name">{{ header ~ (colour ? ' - ' ~ colour : '') }}</h1>
+                                            <h1 itemprop="name">{{ header ~ (((colour != '') and (colour != 'N/A')) ? ' - ' ~ colour : '') }}</h1>
                                             {% if variant is null %}
                                                 {% set variant = product.variants[0] %}
                                             {% endif %}
