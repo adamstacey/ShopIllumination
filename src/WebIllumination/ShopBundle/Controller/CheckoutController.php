@@ -158,14 +158,15 @@ class CheckoutController extends Controller
         } else {
 		    $mobile = '';
         }
-        $billingName = explode(' ', ucwords(trim($request->request->get('billingFirstName'))));
-        if (count($billingName) == 1)
+        $billingName = ucwords(trim($request->request->get('billingFirstName')));
+        $billingNameExploded = explode(' ', ucwords(trim($request->request->get('billingFirstName'))));
+        if (count($billingNameExploded) == 1)
         {
-            $billingFirstName = '';
-            $billingLastName = $billingName[0];
+            $billingFirstName = $billingNameExploded[0];
+            $billingLastName = $billingNameExploded[0];
         } else {
-            $billingFirstName = $billingName[0];
-            $billingLastName = $billingName[count($billingName) - 1];
+            $billingFirstName = $billingNameExploded[0];
+            $billingLastName = str_replace($billingFirstName.' ', '', $billingName);
         }
         $firstName = $billingFirstName;
         $lastName = $billingLastName;
