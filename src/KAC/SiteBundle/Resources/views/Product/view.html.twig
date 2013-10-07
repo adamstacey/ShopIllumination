@@ -176,13 +176,15 @@
                                                                 <h5 class="mtm">Manufacturers Description</h5>
                                                                 {{ brandDescription|raw }}
                                                             {% endif %}
-                                                            {% if guarantees|length > 0 %}
-                                                                <div class="pbm">
-                                                                    <h5 class="mtm mbn">Manufacturers Guarantees</h5>
-                                                                    {% for guarantee in guarantees %}
-                                                                        <button type="button" class="fill mts button button-small icon-turquoise" data-icon-primary="icon-826"><strong>{{ guarantee.length.displayName }}:</strong> {{ guarantee.type.guaranteeType }}</button>
-                                                                    {% endfor %}
-                                                                </div>
+                                                            {% if not product.accessory %}
+                                                                {% if guarantees|length > 0 %}
+                                                                    <div class="pbm">
+                                                                        <h5 class="mtm mbn">Manufacturers Guarantees</h5>
+                                                                        {% for guarantee in guarantees %}
+                                                                            <button type="button" class="fill mts button button-small icon-turquoise" data-icon-primary="icon-826"><strong>{{ guarantee.length.displayName }}:</strong> {{ guarantee.type.guaranteeType }}</button>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                {% endif %}
                                                             {% endif %}
                                                         </section>
                                                     </div>
