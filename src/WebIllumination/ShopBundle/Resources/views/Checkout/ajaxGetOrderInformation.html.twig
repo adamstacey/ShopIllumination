@@ -111,16 +111,6 @@
                 <td width="1" class="vam colour-green tar">{{ basket.totals.discount|currency('GBP', false, true, '')|raw }}</td>
             </tr>
         {% endif %}
-        {% if basket.discounts|length > 0 %}
-            {% for discount in basket.discounts %}
-                {% if discount.discount > 0 %}
-                    <tr>
-                        <td class="vam tar discount-description no-wrap small">{{ discount.description }}:</td>
-                        <td class="vam colour-green tar small" width="1">{{ discount.discount|currency('GBP', false, true, '')|raw }}</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
         <tr class="product">
             <td class="tar vam"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
             <td width="180" class="vam price colour-red no-wrap tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
@@ -131,6 +121,20 @@
         <div class="message message-warning">
             <span class="ui-button-icon-primary ui-icon icon-white icon-695"></span>
             <p class="tal">Sorry, we are currently unable to deliver the selected items to your area.</p>
+        </div>
+    {% endif %}
+    {% if 'Pallet' in basket.delivery.service %}
+        <div class="delivery-information product">
+            <img class="fr mbm mlm" width="100" src="{{ asset('/bundles/kacsite/images/pallet-delivery.png') }}" border="0" alt="Pallet Delivery" />
+            <p>You have selected a <strong>PALLET</strong> delivery. Our pallet deliveries are subcontracted out to palletised carrier companies who use tail-lifts to lower pallets to ground level, before manoeuvring them into place with pallet trucks. In order to achieve this, you must ensure there is a hard flat surface outside your property free from grass, gravel or uneven paving. It is your responsibility to advise us of any delivery restrictions prior to goods being despatched.</p>
+            <ul class="tick-list mtn pbm">
+                <li>Is access to your property suitable; not just your drive but also any roads approaching your property (weight limit restrictions, narrow lanes, etc)? Can a refuse lorry or fire engine gain access to your property easily?</li>
+                <li>Is the allocated drop off point on a flat level surface free from grass, gravel, uneven paving etc?</li>
+                <li>If ground or access is unsuitable, pallets may be left on the roadside or kerbside at the drivers discretion.</li>
+                <li>Will you (or a designated individual) be available to sign for the goods and be contactable on the contact number supplied?</li>
+            </ul>
+            <p>We do offer other delivery methods that you can select by <a class="action-change-delivery colour-grey" href="Javascript:void(0);">clicking here</a>.</p>
+            <p>By placing the order you understand and agree that your order will be off-loaded using a tail-lift (not a crane) and you have a flat level surface free from grass or gravel as set out in our <a class="colour-grey" target="_blank" href="{{ path('content_terms_and_conditions') }}">Terms and Conditions</a>.</p>
         </div>
     {% endif %}
 </div>

@@ -126,3 +126,10 @@
 .small-basket-product-info p a:hover {
     text-decoration: none !important;
 }
+
+.delivery-information {
+    padding: $spacingMedium $spacingMedium 0 $spacingMedium;
+
+    @include equalBorderRadius($radiusSize);
+    background: $colourYellowExtraLight;
+}

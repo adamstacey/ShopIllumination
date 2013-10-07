@@ -585,7 +585,7 @@ class ListingController extends Controller
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
                 ->setParameter('unitCost', 200);
-            if($num)
+            if ($num)
             {
                 $qb->setMaxResults($num);
             }
