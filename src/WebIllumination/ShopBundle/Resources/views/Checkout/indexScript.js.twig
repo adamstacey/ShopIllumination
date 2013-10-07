@@ -11,6 +11,10 @@
 		if ($("#form-same-delivery-address-billing").is(":checked"))
 		{
 			$sameDeliveryAddress = 1;
+            $("#form-delivery-first-name").removeAttr("required").removeAttr("data-message");
+            $("#form-delivery-address-line-1").removeAttr("required").removeAttr("data-message");
+            $("#form-delivery-town-city").removeAttr("required").removeAttr("data-message");
+            $("#form-delivery-post-zip-code").removeAttr("required").removeAttr("data-message");
 			$("#form-delivery-first-name").val($("#form-billing-first-name").val());
 			$("#form-delivery-address-line-1").val($("#form-billing-address-line-1").val());
 			$("#form-delivery-address-line-2").val($("#form-billing-address-line-2").val());
@@ -37,7 +41,9 @@
 	   				dataType: "json",
 	   				url: "{{ path('checkout_ajax_save_order') }}",
 	   				beforeSend: function() {
-						$("#ajax-loading").show();
+                        $("#order-processing-loading").show();
+                        $("#proceeed-to-payment").removeClass("button-green icon-white").addClass("button-grey icon-black");
+                        $("#proceeed-to-payment span.ui-button-text").html("Processing...");
 					},
 	   				data: {
 	   					emailAddress: $("#form-email-address").val(),
@@ -61,7 +67,9 @@
 	   					deliveryOption: $("input[name='delivery-option']:checked").val()
 	   				},
 	   				error: function(data) {
-			      		$("#ajax-loading").hide();
+                        $("#order-processing-loading").hide();
+                        $("#proceeed-to-payment").removeClass("button-grey icon-black").addClass("button-green icon-white");
+                        $("#proceeed-to-payment span.ui-button-text").html("Proceed to Payment");
 			      	},
 	   				success: function(data) {
 	   					updateOrderProcess(data, "");
@@ -79,7 +87,7 @@
 	
 	{# Get the basket contents #}
 	function getOrderInformation()
-	{		
+	{
 		$.ajax({
 			type: "GET",
 			url: "{{ path('checkout_ajax_get_order_information') }}",
@@ -184,15 +192,47 @@
 			$("#form-delivery-post-zip-code").val('000');
 			$("#republic-of-ireland-delivery-address-message").show();
 			$("#same-address-delivery").hide();
-		} else if ($("#form-billing-country-code").val() == 'GB') {
+            $("#checkout-delivery-address").hide();
+		} else {
 			$("#form-delivery-post-zip-code").val($("#form-billing-post-zip-code").val());
 			$("#republic-of-ireland-delivery-address-message").hide();
 			$("#delivery-post-zip-code-container").show();
-			$("#same-address-delivery").show();
+            $("#checkout-delivery-address").show();
 		}
 		$("#form-same-delivery-address").attr("checked", false);
 		$("#uniform-form-same-delivery-address > span").removeClass("checked");
+        getOrderInformation();
 	}
+
+    function copyDeliveryAddressToBillingAddress()
+    {
+        resetBillingAddress();
+        $("#form-billing-country-code option:selected").removeAttr("selected");
+        $("#form-billing-country-code option[value='"+$("#form-delivery-country-code").val()+"']").attr("selected", "selected");
+        $("#uniform-form-billing-country-code > span").html($("#form-billing-country-code option[value='"+$("#form-delivery-country-code").val()+"']").text());
+        $("#form-billing-first-name").val($("#form-delivery-first-name").val());
+        $("#form-billing-last-name").val($("#form-delivery-last-name").val());
+        $("#form-billing-organisation-name").val($("#form-delivery-organisation-name").val());
+        $("#form-billing-address-line-1").val($("#form-delivery-address-line-1").val());
+        $("#form-billing-address-line-2").val($("#form-delivery-address-line-2").val());
+        $("#form-billing-town-city").val($("#form-delivery-town-city").val());
+        $("#form-billing-county-state").val($("#form-delivery-county-state").val());
+        if ($("#form-delivery-country-code").val() == 'IE')
+        {
+            $("#billing-post-zip-code-container").hide();
+            $("#form-billing-post-zip-code").val('000');
+            $("#republic-of-ireland-delivery-address-message").show();
+            $("#same-address-delivery").hide();
+            $("#checkout-delivery-address").hide();
+        } else {
+            $("#form-billing-post-zip-code").val($("#form-billing-post-zip-code").val());
+            $("#republic-of-ireland-delivery-address-message").hide();
+            $("#billing-post-zip-code-container").show();
+        }
+        $("#form-same-delivery-address").attr("checked", false);
+        $("#uniform-form-same-delivery-address > span").removeClass("checked");
+        getOrderInformation();
+    }
 		
 	function resetBillingAddress()
 	{
@@ -211,6 +251,7 @@
 		$("#republic-of-ireland-billing-address-message").hide();
 		$("#same-address-billing").show();
 		$("#pcainput_ym28te79te92mr9220037").focus();
+        getOrderInformation();
 	}
 		
 	function resetDeliveryAddress()
@@ -231,6 +272,7 @@
 		$("#uniform-form-same-delivery-address > span").addClass("checked");
 		$("#republic-of-ireland-delivery-address-message").hide();
 		$("#pcainput_ym28te79te92mr9220037").focus();
+        getOrderInformation();
 	}
 	
 	$(document).ready(function() {
@@ -270,7 +312,7 @@
 		getOrderInformation();
 		
 		{# Update the postcode #}
-		$("#form-billing-country-code").live('change', function() {
+		$("#form-billing-country-code").on('change', function() {
 			if ($(this).val() == 'IE')
 			{
 				$("#form-telephone-daytime").removeAttr("data-validation-type");
@@ -280,7 +322,7 @@
 				$("#form-billing-post-zip-code").val('000');
 				$("#republic-of-ireland-billing-address-message").fadeIn();
 				copyBillingAddressToDeliveryAddress();
-			} else if ($(this).val() == 'GB') {
+			} else {
 				$("#form-telephone-daytime").attr("data-validation-type", "telephone");
 				$("#form-telephone-evening").attr("data-validation-type", "telephone");
 				$("#republic-of-ireland-billing-address-message").hide();
@@ -290,7 +332,14 @@
 				resetDeliveryAddress();
 			}
 		});
-		$("#form-delivery-country-code").live('change', function() {
+        $("#form-billing-post-zip-code").on('change', function() {
+            if (($(this).val() != '000') && ($(this).val() != ''))
+            {
+                getOrderInformation();
+            }
+        });
+
+		$("#form-delivery-country-code").on('change', function() {
 			if ($(this).val() == 'IE')
 			{
 				$("#delivery-post-zip-code-container").hide();
@@ -300,7 +349,7 @@
 				$("#form-same-delivery-address").removeAttr("checked");
 				$("#uniform-form-same-delivery-address > span").removeClass("checked");
 				copyDeliveryAddressToBillingAddress();
-			} else if ($(this).val() == 'GB') {
+			} else {
 				$("#republic-of-ireland-delivery-address-message").hide();
 				$("#form-delivery-post-zip-code").val("");
 				$("#form-same-delivery-address").removeAttr("checked");
@@ -313,15 +362,21 @@
 				}
 			}
 		});
-		
+        $("#form-delivery-post-zip-code").on('change', function() {
+            if (($(this).val() != '000') && ($(this).val() != ''))
+            {
+                getOrderInformation();
+            }
+        });
+
 		{# Use the billing address for the delivery address #}
-		$("#form-same-delivery-address-billing, #form-same-delivery-address-delivery").live('change', function() {
+		$("#form-same-delivery-address-billing, #form-same-delivery-address-delivery").on('change', function() {
 			$(".form-error-3-5").hide();
 			$("#float-save-order-content").removeClass("float-save-order-sticky");
 			if ($("#form-same-delivery-address-delivery").is(":checked"))
 			{
 				resetDeliveryAddress();
-				$("#form-delivery-first-name").attr("required", "required").attr("data-message", "Enter your first name");
+				$("#form-delivery-first-name").attr("required", "required").attr("data-message", "Enter your full name");
 				$("#form-delivery-address-line-1").attr("required", "required").attr("data-message", "Enter the first line of your address");
 				$("#form-delivery-town-city").attr("required", "required").attr("data-message", "Enter your Town or City");
 				$("#form-delivery-post-zip-code").attr("required", "required").attr("data-message", "Enter a valid postcode");
@@ -368,9 +423,6 @@
 		
 		{# Submit payment #}
 		$(document).on("click", ".action-submit-payment", function() {
-            $("#order-processing-loading").show();
-            $("#proceeed-to-payment").removeClass("button-green icon-white").addClass("button-grey icon-black");
-            $("#proceeed-to-payment span.ui-button-text").html("Processing...");
 			var $paymentType = $(".action-submit-payment").attr("data-payment-type");
 			saveOrder($paymentType);
 		});

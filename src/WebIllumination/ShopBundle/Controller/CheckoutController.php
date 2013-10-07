@@ -277,6 +277,15 @@ class CheckoutController extends Controller
 		$countryCode = ($request->query->get('countryCode')?$request->query->get('countryCode'):$basket['delivery']['countryCode']);
 		$postZipCode = ($request->query->get('postZipCode')?$request->query->get('postZipCode'):$basket['delivery']['postZipCode']);
 		$deliveryOption = ($request->query->get('deliveryOption')?$request->query->get('deliveryOption'):$basket['delivery']['service']);
+        if ($countryCode == 'IE')
+        {
+            $postZipCode = '000';
+        } else {
+            if ($postZipCode == '000')
+            {
+                $postZipCode = '';
+            }
+        }
 		
 		// Get the basket
 		$basket = $this->get('session')->get('basket');

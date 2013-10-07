@@ -319,7 +319,7 @@ class BasketService {
 
         // Calculate the delivery zone
         $olympicZone = false;
-        $postCode = strtoupper(str_replace(' ', '', $basket['delivery']['postZipCode']));
+        $postCode = strtoupper(str_replace(' ', '', trim($basket['delivery']['postZipCode'])));
         if (!$postCode)
         {
             $postCode = 'NG162UZ';
