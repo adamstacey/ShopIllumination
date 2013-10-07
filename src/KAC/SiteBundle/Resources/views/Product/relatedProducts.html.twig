@@ -106,7 +106,9 @@
                         <div class="product-listing-colour">
                             {% for feature in product.variants[0].features %}
                                 {% if feature.featureGroup.name == 'Colour' %}
-                                    {{ feature.feature.name }}
+                                    {% if feature.feature.name != 'N/A' %}
+                                        {{ feature.feature.name }}
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </div>
