@@ -523,7 +523,7 @@ class ListingController extends Controller
         $response = $this->render('KACSiteBundle:Listing:cheaperAlternative.html.twig', array(
             'product' => $product,
         ));
-        $response->setSharedMaxAge(432000);
+        $response->setSharedMaxAge(300);
 
         return $response;
     }
@@ -554,7 +554,7 @@ class ListingController extends Controller
             'department' => $department,
             'brand' => $brand,
         ));
-        $response->setSharedMaxAge(432000);
+        $response->setSharedMaxAge(300);
 
         return $response;
     }
