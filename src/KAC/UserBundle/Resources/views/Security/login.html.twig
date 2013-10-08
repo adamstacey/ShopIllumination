@@ -2,7 +2,6 @@
 
 {% block title %}Login | {{ parent() }}{% endblock %}
 {% block page_header %}Login{% endblock %}
-
 {% block fos_user_content %}
 <form id="secure-login" class="form has-validation" action="{{ path("fos_user_security_check") }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -10,7 +9,7 @@
     <div class="clearfix">
         {% if error %}
             <div class="message message-error">
-                <span class="ui-button-icon-primary ui-icon icon-yellow icon-851"></span>
+                <span class="ui-button-icon-primary ui-icon icon-white icon-851"></span>
                 <p>{{ error|trans({}, 'FOSUserBundle') }}</p>
             </div>
         {% else %}

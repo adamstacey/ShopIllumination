@@ -523,7 +523,7 @@ class ListingController extends Controller
         $response = $this->render('KACSiteBundle:Listing:cheaperAlternative.html.twig', array(
             'product' => $product,
         ));
-        $response->setSharedMaxAge(432000);
+        $response->setSharedMaxAge(300);
 
         return $response;
     }
@@ -554,7 +554,7 @@ class ListingController extends Controller
             'department' => $department,
             'brand' => $brand,
         ));
-        $response->setSharedMaxAge(432000);
+        $response->setSharedMaxAge(300);
 
         return $response;
     }
@@ -585,7 +585,7 @@ class ListingController extends Controller
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
                 ->setParameter('unitCost', 200);
-            if($num)
+            if ($num)
             {
                 $qb->setMaxResults($num);
             }

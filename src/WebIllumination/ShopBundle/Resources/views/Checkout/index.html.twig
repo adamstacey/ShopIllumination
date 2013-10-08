@@ -24,8 +24,8 @@
                                 <div id="order-information" class="clearfix ui-helper-hidden"></div>
                                 <div class="clear"></div>
                                 <div>
-                                    <p class="mts mbm"><strong>For Sales & Advice Call:</strong></p>
-                                    <h3>01159 385 111</h3>
+                                    <p class="mts mbn"><strong>For Sales &amp; Advice or to Discuss any Delivery Requirements Call:</strong></p>
+                                    <h3 class="man">01159 385 111</h3>
                                 </div>
                             </div>
                         </div>
@@ -227,7 +227,7 @@
                                                 <label for="form-delivery-post-zip-code"><span class="required">*</span> Postcode</label>
                                             </div>
                                             <div class="widget widget-2-of-3">
-                                                <input type="text" id="form-delivery-post-zip-code" data-message="Enter a valid postcode." required="required" name="delivery-post-zip-code" value="{{ order.deliveryPostZipCode|default('') }}" />
+                                                <input type="text" id="form-delivery-post-zip-code" size="10" data-message="Enter a valid postcode." required="required" name="delivery-post-zip-code" value="{{ order.deliveryPostZipCode|default('') }}" />
                                             </div>
                                         </div>
                                         <div class="form-element widget-group clearfix">
@@ -241,6 +241,7 @@
                                                     <option value="GG"{% if order.deliveryCountryCode == 'GG' %} selected="selected"{% endif %}>Guernsey</option>
                                                     <option value="IM"{% if order.deliveryCountryCode == 'IM' %} selected="selected"{% endif %}>Isle of Man</option>
                                                     <option value="JE"{% if order.deliveryCountryCode == 'JE' %} selected="selected"{% endif %}>Jersey</option>
+                                                    <option value="IE"{% if order.deliveryCountryCode == 'IE' %} selected="selected"{% endif %}>Republic of Ireland</option>
                                                 </select>
                                             </div>
                                         </div>

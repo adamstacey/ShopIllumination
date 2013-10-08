@@ -32,10 +32,10 @@
         </div>
     </div>
 {% endblock %}
+{% block top_reviews %}
+    {{ render_esi(url('reviews_trustpilot')) }}
+{% endblock %}
 {% block body %}
-    <script>
-
-    </script>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">

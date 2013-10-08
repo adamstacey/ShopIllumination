@@ -219,7 +219,7 @@
 											<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #CC0000; font-size: 11px; font-family: Arial; padding: 2px 5px; text-align: right;" align="right" width="1"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
 										</tr>
 									</table>
-									{% if (order.deliveryType == 'Royal Mail 1st Class') or (order.deliveryType == 'Royal Mail Economy') or (order.deliveryType == 'Parcel Delivery Express') or (order.deliveryType == 'Parcel Delivery Economy') or (order.deliveryType == 'FREE DELIVERY Parcel Service') or (order.deliveryType == 'FREE DELIVERY Parcel Express') %}
+									{% if (order.deliveryType == 'Royal Mail 1st Class') or (order.deliveryType == 'Royal Mail Economy') or (order.deliveryType == 'Parcel Delivery Express') or (order.deliveryType == 'FREE DELIVERY Parcel Economy') or (order.deliveryType == 'Parcel Delivery Economy') or (order.deliveryType == 'FREE DELIVERY Parcel Service') or (order.deliveryType == 'FREE DELIVERY Parcel Express') %}
 										<h3 style="border-bottom: 1px dotted #676767; line-height: 100%; color: #000; font-size: 14px; font-family: Arial; padding: 20px 0px 5px 0px; margin: 0px 0px 5px 0px;">{% if (order.deliveryType == 'Royal Mail 1st Class') or (order.deliveryType == 'Royal Mail Economy') %}Royal Mail{% else %}Parcel Delivery{% endif %} Checklist</h3>
 										<table style="border-collapse: collapse; border: 2px solid #CC0000;" width="100%" cellspacing="0" border="0" cellpadding="0">
 											<tr>

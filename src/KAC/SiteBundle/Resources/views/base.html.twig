@@ -82,9 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    {% block top_reviews %}
-                        {{ render_esi(url('reviews_trustpilot')) }}
-                    {% endblock %}
+                    {% block top_reviews %}{% endblock %}
                 </header>
                 {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
                 <section class="container">
@@ -132,7 +130,7 @@
                 var _tsid = 'X8575556777F6ADF0D6A223246D624724';
                 _tsConfig = {
                     'yOffset': '0', //offset from page bottom
-                    'variant': 'default' //text, default, small
+                    'variant': 'small' //text, default, small
                 };
                 var _ts = document.createElement('script');
                 _ts.type = 'text/javascript';

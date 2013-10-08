@@ -319,7 +319,7 @@ class BasketService {
 
         // Calculate the delivery zone
         $olympicZone = false;
-        $postCode = strtoupper(str_replace(' ', '', $basket['delivery']['postZipCode']));
+        $postCode = strtoupper(str_replace(' ', '', trim($basket['delivery']['postZipCode'])));
         if (!$postCode)
         {
             $postCode = 'NG162UZ';
@@ -622,8 +622,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Pallet Delivery Express';
                         $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 3;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 4:
@@ -631,8 +631,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Pallet Delivery Express';
                         $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 3;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 5:
@@ -640,8 +640,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Pallet Delivery Express';
                         $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 3;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                 }
@@ -654,8 +654,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Parcel Delivery Express';
                         $deliveryOption['description'] = 'Package sent express service by courier DPD.';
                         $deliveryOption['price'] = 15.95;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 3;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 8;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 2:
@@ -663,8 +663,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Parcel Delivery Express';
                         $deliveryOption['description'] = 'Package sent express service by courier DPD.';
                         $deliveryOption['price'] = 15.95;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 3;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 8;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 3:
@@ -682,7 +682,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 5:
@@ -691,7 +691,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                 }
@@ -720,8 +720,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Parcel Delivery Express';
                         $deliveryOption['description'] = 'Package sent express service by courier DPD.';
                         $deliveryOption['price'] = 19.95;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 5;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 3;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 8;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 3:
@@ -739,7 +739,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 99;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 5:
@@ -748,7 +748,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 99;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                 }
@@ -777,8 +777,8 @@ class BasketService {
                         $deliveryOption['service'] = 'Parcel Delivery Express';
                         $deliveryOption['description'] = 'Package sent express service by courier DPD.';
                         $deliveryOption['price'] = 19.95;
-                        $deliveryOption['estimatedDeliveryDaysStart'] = 5;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysStart'] = 4;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 3:
@@ -787,7 +787,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 149;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 5;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 11;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 4:
@@ -796,7 +796,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 149;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 5;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 14;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 11;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                     case 5:
@@ -805,7 +805,7 @@ class BasketService {
                         $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 149;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 5;
-                        $deliveryOption['estimatedDeliveryDaysEnd'] = 14;
+                        $deliveryOption['estimatedDeliveryDaysEnd'] = 11;
                         $deliveryOptions[] = $deliveryOption;
                         break;
                 }
