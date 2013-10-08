@@ -33,7 +33,7 @@
 			</select>
 		</div>
 	</div>
-    <div id="delivery-post-zip-code-container" class="clearfix{% if basket.delivery.countryCode != 'GB' %} ui-helper-hidden{% endif %}">
+    <div id="delivery-post-zip-code-container" class="clearfix{% if basket.delivery.countryCode == 'IE' %} ui-helper-hidden{% endif %}">
         <div class="mtm form-input pr">
             <input class="fill" data-validation-type="postcode" placeholder="Delivery Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" required="required" value="{% if basket.delivery.countryCode == 'IE' %}000{% else %}{{ basket.delivery.postZipCode|default('') }}{% endif %}" />
             <button type="button" class="action-update-delivery-options ui-corner-none-left button icon-grey" data-icon-only="true" data-icon-primary="icon-1113">Update Delivery Options</button>

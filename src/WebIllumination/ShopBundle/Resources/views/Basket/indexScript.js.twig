@@ -208,7 +208,7 @@
 	{# Check delivery #}
 	function checkDelivery()
 	{
-        if ($("#form-delivery-country-code").val() == 'GB')
+        if ($("#form-delivery-country-code").val() != 'IE')
         {
             if ($("#form-delivery-post-zip-code").val() == '000') {
                 $("#form-delivery-post-zip-code").val('');
@@ -216,7 +216,7 @@
             $("#delivery-post-zip-code-container").show();
             loadDeliveryOptions();
         } else {
-            if ($("#form-delivery-country-code").val() == 'GB')
+            if ($("#form-delivery-country-code").val() != 'IE')
             {
                 $("#form-delivery-post-zip-code").val('');
             }
