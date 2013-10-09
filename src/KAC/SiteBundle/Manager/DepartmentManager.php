@@ -28,6 +28,68 @@ class DepartmentManager extends Manager
         return $department;
     }
 
+    public function rebuildDepartmentTree()
+    {
+        $em = $this->doctrine->getManager();
+        $level = 0;
+        $nodeCount = 1;
+        $displayOrder = 1;
+        $rootDepartment = $em->createQuery("SELECT d FROM KAC\SiteBundle\Entity\Department d WHERE d.parent IS NULL")->getSingleResult();
+        $rootDepartment->setLvl($level);
+        $rootDepartment->setLft($nodeCount);
+        $rootDepartment->setDisplayOrder($displayOrder);
+        $this->updateChildren($rootDepartment, $nodeCount, $displayOrder, $level + 1);
+        $nodeCount++;
+        $rootDepartment->setRgt($nodeCount);
+        $em->persist($rootDepartment);
+        $em->flush();
+        return true;
+    }
+
+    private function updateChildren(Department $department, &$nodeCount, &$displayOrder, $level)
+    {
+        $em = $this->doctrine->getManager();
+        foreach ($department->getChildren() as $child)
+        {
+            $nodeCount++;
+            $displayOrder++;
+            $child->setParent($department);
+            $child->setLvl($level);
+            $child->setLft($nodeCount);
+            $child->setDisplayOrder($displayOrder);
+            $this->updateChildren($child, $nodeCount, $displayOrder, $level + 1);
+            $nodeCount++;
+            $child->setRgt($nodeCount);
+            $em->persist($child);
+            $em->flush();
+        }
+    }
+
+    public function updateDisplayOrders()
+    {
+        $em = $this->doctrine->getManager();
+        $displayOrder = 1;
+        $rootDepartment = $em->createQuery("SELECT d FROM KAC\SiteBundle\Entity\Department d WHERE d.parent IS NULL")->getSingleResult();
+        $rootDepartment->setDisplayOrder($displayOrder);
+        $this->updateChildrenDisplayOrder($rootDepartment, $displayOrder);
+        $em->persist($rootDepartment);
+        $em->flush();
+        return true;
+    }
+
+    private function updateChildrenDisplayOrder(Department $department, &$displayOrder)
+    {
+        $em = $this->doctrine->getManager();
+        foreach ($department->getChildren() as $child)
+        {
+            $displayOrder++;
+            $child->setDisplayOrder($displayOrder);
+            $this->updateChildrenDisplayOrder($child, $displayOrder);
+            $em->persist($child);
+            $em->flush();
+        }
+    }
+
     public function updateDepartmentPath(Department $department)
     {
         $departmentPath = array();
