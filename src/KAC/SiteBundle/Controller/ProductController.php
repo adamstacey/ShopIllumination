@@ -53,7 +53,7 @@ class ProductController extends Controller {
             throw new NotFoundHttpException("Product not found");
         }
         // Check if product is enabled
-        if($product->getStatus() !== 'a' && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
+        if ($product->getStatus() !== 'a' && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             return $this->redirect($this->generateUrl('routing', array(
                 'url' => $product->getDepartment()->getDepartment()->getUrl()
@@ -72,12 +72,15 @@ class ProductController extends Controller {
             $variantFeatures[$entity->getId()] = array();
 
             // Calculate price range
-            foreach ($entity->getPrices() as $price) {
-                if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice()) {
+            foreach ($entity->getPrices() as $price)
+            {
+                if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice())
+                {
                     $lowestPrice = $price;
                     $cheapestVariant = $entity;
                 }
-                if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice()) {
+                if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice())
+                {
                     $highestPrice = $price;
                 }
             }
@@ -86,7 +89,7 @@ class ProductController extends Controller {
             /** @var $feature VariantToFeature */
             foreach ($entity->getFeatures() as $feature)
             {
-                if($feature && $feature->getFeatureGroup() && $feature->getFeature())
+                if ($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
                     // Fetch the relevant department to feature entity
                     $departmentToFeature = $em->createQuery("
@@ -98,7 +101,7 @@ class ProductController extends Controller {
                         ->execute();
 
                     // Check for common features
-                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
+                    if ($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
                     {
                         if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
                         {
@@ -119,16 +122,18 @@ class ProductController extends Controller {
                         }
                     }
 
-                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
+                    if ($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
                     {
                         $variantFeatures[$entity->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                        if(!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()])) {
+                        if (!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()]))
+                        {
                             $differentiatingFeatures[$feature->getFeatureGroup()->getName()] = array();
                         }
                         $differentiatingFeatures[$feature->getFeatureGroup()->getName()][] = $feature->getFeature()->getName();
                     } elseif (!$departmentToFeature || count($departmentToFeature) <= 0) {
                         $variantFeatures[$entity->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                        if(!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()])) {
+                        if (!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()]))
+                        {
                             $differentiatingFeatures[$feature->getFeatureGroup()->getName()] = array();
                         }
                         $differentiatingFeatures[$feature->getFeatureGroup()->getName()][] = $feature->getFeature()->getName();
@@ -138,10 +143,10 @@ class ProductController extends Controller {
         }
 
         // Calculate the differentiating features
-        foreach($differentiatingFeatures as $key => &$features)
+        foreach ($differentiatingFeatures as $key => &$features)
         {
             $features = array_unique($features);
-            if(count($features) <= 1)
+            if (count($features) <= 1)
             {
                 unset($differentiatingFeatures[$key]);
             }
@@ -271,38 +276,53 @@ class ProductController extends Controller {
         }
 
         // Work out the related products
-        $relatedProductTotal = 10;
+        $usedIds = array();
+        $usedIds[] = $product->getId();
         $relatedProducts = array();
         foreach ($product->getRelatedProducts() as $relatedProduct)
         {
-            $relatedProducts[] = $relatedProduct;
+            if (!in_array($relatedProduct->getId(), $usedIds))
+            {
+                $usedIds[] = $relatedProduct->getId();
+                $relatedProducts[] = $relatedProduct;
+            }
         }
-        $relatedProductTotal = 10 - count($relatedProducts);
+        $relatedProductTotal = 20 - count($relatedProducts);
         if ($relatedProductTotal > 0)
         {
-            $brandDepartmentProductsQuery = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.departments pd WHERE p.brand = :brand AND pd.department = :department")
+            $brandDepartmentProductsQuery = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.departments pd WHERE p.brand = :brand AND pd.department = :department AND p.id != :id")
                 ->setParameter('brand', $product->getBrand())
                 ->setParameter('department', $product->getDepartment()->getDepartment())
+                ->setParameter('id', $product->getId())
                 ->setMaxResults($relatedProductTotal);
             $brandDepartmentProducts = $brandDepartmentProductsQuery->getResult();
             if ($brandDepartmentProducts)
             {
                 foreach ($brandDepartmentProducts as $brandDepartmentProduct)
                 {
-                    $relatedProducts[] = $brandDepartmentProduct;
+                    if (!in_array($brandDepartmentProduct->getId(), $usedIds))
+                    {
+                        $usedIds[] = $brandDepartmentProduct->getId();
+                        $relatedProducts[] = $brandDepartmentProduct;
+                    }
                 }
-                $relatedProductTotal = 10 - count($relatedProducts);
+                $relatedProductTotal = 20 - count($relatedProducts);
                 if ($relatedProductTotal > 0)
                 {
-                    $departmentProductsQuery = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.departments pd WHERE pd.department = :department")
+                    $departmentProductsQuery = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.departments pd WHERE pd.department = :department AND p.id != :id")
                         ->setParameter('department', $product->getDepartment()->getDepartment())
+                        ->setParameter('id', $product->getId())
                         ->setMaxResults($relatedProductTotal);
                     $departmentProducts = $departmentProductsQuery->getResult();
                     if ($departmentProducts)
                     {
                         foreach ($departmentProducts as $departmentProduct)
                         {
-                            $relatedProducts[] = $departmentProduct;
+                            if (!in_array($departmentProduct->getId(), $usedIds))
+                            {
+                                $usedIds[] = $departmentProduct->getId();
+                                $relatedProducts[] = $departmentProduct;
+                            }
                         }
                     }
                 } elseif ($relatedProductTotal < 0) {
@@ -340,7 +360,7 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($id);
-        if(!$variant)
+        if (!$variant)
         {
             throw new NotFoundHttpException("Variant not found");
         }
