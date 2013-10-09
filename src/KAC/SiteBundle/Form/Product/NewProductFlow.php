@@ -152,27 +152,6 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step === 3)
-        {
-            // Go through the variants and update any zero recommended retail prices
-            foreach ($formData->getVariants() as $variant)
-            {
-                if ($variant)
-                {
-                    foreach ($variant->getPrices() as $price)
-                    {
-                        if ($price)
-                        {
-                            if ($price->getRecommendedRetailPrice() < 0.01)
-                            {
-                                $price->setRecommendedRetailPrice($price->getListPrice());
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         if ($step === 4)
         {
             // Generate combinations
