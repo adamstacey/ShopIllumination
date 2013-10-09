@@ -13,15 +13,35 @@
     {% set metaKeywords = product.description.metaKeywords %}
     {% set features = common_features %}
 {% else %}
-    {% set description = variant.description.description %}
-    {% if description == '' %}
-        {% set description = variant.description.metaDescription %}
-    {% endif %}
     {% set pageTitle = variant.description.pageTitle %}
     {% set header = variant.description.header %}
+    {% set description = variant.description.description %}
     {% set brandDescription = variant.brandDescription.description %}
     {% set metaDescription = variant.description.metaDescription %}
     {% set metaKeywords = variant.description.metaKeywords %}
+    {% if description == '' %}
+        {% set pageTitle = product.description.pageTitle %}
+        {% set header = product.description.header %}
+        {% set description = product.description.description %}
+        {% set brandDescription = product.brandDescription.description %}
+        {% set metaDescription = product.description.metaDescription %}
+        {% set metaKeywords = product.description.metaKeywords %}
+    {% endif %}
+    {% if description == '' %}
+        {% set description = variant.description.metaDescription %}
+    {% endif %}
+    {% if description == '' %}
+        {% set description = product.description.metaDescription %}
+    {% endif %}
+    {% if pageTitle == '' %}
+        {% set pageTitle = product.description.pageTitle %}
+    {% endif %}
+    {% if brandDescription == '' %}
+        {% set brandDescription = product.brandDescription.description %}
+    {% endif %}
+    {% if metaDescription == '' %}
+        {% set metaDescription = product.description.metaDescription %}
+    {% endif %}
     {% set features = [] %}
     {% for vtf in variant.features %}
         {% set features = features|merge({(vtf.featureGroup.name): (vtf.feature.name)}) %}
