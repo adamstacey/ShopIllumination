@@ -257,7 +257,7 @@
             this.nodes.push(node);
             this.tree[node.id] = node;
 
-            if (node.parentId != null) {
+            if ((node.parentId != null) && this.tree[node.parentId])  {
               this.tree[node.parentId].addChild(node);
             } else {
               this.roots.push(node);

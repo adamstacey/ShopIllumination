@@ -250,6 +250,48 @@ class DepartmentController extends Controller
     }
 
     /**
+     * @Route("/admin/departments/{departmentId}/moveUp", name="departments_moveup")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function moveUpAction(Request $request, $departmentId)
+    {
+        $manager = $this->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("KAC\\SiteBundle\\Entity\\Department");
+        $department = $repository->find($departmentId);
+        if (!$department)
+        {
+            throw new NotFoundHttpException("Department not found");
+        }
+        $repository->moveUp($department, 1);
+        $em->persist($department);
+        $em->flush();
+        $manager->updateDisplayOrders();
+        return $this->redirect($this->generateUrl('departments_index'));
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/moveDown", name="departments_movedown")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function moveDownAction(Request $request, $departmentId)
+    {
+        $manager = $this->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("KAC\\SiteBundle\\Entity\\Department");
+        $department = $repository->find($departmentId);
+        if (!$department)
+        {
+            throw new NotFoundHttpException("Department not found");
+        }
+        $repository->moveDown($department, 1);
+        $em->persist($department);
+        $em->flush();
+        $manager->updateDisplayOrders();
+        return $this->redirect($this->generateUrl('departments_index'));
+    }
+
+    /**
      * Fetch project manager from container
      *
      * @return \KAC\SiteBundle\Manager\DepartmentManager

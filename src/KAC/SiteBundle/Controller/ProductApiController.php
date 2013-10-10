@@ -92,11 +92,11 @@ class ProductApiController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($id);
-        if(!$product)
+        if (!$product)
         {
             throw new NotFoundHttpException();
         }
-        if(!$request->request->get('price') && count($product->getVariants()) === 1)
+        if (!$request->request->get('price') && count($product->getVariants()) === 1)
         {
             throw new HttpException(403);
         }
