@@ -155,7 +155,7 @@ class ProductManager extends Manager
                 $variant->getRouting()->setUrl($url);
 
                 // Setup any redirects if required
-                if ($previousUrl != $url)
+                if (($previousUrl != $url) && $variant->getId())
                 {
                     $this->seoManager->updateRedirects($variant->getId(), 'product_variant', $previousUrl, $url);
                 }
