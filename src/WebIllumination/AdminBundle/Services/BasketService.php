@@ -328,10 +328,10 @@ class BasketService {
         {
             case 'GB':
                 // Calculate the zone
-                if (preg_match("/^(AL|B0|B1|B2|B3|B4|B5|B6|B7|B8|B9|BA|BB|BD|BH|BL|BN|BR|BS|CB|CF|CH|CM|CO|C0|CR|CV|CW|DA|DE|DH|DL|DN|DT|DY|E0|E1|E2|E3|E4|E5|E6|E7|E8|E9|EC|EN|FY|GL|GU|HA|HD|HG|HP|HR|HU|HX|IG|IP|KT|L0|L1|L2|L3|L4|L5|L6|L7|L8|L9|LD|LE|LN|LS|LU|M0|M1|M2|M3|M4|M5|M6|M7|M8|M9|ME|MK|N0|N1|N2|N3|N4|N5|N6|N7|N8|N9|NG|NN|NP|NR|NW|OL|0L|OX|0X|PE|PR|RG|RH|RM|S0|S1|S2|S3|S4|S5|S6|S7|S8|S9|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TF|TN|TS|TW|UB|W0|W1|W2|W3|W4|W5|W6|W7|W8|W9|WA|WC|WD|WF|WN|WR|WS|WV|YO|Y0)[A-Z0-9]*/", $postCode))
+                if (preg_match("/^(AL|B0|B1|B2|B3|B4|B5|B6|B7|B8|B9|BA|BB|BD|BH|BL|BN|BR|BS|CB|CF|CH|CM|CO|C0|CR|CV|CW|DA|DE|DH|DL|DN|DY|E0|E1|E2|E3|E4|E5|E6|E7|E8|E9|EC|EN|FY|GL|GU|HA|HD|HG|HP|HR|HU|HX|IG|IP|KT|L0|L1|L2|L3|L4|L5|L6|L7|L8|L9|LD|LE|LN|LS|LU|M0|M1|M2|M3|M4|M5|M6|M7|M8|M9|ME|MK|N0|N1|N2|N3|N4|N5|N6|N7|N8|N9|NG|NN|NP|NR|NW|OL|0L|OX|0X|PE|PR|RG|RH|RM|S0|S1|S2|S3|S4|S5|S6|S7|S8|S9|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TF|TN|TS|TW|UB|W0|W1|W2|W3|W4|W5|W6|W7|W8|W9|WA|WC|WD|WF|WN|WR|WS|WV|YO|Y0)[A-Z0-9]*/", $postCode))
                 {
                     $zone = 1;
-                } elseif (preg_match("/^(CA|CT|DG|EH|EX|G0|G1|G2|G3|G4|G5|G6|G7|G8|G9|LA|LL|ML|NE|PL|SA|TA|TD|TQ|TR)[A-Z0-9]*/", $postCode)) {
+                } elseif (preg_match("/^(CA|CT|DG|DT|EH|EX|G0|G1|G2|G3|G4|G5|G6|G7|G8|G9|LA|LL|ML|NE|PL|SA|TA|TD|TQ|TR)[A-Z0-9]*/", $postCode)) {
                     $zone = 2;
                 } elseif (preg_match("/^(AB|BT|DD|FK|KY)[A-Z0-9]*/", $postCode)) {
                     $zone = 3;
@@ -1020,7 +1020,9 @@ class BasketService {
 
         // Specials
         $stellarPanSetDiscountsAvailable = 0;
+        $stellarPanSetDiscountApplied = false;
         $numberOfCdaAppliances = 0;
+        $cdaAppliancesDiscountApplied = false;
         $basket['discounts'] = array();
         $basket['donations']['company']['description'] = '';
         $basket['donations']['company']['donation'] = 0;
@@ -1061,7 +1063,8 @@ class BasketService {
                     if ($productEntity && $variantEntity)
                     {
                         $prices = $variantEntity->getPrices();
-                        if(count($prices) > 0) {
+                        if (count($prices) > 0)
+                        {
                             $price = $prices[0];
                             $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getRecommendedRetailPrice();
                             $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice();
@@ -1072,6 +1075,7 @@ class BasketService {
             }
 
             // Check if there are any stellar pan set discounts available
+            $test = array();
             foreach ($basket['products'] as $product)
             {
                 if ($product['validProduct'] > 0)
@@ -1085,10 +1089,14 @@ class BasketService {
                     if ($productEntity && $variantEntity)
                     {
                         // Check for Stellar Pans
-                        foreach($productEntity->getDepartments() as $department) {
-                            if ($department->getId() == 69)
+                        $hobDepartmentIds = array(936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170);
+                        foreach ($productEntity->getDepartments() as $department)
+                        {
+                            $test[] = $department->getDepartment()->getId();
+                            if (in_array($department->getDepartment()->getId(), $hobDepartmentIds))
                             {
                                 $stellarPanSetDiscountsAvailable += $product['quantity'];
+                                break;
                             }
                         }
 
@@ -1101,12 +1109,13 @@ class BasketService {
                 }
             }
             $basket['numberOfCdaAppliances'] = $numberOfCdaAppliances;
+            $basket['stellarPanSetDiscountsAvailable'] = $stellarPanSetDiscountsAvailable;
 
             // Discount any stellar pans where applicable
             $totalPanDiscount = 0;
             if ($stellarPanSetDiscountsAvailable > 0)
             {
-                uasort($basket['products'], array($this, "sortBasketProductsByPrice"));
+                //uasort($basket['products'], array($this, "sortBasketProductsByPrice"));
                 foreach ($basket['products'] as $product)
                 {
                     $skipProduct = false;
@@ -1124,7 +1133,7 @@ class BasketService {
                             // Ensure that the product is not in the discount department
                             foreach($productEntity->getDepartments() as $department)
                             {
-                                if($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
+                                if ($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
                                 {
                                     $skipProduct = true;
                                 }
@@ -1139,9 +1148,10 @@ class BasketService {
                             if ($product['quantity'] == 1)
                             {
                                 $prices = $variantEntity->getPrices();
-                                if(count($prices) > 0) {
+                                if (count($prices) > 0)
+                                {
                                     $price = $prices[0];
-                                    $panDiscount = $price->getListPrice() * 0.4;
+                                    $panDiscount = $price->getListPrice() * 0.3;
                                     $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $panDiscount;
                                     $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
                                     $totalDiscount += $panDiscount;
@@ -1152,9 +1162,10 @@ class BasketService {
                                 if ($stellarPanSetDiscountsAvailable >= $product['quantity'])
                                 {
                                     $prices = $variantEntity->getPrices();
-                                    if(count($prices) > 0) {
+                                    if (count($prices) > 0)
+                                    {
                                         $price = $prices[0];
-                                        $panDiscount = $price->getListPrice() * 0.4;
+                                        $panDiscount = $price->getListPrice() * 0.3;
                                         $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $panDiscount;
                                         $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
                                         $totalDiscount += ($panDiscount * $product['quantity']);
@@ -1163,9 +1174,10 @@ class BasketService {
                                     }
                                 } else {
                                     $prices = $variantEntity->getPrices();
-                                    if(count($prices) > 0) {
+                                    if (count($prices) > 0)
+                                    {
                                         $price = $prices[0];
-                                        $panDiscount = ($price->getListPrice() * 0.4) * $stellarPanSetDiscountsAvailable;
+                                        $panDiscount = ($price->getListPrice() * 0.3) * $stellarPanSetDiscountsAvailable;
                                         $totalSubTotal = ($price->getListPrice() * $product['quantity']) - $panDiscount;
                                         $basket['products'][$product['basketItemId']]['unitCost'] = $totalSubTotal / $product['quantity'];
                                         $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
@@ -1181,11 +1193,13 @@ class BasketService {
                 if ($totalPanDiscount > 0)
                 {
                     $basketDiscount = array();
-                    $basketDiscount['description'] = '40% Off Stellar Pan Sets';
+                    $basketDiscount['description'] = '30% Off Stellar Pan Sets';
                     $basketDiscount['discount'] = $totalPanDiscount;
                     $basket['discounts'][] = $basketDiscount;
-                    $messages['success'][] = 'Congratulations your order has qualified for our 40% Off Stellar Pan Sets.';
+                    $stellarPanSetDiscountApplied = true;
                 }
+                $basket['stellarPanSetDiscountApplied'] = $stellarPanSetDiscountApplied;
+                $basket['stellarPanSetDiscountsAvailable'] = $stellarPanSetDiscountsAvailable;
             }
             //uasort($basket['products'], array($this, "sortBasketProductsByProduct"));
 
@@ -1207,9 +1221,9 @@ class BasketService {
                     if ($productEntity && $variantEntity)
                     {
                         // Ensure that the product is not in the discount department
-                        foreach($productEntity->getDepartments() as $department)
+                        foreach ($productEntity->getDepartments() as $department)
                         {
-                            if($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
+                            if ($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
                             {
                                 $skipProduct = true;
                             }
@@ -1247,8 +1261,9 @@ class BasketService {
                 $basketDiscount['description'] = '10% Off CDA Appliances';
                 $basketDiscount['discount'] = $totalCdaDiscount;
                 $basket['discounts'][] = $basketDiscount;
-                $messages['success'][] = 'Congratulations your order has qualified for our 10% Off CDA Appliances.';
+                $cdaAppliancesDiscountApplied = true;
             }
+            $basket['cdaAppliancesDiscountApplied'] = $cdaAppliancesDiscountApplied;
 
             // Check for active voucher codes
             $uSaveVoucherActive = false;
@@ -1349,7 +1364,7 @@ class BasketService {
                                $discountPercent = 0.02;
                             }
 
-                            if ($basket['products'][$product['basketItemId']]['recommendedRetailPrice'] == $basket['products'][$product['basketItemId']]['unitCost'])
+                            if (($basket['products'][$product['basketItemId']]['recommendedRetailPrice'] == $basket['products'][$product['basketItemId']]['unitCost']) || ($basket['products'][$product['basketItemId']]['recommendedRetailPrice'] < 0.01))
                             {
                                 $discount = $basket['products'][$product['basketItemId']]['unitCost'] * $discountPercent;
                                 $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $basket['products'][$product['basketItemId']]['unitCost'];
@@ -1388,6 +1403,7 @@ class BasketService {
             }
             if ($totalUSaveDiscount > 0)
             {
+                $basket['uSaveDiscountApplied'] = true;
                 $savings -= $totalUSaveDiscount;
             }
             $basketDiscount['discount'] = $savings;

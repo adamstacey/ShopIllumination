@@ -53,9 +53,37 @@
 	</table>
     {% if basket.numberOfCdaAppliances is defined %}
         {% if (basket.numberOfCdaAppliances > 0) and (basket.numberOfCdaAppliances < 3) %}
-            <div class="message mtm message-help">
-                <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
-                <p class="tal">You currently have <strong>{{ basket.numberOfCdaAppliances }}</strong> CDA appliance{% if basket.numberOfCdaAppliances > 1 %}s{% endif %} in your basket. If you add another <strong>{% if basket.numberOfCdaAppliances == 1 %}2 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliances</a>{% else %}1 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliance</a>{% endif %}</strong> to your basket you will receive <strong>10% off each CDA appliance ordered</strong>.</p>
+            <div class="basket-message-notice">
+                <p>You have <strong class="colour-red">{{ basket.numberOfCdaAppliances }} CDA appliance{% if basket.numberOfCdaAppliances > 1 %}s{% endif %}</strong> in your basket.<br />Add another <span class="colour-red"><strong>{% if basket.numberOfCdaAppliances == 1 %}2 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliances</a>{% else %}1 <a class="colour-red" href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliance</a>{% endif %}</strong></span> and you will receive <strong class="colour-red">10% off each CDA item</strong>.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if basket.stellarPanSetDiscountsAvailable is defined %}
+        {% if basket.stellarPanSetDiscountsAvailable > 0 %}
+            <div class="basket-message-notice">
+                <p>For each hob and Stellar pan set you buy get 30% off the pans.<br />Add <span class="colour-red"><strong>{{ basket.stellarPanSetDiscountsAvailable }} <a class="colour-red" href="{{ path('routing', {'url': 'kitchen-essentials/kitchen-cookware/sauce-pan-set'}) }}">Stellar Pan Set{% if basket.stellarPanSetDiscountsAvailable > 1 %}s{% endif %}</a></strong></span> to your basket to automatically get <strong class="colour-red">30% off</strong>.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if basket.cdaAppliancesDiscountApplied is defined %}
+        {% if basket.cdaAppliancesDiscountApplied %}
+            <div class="basket-message-success">
+                <p>You have automatically received <strong>10% off</strong> your CDA items.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if basket.stellarPanSetDiscountApplied is defined %}
+        {% if basket.stellarPanSetDiscountApplied %}
+            <div class="basket-message-success">
+                <p>You have automatically received <strong>30% off</strong> 1 or more of your Stellar pan sets.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if basket.uSaveDiscountApplied is defined %}
+        {% if basket.uSaveDiscountApplied %}
+            <div class="basket-message-success">
+                <p>You have successfully applied the <strong>{{ basket.voucherCodes|join('') }}</strong> voucher code.</p>
             </div>
         {% endif %}
     {% endif %}

@@ -133,3 +133,45 @@
     @include equalBorderRadius($radiusSize);
     background: $colourYellowExtraLight;
 }
+
+.basket-message-success,
+.basket-message-notice {
+    margin: $spacingMedium 0 0 0;
+    @include equalBorderRadius($radiusSize);
+}
+
+.basket-message-success {
+    padding: 5px 5px 0 26px;
+
+    border: 1px solid $colourGreenExtraLight;
+    background-color: $colourGreenExtraExtraLight;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    background-image: url("#{$cssPath}/resources/images/icons/green-tick.png");
+    background-position: 5px 7px;
+    line-height: 16px;
+}
+
+.basket-message-notice {
+    padding: 5px 5px 0 5px;
+
+    line-height: 16px;
+    background: $colourYellowExtraLight;
+}
+
+.basket-message-success p,
+.basket-message-notice p {
+    padding: 0 0 5px 0;
+    margin: 0;
+
+    @include fontSize(11);
+    line-height: 16px;
+}
+
+.basket-message-success p {
+    color: $colourGreen;
+}
+
+.basket-message-notice p {
+    color: $colourGreyDark;
+}

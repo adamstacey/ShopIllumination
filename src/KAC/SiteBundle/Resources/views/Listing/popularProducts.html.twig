@@ -13,8 +13,16 @@
                         <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                             <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.description.header|raw }}" width="100%" />
                         </a>
+                        {% set hobDepartmentIds = [936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170] %}
                         {% if product.cheaperAlternative %}
                             {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
+                        {% elseif product.department.department.id in hobDepartmentIds %}
+                            <div class="sash sash-small sash-br sash-orange">30% OFF<br />PAN SETS</div>
+                        {% endif %}
+                        {% if product.brand.id == 7 %}{# CDA #}
+                            <div class="sash sash-bl sash-red">10% OFF</div>
+                        {% elseif product.brand.id == 59 %}{# Caple #}
+                            <div class="sash sash-bl sash-red">10% OFF</div>
                         {% endif %}
                     </div>
                     <span class="listing-top-item">{{ loop.index }}</span>

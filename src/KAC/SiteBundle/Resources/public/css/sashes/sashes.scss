@@ -1,0 +1,79 @@
+@import "compass";
+@import "../includes/base";
+
+ul.breadcrumbs {
+    margin: 8px 0 0 0 !important;
+    padding: 0;
+    float: left;
+}
+ul.breadcrumbs li {
+    padding: 0 $spacingSmall 0 13px;
+    margin: 0;
+
+    position: relative;
+    float: left;
+    display: block;
+
+    list-style: none;
+    @include fontSize($fontSizeSmall);
+    background: $colourGrey;
+    @include boxGlow($colourGreyDark, 10px, 0, 0.5);
+    border: 1px solid $colourGreyLight;
+    line-height: 20px;
+    color: $colourWhite;
+    @include textShadow($colourGreyDark, 0, 1px);
+}
+
+ul.breadcrumbs li a {
+    @include fontSize($fontSizeSmall);
+    color: $colourGreyLight;
+    @include textShadow($colourGreyDark, 0, 1px);
+    text-decoration: none;
+}
+
+ul.breadcrumbs li a:hover {
+    color: $colourWhite;
+}
+
+ul.breadcrumbs li:after,
+ul.breadcrumbs li:before {
+    height: 0;
+    width: 0;
+
+    position: absolute;
+    left: 100%;
+
+    border: solid transparent;
+    content: " ";
+    pointer-events: none;
+}
+
+ul.breadcrumbs li:after {
+    border-color: transparent;
+    border-left-color: $colourGrey;
+    border-width: 10px;
+    top: 50%;
+    margin-top: -10px;
+}
+
+ul.breadcrumbs li:before {
+    border-color: transparent;
+    border-left-color: $colourGreyLight;
+    border-width: 11px;
+    top: 50%;
+    margin-top: -11px;
+}
+
+ul.breadcrumbs > :first-child {
+    padding-left: $spacingSmall;
+    @include borderRadius($radiusSize, 0, 0, $radiusSize);
+}
+
+ul.breadcrumbs > :last-child {
+    @include borderRadius(0, $radiusSize, $radiusSize, 0);
+}
+
+ul.breadcrumbs > :last-child:before,
+ul.breadcrumbs > :last-child:after {
+    display: none;
+}
