@@ -1,79 +1,140 @@
 @import "compass";
 @import "../includes/base";
 
-ul.breadcrumbs {
-    margin: 8px 0 0 0 !important;
-    padding: 0;
-    float: left;
-}
-ul.breadcrumbs li {
-    padding: 0 $spacingSmall 0 13px;
-    margin: 0;
-
-    position: relative;
-    float: left;
-    display: block;
-
-    list-style: none;
-    @include fontSize($fontSizeSmall);
-    background: $colourGrey;
-    @include boxGlow($colourGreyDark, 10px, 0, 0.5);
-    border: 1px solid $colourGreyLight;
-    line-height: 20px;
-    color: $colourWhite;
-    @include textShadow($colourGreyDark, 0, 1px);
-}
-
-ul.breadcrumbs li a {
-    @include fontSize($fontSizeSmall);
-    color: $colourGreyLight;
-    @include textShadow($colourGreyDark, 0, 1px);
-    text-decoration: none;
-}
-
-ul.breadcrumbs li a:hover {
-    color: $colourWhite;
-}
-
-ul.breadcrumbs li:after,
-ul.breadcrumbs li:before {
-    height: 0;
-    width: 0;
+.sash {
+    position: absolute;
+    padding: 0 $spacingSmall;
 
     position: absolute;
-    left: 100%;
+    display: block;
 
-    border: solid transparent;
-    content: " ";
-    pointer-events: none;
+    @include fontSize(14);
+    line-height: 18px;
+    color: $colourWhite;
+    @include selectNone;
+    text-transform: uppercase;
 }
 
-ul.breadcrumbs li:after {
-    border-color: transparent;
-    border-left-color: $colourGrey;
-    border-width: 10px;
-    top: 50%;
-    margin-top: -10px;
+.sash-small {
+    position: absolute;
+    padding: 0 $spacingExtraSmall;
+
+    position: absolute;
+    display: block;
+
+    @include fontSize(11);
+    line-height: 13px;
+    color: $colourWhite;
+    @include selectNone;
+    text-transform: uppercase;
 }
 
-ul.breadcrumbs li:before {
-    border-color: transparent;
-    border-left-color: $colourGreyLight;
-    border-width: 11px;
-    top: 50%;
-    margin-top: -11px;
+.sash-large {
+    position: absolute;
+    padding: 0 $spacingSmall;
+
+    position: absolute;
+    display: block;
+
+    @include fontSize(18);
+    line-height: 22px;
+    color: $colourWhite;
+    @include selectNone;
+    text-transform: uppercase;
 }
 
-ul.breadcrumbs > :first-child {
-    padding-left: $spacingSmall;
-    @include borderRadius($radiusSize, 0, 0, $radiusSize);
+.sash-tl {
+    top: 10px;
+    left: -5px;
 }
 
-ul.breadcrumbs > :last-child {
-    @include borderRadius(0, $radiusSize, $radiusSize, 0);
+.sash-tr {
+    top: 10px;
+    right: -5px;
 }
 
-ul.breadcrumbs > :last-child:before,
-ul.breadcrumbs > :last-child:after {
-    display: none;
+.sash-br {
+    bottom: 20px;
+    right: -5px;
+}
+
+.sash-bl {
+    bottom: 20px;
+    left: -5px;
+}
+
+.sash-tl,
+.sash-bl {
+    text-align: left;
+}
+
+.sash-tr,
+.sash-br {
+    text-align: right;
+}
+
+.sash-black {
+    @include highlightedVerticalGradientBlack;
+    @include boxGlow($colourBlack, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-grey {
+    @include highlightedVerticalGradientGrey;
+    @include boxGlow($colourGrey, 5px);
+    border: 1px solid $colourBlack;
+}
+
+.sash-grey-dark {
+    @include highlightedVerticalGradientGreyDark;
+    @include boxGlow($colourGreyDark, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-grey-light {
+    @include highlightedVerticalGradientGreyLight;
+    @include boxGlow($colourGreyLight, 5px);
+    border: 1px solid $colourGreyDark;
+}
+
+.sash-dark-red {
+    @include highlightedVerticalGradientDarkRed;
+    @include boxGlow($colourDarkRed, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-red {
+    @include highlightedVerticalGradientRed;
+    @include boxGlow($colourRed, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-orange {
+    @include highlightedVerticalGradientOrange;
+    @include boxGlow($colourOrange, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-yellow {
+    @include highlightedVerticalGradientYellow;
+    @include boxGlow($colourYellow, 5px);
+    border: 1px solid $colourGreyDark;
+}
+
+.sash-green {
+    @include highlightedVerticalGradientGreen;
+    @include boxGlow($colourGreen, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-turquoise {
+    @include highlightedVerticalGradientTurquoise;
+    @include boxGlow($colourTurquoise, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-blue {
+    @include highlightedVerticalGradientBlue;
+    @include boxGlow($colourBlue, 5px);
+    border: 1px solid $colourWhite;
 }
