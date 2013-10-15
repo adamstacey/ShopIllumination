@@ -1656,7 +1656,8 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         {
             $maiaProductCount++;
             $xmlWriter->startElement('item');
-            $xmlWriter->writeElement('title', 'maia '.$maiaProduct['worktopColour'].' '.$maiaProduct['productCode'].' '.str_replace('"', '', $maiaProduct['header']));
+            //$xmlWriter->writeElement('title', 'maia '.$maiaProduct['worktopColour'].' '.$maiaProduct['productCode'].' '.str_replace('"', '', $maiaProduct['header']));
+            $xmlWriter->writeElement('title', 'maia '.$maiaProduct['worktopColour'].' '.str_replace('mm × ', '×', str_replace('"', '', $maiaProduct['header'])));
             $xmlWriter->writeElement('link', $router->generate('routing', array('url' => $maiaProduct['url']), true));
             $xmlWriter->startElement('description');
             $xmlWriter->writeCdata('maia '.$maiaProduct['worktopColour'].' '.$maiaProduct['productCode'].' '.str_replace('"', '', $maiaProduct['header']));
