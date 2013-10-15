@@ -15,9 +15,9 @@
                 <div class="product-image-container man pr">
                     <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
                         {% if product.thumbnail_path %}
-                            <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
+                            <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
                         {% else  %}
-                            <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
+                            <img class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
                         {% endif  %}
                     </a>
                     {% if product.cheaper_alternative %}
