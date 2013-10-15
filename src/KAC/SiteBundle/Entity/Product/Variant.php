@@ -42,7 +42,7 @@ class Variant implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @ORM\OrderBy({"displayOrder" = "DESC"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
      * @Assert\Valid()
      * @var VariantToFeature[]
      */
@@ -51,7 +51,7 @@ class Variant implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @ORM\OrderBy({"displayOrder" = "DESC"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
      * @Assert\Valid()
      * @var VariantToOption[]
      */
