@@ -1118,30 +1118,7 @@ class BasketService {
                 //uasort($basket['products'], array($this, "sortBasketProductsByPrice"));
                 foreach ($basket['products'] as $product)
                 {
-                    $skipProduct = false;
-
-                    if ($product['validProduct'] > 0)
-                    {
-                        /**
-                         * @var Product $productEntity
-                         * @var Product\Variant $variantEntity
-                         */
-                        $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
-                        $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
-                        if ($productEntity && $variantEntity)
-                        {
-                            // Ensure that the product is not in the discount department
-                            foreach($productEntity->getDepartments() as $department)
-                            {
-                                if ($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
-                                {
-                                    $skipProduct = true;
-                                }
-                            }
-                        }
-                    }
-
-                    if (!$skipProduct && $stellarPanSetDiscountsAvailable > 0)
+                    if ($stellarPanSetDiscountsAvailable > 0)
                     {
                         if (($product['productCode'] == 'S7C1D') || ($product['productCode'] == 'S7A1D'))
                         {
