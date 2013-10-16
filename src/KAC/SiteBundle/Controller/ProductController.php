@@ -333,6 +333,23 @@ class ProductController extends Controller {
             $relatedProducts = array_slice($relatedProducts, 0, 10);
         }
 
+        $hobDepartmentIds = array(936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170);
+        $panOfferAvaliable = false;
+        $panOffers = false;
+        foreach ($product->getDepartments() as $department) {
+            if (in_array($department->getDepartment()->getId(), $hobDepartmentIds))
+            {
+                $panOfferAvaliable = true;
+                break;
+            }
+        }
+        if ($panOfferAvaliable)
+        {
+            $panOffers = array();
+            $panOffers[] = $em->getRepository("KAC\SiteBundle\Entity\Product")->find(5068);
+            $panOffers[] = $em->getRepository("KAC\SiteBundle\Entity\Product")->find(5069);
+        }
+
         return $this->render('KACSiteBundle:Product:Templates/'.$template.'.html.twig', array(
             'product' => $product,
             'departments' => $departments,
@@ -349,6 +366,7 @@ class ProductController extends Controller {
             'variant' => $variant,
             'delivery_band' => $deliveryBand,
             'delivery_from_date' => $deliveryFromDate,
+            'pan_offers' => $panOffers,
         ));
     }
 
