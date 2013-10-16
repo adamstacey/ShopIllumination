@@ -188,18 +188,18 @@
                                                 <div class="basket-message-success mtn mbm">
                                                     <p>For each hob and Stellar pan set you buy together you get <strong class="colour-red">30%</strong> off the pans! Add a Stellar pan set to get the discount automatically applied in your basket.</p>
                                                     <div class="widget-group clearfix pbm product">
-                                                        {% for product in pan_offers %}
+                                                        {% for pan_offer in pan_offers %}
                                                             <div class="widget widget-1-of-2">
                                                                 <div class="widget-group">
                                                                     <div class="widget widget-3-of-5">
                                                                         <div class="pr">
                                                                             <div class="product-image-container man pr">
-                                                                                <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                                                                    <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.description.header|raw }}" width="100%" />
+                                                                                <a href="{{ pan_offer.url != '' ? path('routing', {'url': pan_offer.url}) : '' }}">
+                                                                                    <img class="product-image" itemprop="image" src="{{ asset(pan_offer.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ pan_offer.description.header|raw }}" width="100%" />
                                                                                 </a>
                                                                                 <div class="sash sash-small sash-tl sash-red">30% OFF</div>
-                                                                                <div class="small-basket-product-info" data-variantId="{{ product.variants[0].id }}">
-                                                                                    {% include 'KACSiteBundle:Product:smallBasketInfo.html.twig' with {'productId': product.id, 'variantId': product.variants[0].id} %}
+                                                                                <div class="small-basket-product-info" data-variantId="{{ pan_offer.variants[0].id }}">
+                                                                                    {% include 'KACSiteBundle:Product:smallBasketInfo.html.twig' with {'productId': pan_offer.id, 'variantId': pan_offer.variants[0].id} %}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -207,19 +207,19 @@
                                                                     <div class="widget widget-2-of-5">
                                                                         <div class="tal pts">
                                                                             <div class="tal lh100pc">
-                                                                                <a class="colour-grey-dark fs9 lh100pc" href="{{ path('routing', {'url': product.url}) }}">{{ product.description.header|raw }}</a>
+                                                                                <a class="colour-grey-dark fs9 lh100pc" href="{{ path('routing', {'url': pan_offer.url}) }}">{{ pan_offer.description.header|raw }}</a>
                                                                             </div>
                                                                             <div class="tal">
-                                                                                <a href="{{ path('routing', {'url': product.url}) }}">
-                                                                                    {% set recommendedRetailPrice = product.priceRange.high %}
+                                                                                <a href="{{ path('routing', {'url': pan_offer.url}) }}">
+                                                                                    {% set recommendedRetailPrice = pan_offer.priceRange.high %}
                                                                                     {% set listPrice = recommendedRetailPrice - (recommendedRetailPrice * 0.3) %}
                                                                                     <span itemprop="price" class="price-small">{{ listPrice|currency('GBP', true, true, '')|raw }}</span>
                                                                                     <span itemprop="price" class="was-price-small">was <span class="strikethrough">{{ recommendedRetailPrice|currency('GBP', true, true, '')|raw }}</span></span>
                                                                                 </a>
                                                                             </div>
                                                                             <div class="tal ptm">
-                                                                                <div id="purchasingLoading{{ product.variants[0].id }}" class="fr ui-helper-hidden fr"><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="10" border="0" alt="loading" /></div>
-                                                                                <a href="Javascript:void(0);" class="colour-green actionQuickAddToBasket uppercase" data-quantity="1" data-product-id="{{ product.id }}" data-variant-id="{{ product.variants[0].id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}"><strong>Buy &gt;&gt;</strong></a>
+                                                                                <div id="purchasingLoading{{ pan_offer.variants[0].id }}" class="fr ui-helper-hidden fr"><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="10" border="0" alt="loading" /></div>
+                                                                                <a href="Javascript:void(0);" class="colour-green actionQuickAddToBasket uppercase" data-quantity="1" data-product-id="{{ pan_offer.id }}" data-variant-id="{{ pan_offer.variants[0].id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}"><strong>Buy &gt;&gt;</strong></a>
                                                                                 <div class="clear"></div>
                                                                             </div>
                                                                         </div>
