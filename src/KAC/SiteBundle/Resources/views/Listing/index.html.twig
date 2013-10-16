@@ -121,7 +121,7 @@
                                 {% include 'KACSiteBundle:Maia:maiaPromotion.html.twig' %}
                             {% else %}
                                 {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': department.id })) }}
-                                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentIds': department.id })) }}
+                                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentId': department.id })) }}
                             {% endif %}
                         {% endif %}
                     </section>

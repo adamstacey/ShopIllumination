@@ -504,7 +504,7 @@ class ListingController extends Controller
             'brands' => $brands,
             'departmentId' => $departmentId,
         ));
-        $response->setSharedMaxAge(432000);
+        $response->setSharedMaxAge(3600);
 
         return $response;
     }
@@ -559,10 +559,10 @@ class ListingController extends Controller
         return $response;
     }
 
-    private function getPopularBrands($departmentIds = null, $num=null)
+    private function getPopularBrands($departmentIds = null, $num = null)
     {
         // Ensure that department and brand ids are arrays
-        if($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
+        if ($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
 
         /**
          * @var $em EntityManager
@@ -573,7 +573,7 @@ class ListingController extends Controller
         $solarium = $this->get('solarium.client');
 
         // If not department was specified we can fetch the popular products just using SQL
-        if(!$departmentIds)
+        if (!$departmentIds)
         {
             $qb = $em->createQueryBuilder();
             $qb->select('b, count(op.id) AS total')
@@ -594,7 +594,6 @@ class ListingController extends Controller
         } else {
             $products = $this->getPopularProducts($departmentIds);
             $brands = array();
-
             foreach ($products as $item)
             {
                 /**
@@ -624,7 +623,7 @@ class ListingController extends Controller
         }
     }
 
-    private function getPopularProducts($departmentIds = null, $brandIds = null, $num=null)
+    private function getPopularProducts($departmentIds = null, $brandIds = null, $num = null)
     {
         // Ensure that department and brand ids are arrays
         if ($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
