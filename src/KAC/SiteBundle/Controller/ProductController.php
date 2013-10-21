@@ -35,6 +35,7 @@ use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Manager\ProductManager;
 use KAC\SiteBundle\Manager\SeoManager;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ProductController extends Controller {
     public function viewAction(Request $request, $id, $variant=null)
@@ -799,6 +800,219 @@ class ProductController extends Controller {
         ));
     }
 
+    /**
+     * @Route("/admin/products/exportVisualSoftProducts", name="products_export_visual_soft_products")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function exportVisualSoftProductAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $brands = $em->getRepository("KAC\SiteBundle\Entity\Brand\Description")->findBy(array(), array('name' => 'ASC'));
+
+        $brandId = $request->query->get('brandId');
+        if ($brandId)
+        {
+            $brand = $em->getRepository("KAC\SiteBundle\Entity\Brand")->find($brandId);
+        }
+        if ($brand)
+        {
+            $productsQuery = $em->createQuery("SELECT p FROM KAC\SiteBundle\Entity\Product p WHERE p.brand = :brand")
+                ->setParameter('brand', $brand);
+            $products = $productsQuery->getResult();
+            $seoManager = $this->getSeoManager();
+            $csv = "VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Product Summary,Product Description,,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),,Meta Title,Meta Keywords,Meta Description,,Upselling 1 (Related Products),Upselling 2 (Other Colours)\n";
+            foreach ($products as $product)
+            {
+                if ($product->getStatus() == 'a')
+                {
+                    $colour = false;
+                    $materialFinish = false;
+                    $bullets = array();
+                    foreach ($product->getVariant()->getFeatures() as $variantToFeature)
+                    {
+                        foreach ($product->getDepartment()->getDepartment()->getFeatures() as $departmentToFeature)
+                        {
+                            if ($departmentToFeature->getFeatureGroup()->getId() == $variantToFeature->getFeatureGroup()->getId())
+                            {
+                                if ($departmentToFeature->getDisplayOnListing())
+                                {
+                                    if ($variantToFeature->getFeature())
+                                    {
+                                        $featureName = $variantToFeature->getFeature()->getName();
+                                        if (($featureName != 'N/A') && ($featureName != '*** NOT SET ***') && ($featureName != ''))
+                                        {
+                                            $bullets[] = str_replace('"', '', $variantToFeature->getFeatureGroup()->getName().': <strong>'.$featureName.'</strong>');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if ($variantToFeature->getFeatureGroup()->getName() == 'Colour')
+                        {
+                            if ($variantToFeature->getFeature())
+                            {
+                                $featureName = $variantToFeature->getFeature()->getName();
+                                if (($featureName != 'N/A') && ($featureName != '*** NOT SET ***') && ($featureName != ''))
+                                {
+                                    $colour = str_replace('"', '', $variantToFeature->getFeature()->getName());
+                                }
+                            }
+                        }
+                        if ($variantToFeature->getFeatureGroup()->getName() == 'Material Finish')
+                        {
+                            if ($variantToFeature->getFeature())
+                            {
+                                $featureName = $variantToFeature->getFeature()->getName();
+                                if (($featureName != 'N/A') && ($featureName != '*** NOT SET ***') && ($featureName != ''))
+                                {
+                                    $materialFinish = str_replace('"', '', $variantToFeature->getFeature()->getName());
+                                }
+                            }
+                        }
+                    }
+                    if (count($bullets) > 1)
+                    {
+                        $bullets = '<ul><li>'.join('</li><li>', $bullets).'</li></ul>';
+                    } else {
+                        $bullets = false;
+                    }
+                    $departments = array();
+                    $department = $product->getDepartment()->getDepartment();
+                    $departments[] = $department->getDescription()->getName();
+                    while ($department->getParent())
+                    {
+                        $department = $department->getParent();
+                        array_unshift($departments, $department->getDescription()->getName());
+                    }
+                    if (count($departments) > 0)
+                    {
+                        $departments = str_replace('Root Department > ', '', join(' > ', $departments));
+                    } else {
+                        $departments = false;
+                    }
+                    $productCode = str_replace('"', '', $product->getVariant()->getProductCode());
+                    $productPrice = $product->getVariant()->getPrice();
+                    $listPrice = $productPrice->getListPrice();
+                    $recommendedRetailPrice = $productPrice->getRecommendedRetailPrice();
+                    $costPrice = $productPrice->getCostPrice();
+                    $displayOnSalePage = 'N';
+                    $description = str_replace('"', '', $seoManager->cleanHtml($product->getVariant()->getDescription()->getDescription()));
+                    if (!$description)
+                    {
+                        $description = str_replace('"', '', $seoManager->cleanHtml($product->getDescription()->getDescription()));
+                    }
+                    $pageTitle = str_replace('"', '', $product->getVariant()->getDescription()->getPageTitle());
+                    if (!$pageTitle)
+                    {
+                        $pageTitle = str_replace('"', '', $product->getDescription()->getPageTitle());
+                    }
+                    $header = str_replace('"', '', $product->getVariant()->getDescription()->getHeader());
+                    if (!$header)
+                    {
+                        $header = str_replace('"', '', $product->getDescription()->getHeader());
+                    }
+                    $metaDescription = str_replace('"', '', $product->getVariant()->getDescription()->getMetaDescription());
+                    if (!$metaDescription)
+                    {
+                        $metaDescription = str_replace('"', '', $product->getDescription()->getMetaDescription());
+                    }
+                    $metaKeywords = str_replace('"', '', $product->getVariant()->getDescription()->getMetaKeywords());
+                    if (!$metaKeywords)
+                    {
+                        $metaKeywords = str_replace('"', '', $product->getDescription()->getMetaKeywords());
+                    }
+                    $brandName = str_replace('"', '', $product->getBrand()->getDescription()->getName());
+                    $relatedProducts = array();
+                    if ($product->getCheaperAlternative())
+                    {
+                        $relatedProducts[] = $product->getCheaperAlternative()->getVariant()->getProductCode();
+                    }
+                    foreach ($product->getRelatedProducts() as $relatedProduct)
+                    {
+                        $relatedProducts[] = $relatedProduct->getVariant()->getProductCode();
+                    }
+                    if (count($relatedProducts) > 0)
+                    {
+                        $relatedProducts = join(', ', $relatedProducts);
+                    } else {
+                        $relatedProducts = false;
+                    }
+                    $csv .= ','; // VS Parent ID
+                    $csv .= ','; // VS Child ID
+                    $csv .= ','; // -
+                    $csv .= '"'.$productCode.'",'; // Parent Reference
+                    $csv .= '"'.$productCode.'",'; // Child Reference
+                    $csv .= ','; // -
+                    $csv .= '"'.$pageTitle.'",'; // Parent Product Title
+                    $csv .= '"'.$header.'",'; // Child Product Title
+                    $csv .= ($colour ? '"'.$colour.'"' : '').','; // Product Subtitle
+                    $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
+                    $csv .= '"'.$description.'",'; // Product Description
+                    $csv .= ','; // -
+                    $csv .= '"'.$brandName.'",'; // Brand
+                    $csv .= ','; // -
+                    $csv .= ($departments ? '"'.$departments.'"' : '').','; // Categories
+                    $csv .= ','; // -
+                    $csv .= ($materialFinish ? '"'.$materialFinish.'"' : '').','; // Tag 1 (Finish)
+                    $csv .= ','; //
+                    $csv .= '"'.$productCode.'",'; // Model Number
+                    $csv .= '"'.str_replace('"', '', $product->getVariant()->getEan()).'",'; // EAN
+                    $csv .= '"'.$productCode.'",'; // MPN
+                    $csv .= ','; // ISBN
+                    $csv .= '"'.$productCode.'",'; // UPC
+                    $csv .= ','; // -
+                    if (($recommendedRetailPrice > 0) && ($recommendedRetailPrice > $listPrice))
+                    {
+                        $csv .= $recommendedRetailPrice.','; // Price (Inc VAT)
+                        $csv .= $listPrice.','; // Sale Price (Inc VAT)
+                        $csv .= $recommendedRetailPrice.','; // RRP Price (Inc VAT)
+                        $displayOnSalePage = 'Y';
+                    } else {
+                        $csv .= $listPrice.','; // Price (Inc VAT)
+                        $csv .= $listPrice.','; // Sale Price (Inc VAT)
+                        $csv .= '0,'; // RRP Price (Inc VAT)
+                    }
+                    $csv .= $costPrice.','; // Cost Price (Inc VAT)
+                    $csv .= '20,'; // VAT Rate
+                    $csv .= '"'.$displayOnSalePage.'",'; // Display On Sale Page
+                    $csv .= ','; // -
+                    $csv .= '-1,'; // Stock Value
+                    $csv .= ','; // Stock Message
+                    $csv .= '0,'; // Weight (in KGs)
+                    $csv .= '0,'; // Export Weight (in KGs)
+                    $csv .= '"Y",'; // Child Active
+                    $csv .= '"Y",'; // Parent Active
+                    $csv .= '"N",'; // Archive (Delete)
+                    $csv .= ','; // -
+                    $csv .= '"'.$pageTitle.'",'; // Meta Title
+                    $csv .= '"'.$metaKeywords.'",'; // Meta Keywords
+                    $csv .= '"'.$metaDescription.'",'; // Meta Description
+                    $csv .= ','; // -
+                    $csv .= ($relatedProducts ? '"'.$relatedProducts.'"' : '').','; // Upselling 1 (Related Products)
+                    $csv .= ''; // Upselling 2 (Other Colours)
+                    $csv .= "\n";
+                }
+            }
+            $response = new Response();
+            $filename = $brand->getUrl().'-vs-export-'.date("Y-m-d-His").'.csv';
+            $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
+            $response->setStatusCode(200);
+            //$response->headers->set('Content-Type', 'text/plain');
+            $response->headers->set('Content-Type', 'text/csv');
+            $response->headers->set('Content-Description', 'Visual Soft Export');
+            $response->headers->set('Content-Disposition', $contentDisposition);
+            $response->headers->set('Content-Transfer-Encoding', 'binary');
+            $response->headers->set('Pragma', 'no-cache');
+            $response->headers->set('Expires', '0');
+            $response->prepare($request);
+            $response->sendHeaders();
+            $response->setContent($csv);
+            return $response;
+        }
+
+        return $this->render('KACSiteBundle:Product:exportVisualSoftProducts.html.twig', array('brands' => $brands));
+    }
+
     public function baseEditAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
@@ -1207,5 +1421,15 @@ class ProductController extends Controller {
     private function getDocumentManager()
     {
         return $this->get('kac_site.manager.document');
+    }
+
+    /**
+     * Fetch seo manager from container
+     *
+     * @return \KAC\SiteBundle\Manager\SeoManager
+     */
+    private function getSeoManager()
+    {
+        return $this->get('kac_site.manager.seo');
     }
 }

@@ -1,0 +1,11 @@
+VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Product Summary,Product Description,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),Meta Title,Meta Keywords,Meta Description,Upselling 1 (Related Products),Upselling 2 (Other Colours)
+{% for product in products %}
+    {% set features = [] %}
+    {% for vtf in variant.features %}
+        {% set features = features|merge({(vtf.featureGroup.name): (vtf.feature.name)}) %}
+        {% if vtf.featureGroup.name == 'Colour' %}
+            {% set colour = vtf.feature.name %}
+        {% endif %}
+    {% endfor %}
+,,,"{{ product.variant.productCode }}","{{ product.variant.productCode }}",,"{{ product.description.pageTitle }}","{{ product.description.header }}",Product Subtitle,Product Summary,Product Description,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),Meta Title,Meta Keywords,Meta Description,Upselling 1 (Related Products),Upselling 2 (Other Colours)
+{% endfor %}
