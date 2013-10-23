@@ -965,7 +965,7 @@ class ProductController extends Controller {
                     $csv .= '"'.str_replace('"', '', $product->getVariant()->getEan()).'",'; // EAN
                     $csv .= '"'.$productCode.'",'; // MPN
                     $csv .= ','; // ISBN
-                    $csv .= '"'.$productCode.'",'; // UPC
+                    $csv .= ','; // UPC
                     $csv .= ','; // -
                     if (($recommendedRetailPrice > 0) && ($recommendedRetailPrice > $listPrice))
                     {
