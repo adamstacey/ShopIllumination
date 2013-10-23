@@ -978,7 +978,7 @@ class ProductController extends Controller {
                         $csv .= $listPrice.','; // Sale Price (Inc VAT)
                         $csv .= '0,'; // RRP Price (Inc VAT)
                     }
-                    $csv .= $costPrice.','; // Cost Price (Inc VAT)
+                    $csv .= ','; // Cost Price (Inc VAT)
                     $csv .= '20,'; // VAT Rate
                     $csv .= '"'.$displayOnSalePage.'",'; // Display On Sale Page
                     $csv .= ','; // -
