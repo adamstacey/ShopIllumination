@@ -897,6 +897,7 @@ class ProductController extends Controller {
                     $costPrice = $productPrice->getCostPrice();
                     $displayOnSalePage = 'N';
                     $description = str_replace('"', '', $seoManager->cleanHtml($product->getVariant()->getDescription()->getDescription()));
+                    $brandName = str_replace('"', '', $product->getBrand()->getDescription()->getName());
                     if (!$description)
                     {
                         $description = str_replace('"', '', $seoManager->cleanHtml($product->getDescription()->getDescription()));
@@ -906,11 +907,17 @@ class ProductController extends Controller {
                     {
                         $pageTitle = str_replace('"', '', $product->getDescription()->getPageTitle());
                     }
+                    $pageTitle = str_replace($brandName, '', $pageTitle);
+                    $pageTitle = str_replace($productCode, '', $pageTitle);
+                    $pageTitle = str_replace('  ', ' ', trim($pageTitle));
                     $header = str_replace('"', '', $product->getVariant()->getDescription()->getHeader());
                     if (!$header)
                     {
                         $header = str_replace('"', '', $product->getDescription()->getHeader());
                     }
+                    $header = str_replace($brandName, '', $header);
+                    $header = str_replace($productCode, '', $header);
+                    $header = str_replace('  ', ' ', trim($header));
                     $metaDescription = str_replace('"', '', $product->getVariant()->getDescription()->getMetaDescription());
                     if (!$metaDescription)
                     {
@@ -921,7 +928,6 @@ class ProductController extends Controller {
                     {
                         $metaKeywords = str_replace('"', '', $product->getDescription()->getMetaKeywords());
                     }
-                    $brandName = str_replace('"', '', $product->getBrand()->getDescription()->getName());
                     $relatedProducts = array();
                     if ($product->getCheaperAlternative())
                     {
@@ -993,19 +999,15 @@ class ProductController extends Controller {
                     $csv .= "\n";
                 }
             }
+
             $response = new Response();
             $filename = $brand->getUrl().'-vs-export-'.date("Y-m-d-His").'.csv';
-            $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
             $response->setStatusCode(200);
-            //$response->headers->set('Content-Type', 'text/plain');
             $response->headers->set('Content-Type', 'text/csv');
             $response->headers->set('Content-Description', 'Visual Soft Export');
-            $response->headers->set('Content-Disposition', $contentDisposition);
-            $response->headers->set('Content-Transfer-Encoding', 'binary');
+            $response->headers->set('Content-Disposition', 'attachment;filename='.$filename);
             $response->headers->set('Pragma', 'no-cache');
             $response->headers->set('Expires', '0');
-            $response->prepare($request);
-            $response->sendHeaders();
             $response->setContent($csv);
             return $response;
         }
