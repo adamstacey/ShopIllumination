@@ -122,10 +122,18 @@
                                                         {% endfor %}
                                                     </ul>
                                                 {% endif %}
+                                                {% set hobDepartmentIds = [936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170] %}
                                                 {% if product.cheaperAlternative %}
                                                     {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
+                                                {% elseif product.department.department.id in hobDepartmentIds %}
+                                                    <div class="sash sash-tr sash-orange">30% OFF<br />PAN SETS</div>
                                                 {% endif %}
                                                 <div class="clear"></div>
+                                                {% if product.brand.id == 7 %}{# CDA #}
+                                                    <div class="sash sash-large sash-tl sash-red">10% OFF</div>
+                                                {% elseif product.brand.id == 59 %}{# Caple #}
+                                                    <div class="sash sash-large sash-tl sash-red">10% OFF</div>
+                                                {% endif %}
                                             </div>
                                             <p class="mtm colour-turquoise">+ Click images to enlarge</p>
                                             <p class="pbn">
@@ -176,6 +184,52 @@
                                             </div>
                                             {{ helpers.addToBasket(variant) }}
                                             <img src="{{ asset('bundles/kacsite/images/icons/small-cards.png') }}" class="mbs mts" border="0" alt="Cards we accept" />
+                                            {% if pan_offers %}
+                                                <div class="basket-message-success mtn mbm">
+                                                    <p>For each hob and Stellar pan set you buy together you get <strong class="colour-red">30%</strong> off the pans! Add a Stellar pan set to get the discount automatically applied in your basket.</p>
+                                                    <div class="widget-group clearfix pbm product">
+                                                        {% for pan_offer in pan_offers %}
+                                                            <div class="widget widget-1-of-2">
+                                                                <div class="widget-group">
+                                                                    <div class="widget widget-3-of-5">
+                                                                        <div class="pr">
+                                                                            <div class="product-image-container man pr">
+                                                                                <a href="{{ pan_offer.url != '' ? path('routing', {'url': pan_offer.url}) : '' }}">
+                                                                                    <img class="product-image" itemprop="image" src="{{ asset(pan_offer.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ pan_offer.description.header|raw }}" width="100%" />
+                                                                                </a>
+                                                                                <div class="sash sash-small sash-tl sash-red">30% OFF</div>
+                                                                                <div class="small-basket-product-info" data-variantId="{{ pan_offer.variants[0].id }}">
+                                                                                    {% include 'KACSiteBundle:Product:smallBasketInfo.html.twig' with {'productId': pan_offer.id, 'variantId': pan_offer.variants[0].id} %}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="widget widget-2-of-5">
+                                                                        <div class="tal pts">
+                                                                            <div class="tal lh100pc">
+                                                                                <a class="colour-grey-dark fs9 lh100pc" href="{{ path('routing', {'url': pan_offer.url}) }}">{{ pan_offer.description.header|raw }}</a>
+                                                                            </div>
+                                                                            <div class="tal">
+                                                                                <a href="{{ path('routing', {'url': pan_offer.url}) }}">
+                                                                                    {% set recommendedRetailPrice = pan_offer.priceRange.high %}
+                                                                                    {% set listPrice = recommendedRetailPrice - (recommendedRetailPrice * 0.3) %}
+                                                                                    <span itemprop="price" class="price-small">{{ listPrice|currency('GBP', true, true, '')|raw }}</span>
+                                                                                    <span itemprop="price" class="was-price-small">was <span class="strikethrough">{{ recommendedRetailPrice|currency('GBP', true, true, '')|raw }}</span></span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="tal ptm">
+                                                                                <div id="purchasingLoading{{ pan_offer.variants[0].id }}" class="fr ui-helper-hidden fr"><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="10" border="0" alt="loading" /></div>
+                                                                                <a href="Javascript:void(0);" class="colour-green actionQuickAddToBasket uppercase" data-quantity="1" data-product-id="{{ pan_offer.id }}" data-variant-id="{{ pan_offer.variants[0].id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}"><strong>Buy &gt;&gt;</strong></a>
+                                                                                <div class="clear"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endif %}
                                             <section>
                                                 <div class="tabs pbn">
                                                     <ul>
@@ -183,7 +237,7 @@
                                                         {% if features|length > 0 %}<li><a href="#specification">Specification</a></li>{% endif %}
                                                         <li><a href="#delivery">Delivery</a></li>
                                                         <li><a href="#security">Security</a></li>
-                                                        <li><a href="#whyBuyFromUs">Why buy from us?</a></li>
+                                                        <li><a href="#whyBuyFromUs">Why buy?</a></li>
                                                     </ul>
                                                     <div id="overview">
                                                         <section>

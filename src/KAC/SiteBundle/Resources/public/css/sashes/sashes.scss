@@ -1,0 +1,140 @@
+@import "compass";
+@import "../includes/base";
+
+.sash {
+    position: absolute;
+    padding: 0 $spacingSmall;
+
+    position: absolute;
+    display: block;
+
+    @include fontSize(14);
+    line-height: 18px;
+    color: $colourWhite;
+    @include selectNone;
+    text-transform: uppercase;
+}
+
+.sash-small {
+    position: absolute;
+    padding: 0 $spacingExtraSmall;
+
+    position: absolute;
+    display: block;
+
+    @include fontSize(11);
+    line-height: 13px;
+    color: $colourWhite;
+    @include selectNone;
+    text-transform: uppercase;
+}
+
+.sash-large {
+    position: absolute;
+    padding: 0 $spacingSmall;
+
+    position: absolute;
+    display: block;
+
+    @include fontSize(18);
+    line-height: 22px;
+    color: $colourWhite;
+    @include selectNone;
+    text-transform: uppercase;
+}
+
+.sash-tl {
+    top: 10px;
+    left: -5px;
+}
+
+.sash-tr {
+    top: 10px;
+    right: -5px;
+}
+
+.sash-br {
+    bottom: 20px;
+    right: -5px;
+}
+
+.sash-bl {
+    bottom: 20px;
+    left: -5px;
+}
+
+.sash-tl,
+.sash-bl {
+    text-align: left;
+}
+
+.sash-tr,
+.sash-br {
+    text-align: right;
+}
+
+.sash-black {
+    @include highlightedVerticalGradientBlack;
+    @include boxGlow($colourBlack, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-grey {
+    @include highlightedVerticalGradientGrey;
+    @include boxGlow($colourGrey, 5px);
+    border: 1px solid $colourBlack;
+}
+
+.sash-grey-dark {
+    @include highlightedVerticalGradientGreyDark;
+    @include boxGlow($colourGreyDark, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-grey-light {
+    @include highlightedVerticalGradientGreyLight;
+    @include boxGlow($colourGreyLight, 5px);
+    border: 1px solid $colourGreyDark;
+}
+
+.sash-dark-red {
+    @include highlightedVerticalGradientDarkRed;
+    @include boxGlow($colourDarkRed, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-red {
+    @include highlightedVerticalGradientRed;
+    @include boxGlow($colourRed, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-orange {
+    @include highlightedVerticalGradientOrange;
+    @include boxGlow($colourOrange, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-yellow {
+    @include highlightedVerticalGradientYellow;
+    @include boxGlow($colourYellow, 5px);
+    border: 1px solid $colourGreyDark;
+}
+
+.sash-green {
+    @include highlightedVerticalGradientGreen;
+    @include boxGlow($colourGreen, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-turquoise {
+    @include highlightedVerticalGradientTurquoise;
+    @include boxGlow($colourTurquoise, 5px);
+    border: 1px solid $colourWhite;
+}
+
+.sash-blue {
+    @include highlightedVerticalGradientBlue;
+    @include boxGlow($colourBlue, 5px);
+    border: 1px solid $colourWhite;
+}

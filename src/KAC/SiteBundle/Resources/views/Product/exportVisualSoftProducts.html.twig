@@ -1,0 +1,37 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}Export Visual Soft Products{% endblock %}
+{% block top_reviews %}{% endblock %}
+{% block body %}
+    <div class="widget-group ptl clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Export Products to Visual Soft</h2>
+                </header>
+                <section class="ui-widget-content widget-content ui-corner-bottom">
+                    <p>To export products for importing into Visual Soft please select a brand and click the "Export" button.</p>
+                    <form class="form" action="" method="get">
+                        <fieldset>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Select a brand." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="formBrandId">Brand</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select class="fill" name="brandId" id="formBrandId">
+                                        {% for brand in brands %}
+                                            <option value="{{ brand.brand.id }}">{{ brand.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="clearfix">
+                            <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1119">Export</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -32,6 +32,10 @@
     color: $colourGrey !important;
 }
 
+.colour-grey-dark {
+    color: $colourGreyDark !important;
+}
+
 .colour-red {
     color: $colourRed !important;
 }
@@ -58,4 +62,30 @@
 
 .colour-turquoise {
     color: $colourTurquoise !important;
+}
+
+.lh100pc {
+    line-height: 100% !important;
+}
+
+.lh120pc {
+    line-height: 120% !important;
+}
+
+.lh125pc {
+    line-height: 125% !important;
+}
+
+.lh150pc {
+    line-height: 150% !important;
+}
+
+.fs9 {
+    font-size: 0.9rem !important;
+    font-size: 9px !important;
+}
+
+.fs10 {
+    font-size: 1.0rem !important;
+    font-size: 10px !important;
 }

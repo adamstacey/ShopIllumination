@@ -15,13 +15,22 @@
                 <div class="product-image-container man pr">
                     <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
                         {% if product.thumbnail_path %}
-                            <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
+                            <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
                         {% else  %}
-                            <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
+                            <img class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
                         {% endif  %}
                     </a>
                     {% if product.cheaper_alternative %}
                         {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
+                    {% endif %}
+                    {% if product.brand_id == 7 %}{# CDA #}
+                        <div class="sash sash-tl sash-red">10% OFF</div>
+                    {% elseif product.brand_id == 59 %}{# Caple #}
+                        <div class="sash sash-tl sash-red">10% OFF</div>
+                    {% endif %}
+                    {% set hobDepartmentIds = [936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170] %}
+                    {% if product.department_ids[0] in hobDepartmentIds %}
+                        <div class="sash sash-small sash-bl sash-orange">30% OFF<br />PAN SETS</div>
                     {% endif %}
                     <div class="small-basket-product-info" data-variantId="{{ product.variant_ids.0 }}">
                         {% include 'KACSiteBundle:Product:smallBasketInfo.html.twig' with {'productId': product.id, 'variantId': product.variant_ids.0} %}

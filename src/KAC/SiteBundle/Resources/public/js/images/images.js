@@ -11,7 +11,8 @@ $(document).ready(function() {
         small_thumbs: 3,
         zoom_area_width: 293,
         zoom_area_height: 293,
-        smallthumb_hide_single: false
+        smallthumb_hide_single: false,
+        smallthumb_inactive_opacity: 1
     });
 
     $(".etalage-inset").etalage({
@@ -23,7 +24,8 @@ $(document).ready(function() {
         source_image_height: 400,
         small_thumbs: 3,
         zoom_area_width: 222,
-        zoom_area_height: 222
+        zoom_area_height: 222,
+        smallthumb_inactive_opacity: 1
     });
 
     $(document).on("click", ".etalage_magnifier > div > img", function() {
