@@ -951,7 +951,8 @@ class ProductController extends Controller {
                     $csv .= ','; // -
                     $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
                     $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
-                    $csv .= ($colour ? '"'.$colour.'"' : '').','; // Product Subtitle
+                    //$csv .= ($colour ? '"'.$colour.'"' : '').','; // Product Subtitle
+                    $csv .= ','; // Product Subtitle
                     $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
                     $csv .= '"'.$description.'",'; // Product Description
                     $csv .= ','; // -
