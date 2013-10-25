@@ -823,7 +823,7 @@ class ProductController extends Controller {
             $csv = "VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Product Summary,Product Description,,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),,Meta Title,Meta Keywords,Meta Description,,Upselling 1 (Related Products),Upselling 2 (Other Colours)\n";
             foreach ($products as $product)
             {
-                if ($product->getStatus() == 'a')
+                if (($product->getStatus() == 'a') || ($product->getStatus() == 'h'))
                 {
                     $colour = false;
                     $materialFinish = false;
@@ -907,17 +907,17 @@ class ProductController extends Controller {
                     {
                         $pageTitle = str_replace('"', '', $product->getDescription()->getPageTitle());
                     }
-                    $pageTitle = str_replace($brandName, '', $pageTitle);
-                    $pageTitle = str_replace($productCode, '', $pageTitle);
-                    $pageTitle = str_replace('  ', ' ', trim($pageTitle));
+                    $cleansedPageTitle = str_replace($brandName, '', $pageTitle);
+                    $pageTitle = str_replace($productCode, '', $cleansedPageTitle);
+                    $pageTitle = str_replace('  ', ' ', trim($cleansedPageTitle));
                     $header = str_replace('"', '', $product->getVariant()->getDescription()->getHeader());
                     if (!$header)
                     {
                         $header = str_replace('"', '', $product->getDescription()->getHeader());
                     }
-                    $header = str_replace($brandName, '', $header);
-                    $header = str_replace($productCode, '', $header);
-                    $header = str_replace('  ', ' ', trim($header));
+                    $cleansedHeader = str_replace($brandName, '', $header);
+                    $cleansedHeader = str_replace($productCode, '', $cleansedHeader);
+                    $cleansedHeader = str_replace('  ', ' ', trim($cleansedHeader));
                     $metaDescription = str_replace('"', '', $product->getVariant()->getDescription()->getMetaDescription());
                     if (!$metaDescription)
                     {
@@ -949,8 +949,8 @@ class ProductController extends Controller {
                     $csv .= '"'.$productCode.'",'; // Parent Reference
                     $csv .= '"'.$productCode.'",'; // Child Reference
                     $csv .= ','; // -
-                    $csv .= '"'.$pageTitle.'",'; // Parent Product Title
-                    $csv .= '"'.$header.'",'; // Child Product Title
+                    $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
+                    $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                     $csv .= ($colour ? '"'.$colour.'"' : '').','; // Product Subtitle
                     $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
                     $csv .= '"'.$description.'",'; // Product Description
