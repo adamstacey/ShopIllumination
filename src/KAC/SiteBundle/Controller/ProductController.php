@@ -908,8 +908,8 @@ class ProductController extends Controller {
                         $pageTitle = str_replace('"', '', $product->getDescription()->getPageTitle());
                     }
                     $cleansedPageTitle = str_replace($brandName, '', $pageTitle);
-                    $pageTitle = str_replace($productCode, '', $cleansedPageTitle);
-                    $pageTitle = str_replace('  ', ' ', trim($cleansedPageTitle));
+                    $cleansedPageTitle = str_replace($productCode, '', $cleansedPageTitle);
+                    $cleansedPageTitle = str_replace('  ', ' ', trim($cleansedPageTitle));
                     $header = str_replace('"', '', $product->getVariant()->getDescription()->getHeader());
                     if (!$header)
                     {
