@@ -284,10 +284,11 @@ nav.left-menu .ui-button-text {
     margin: 3px 0 3px $spacingMedium;
 }
 
-a.submenu-brand {
+.sf-mega a.brand {
     width: 77px;
     height: 39px;
     padding: $spacingMedium;
+    margin: 0 !important;
 
     float: left;
     display: block;
@@ -298,11 +299,11 @@ a.submenu-brand {
     border-bottom: 1px solid $colourGreyLight;
 }
 
-a.submenu-brand:hover {
+.sf-mega a.brand:hover {
     @include boxInsetShadow($colourGreyLight, 0, 0, $spacingMedium);
 }
 
-a.submenu-brand img {
+.sf-mega a.brand img {
     width: 77px;
     height: 39px;
 }
@@ -434,7 +435,7 @@ a.submenu-brand img {
     top: 100%;
     left: 0;
     z-index: 99;
-    width: 976px;
+    width: 980px;
     box-shadow: 2px 2px 6px rgba(0,0,0,.2);
 }
 
@@ -519,12 +520,11 @@ a.submenu-brand img {
 }
 
 .sf-menu a.button {
+    padding: 0 15px;
     height: 32px;
     margin: 8px 0 0 10px;
+    float: right;
 
-    color: #58BB47;
-    font-weight: bold;
-    text-shadow: 0 1px 0 #e9e9e9;
     line-height: 32px;
     border-right: 0 none;
     -webkit-border-radius: 4px 4px 0 0;
@@ -534,10 +534,6 @@ a.submenu-brand img {
     -moz-box-shadow: 0 -2px 5px 0 #5a6470;
     box-shadow: 0 -2px 5px 0 #5a6470;
     background: transparent;
-}
-
-.sf-menu a.button:hover {
-    background: #ccc;
 }
 
 .sf-menu a.highlight:hover {
@@ -567,7 +563,7 @@ a.submenu-brand img {
 }
 
 .sf-mega {
-    background-color: #fff;
+    @include alphaBackground($colourWhite, $opacity: 0.95);
     box-sizing: border-box;
 }
 .sf-mega-section {
@@ -622,4 +618,65 @@ a.submenu-brand img {
 
 .sf-menu > li > a.sf-with-ul:after {
     right: 99999px !important;
+}
+
+.sf-mega table {
+    border-collapse: collapse;
+    border: 0 none !important;
+    table-layout: fixed !important;
+}
+
+.sf-mega table th,
+.sf-mega table td {
+    padding: $spacingLarge;
+
+    border-collapse: collapse;
+    border: 1px solid #ECECEC;
+    vertical-align: top !important;
+}
+
+.sf-mega .menu-image {
+    width: 100%;
+    height: 80px;
+    padding: 0;
+    margin: 0;
+}
+
+.sf-mega .menu-image a {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: 80px;
+
+    display: block;
+}
+
+.sf-mega h3 {
+    margin: 0;
+    padding: $spacingSmall 0 0 0;
+
+    color: $colourGreyDark;
+    @include fontSize(11);
+}
+
+.sf-mega h3 a {
+    margin: 0 !important;
+
+    color: $colourGrey;
+    font-weight: bold;
+    @include fontSize(11);
+}
+
+.sf-mega a {
+    margin: $spacingSmall 0 0 0;
+    padding: 0;
+    width: 100%;
+    height: 14px;
+
+    line-height: 14px;
+    display: block;
+    float: left;
+    color: $colourGrey;
+    @include fontSize(10);
+    text-decoration: none;
 }
