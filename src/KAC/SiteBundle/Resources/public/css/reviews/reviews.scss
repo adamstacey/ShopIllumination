@@ -308,6 +308,7 @@
     background: -ms-linear-gradient(top,  #424c53 0%,#2d363c 100%);
     background: linear-gradient(to bottom,  #424c53 0%,#2d363c 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#424c53', endColorstr='#2d363c',GradientType=0 );
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
 }
 
 .customer-review {
