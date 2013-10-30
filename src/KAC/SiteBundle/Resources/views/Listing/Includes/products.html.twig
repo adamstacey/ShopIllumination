@@ -79,7 +79,7 @@
                             {% for featureGroup in product.features|slice(0, 4) %}
                                 {% set feature = product['attr_feature_'~featureGroup|replace({" ": ""})][0] %}
                                 {% if (feature != '') and (feature != '*** NOT SET ***') %}
-                                    <li>{{ featureGroup }}: <strong>{{ feature }}</strong></li>
+                                    <li><strong>{{ featureGroup }}</strong>: {{ feature }}</li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
