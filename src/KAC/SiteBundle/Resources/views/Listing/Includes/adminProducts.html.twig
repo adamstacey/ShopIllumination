@@ -24,7 +24,7 @@
                         {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
                     {% endif %}
                 </div>
-                <div class="{% if product.status == 'd' %}background-red-extra-extra-light {% elseif product.status == 'h' %}background-orange-extra-extra-light {% endif %}pts">
+                <div class="{% if product.status == 'd' %}background-red-extra-light {% elseif product.status == 'h' %}background-orange-extra-light {% endif %}pts">
                     {% if not brand %}
                         {% if product.brand_logo != '' %}
                             <div class="fr">
