@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,7 +7,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassZ1WoUR.scss */
+/* line 4, assetic_compassviPkmN.scss */
 .admin-container {
   padding: 10px;
   background: #29a3cc;

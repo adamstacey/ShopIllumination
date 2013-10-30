@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,23 +7,23 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compass3lfPzt.scss */
+/* line 4, assetic_compassvFOLEu.scss */
 a {
   text-decoration: none;
   color: #4ec0e3;
 }
 
-/* line 9, assetic_compass3lfPzt.scss */
+/* line 9, assetic_compassvFOLEu.scss */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 13, assetic_compass3lfPzt.scss */
+/* line 13, assetic_compassvFOLEu.scss */
 a:focus {
   outline: none;
 }
 
-/* line 17, assetic_compass3lfPzt.scss */
+/* line 17, assetic_compassvFOLEu.scss */
 .top-menu {
   border-top: 3px solid #4ec0e3;
   background: white;
@@ -48,18 +44,18 @@ a:focus {
   background-repeat: no-repeat;
 }
 
-/* line 22, assetic_compass3lfPzt.scss */
+/* line 22, assetic_compassvFOLEu.scss */
 .social-media-interaction {
   float: left;
-  padding: 2px 15px 2px 0;
+  padding: 0 10px 0 0;
 }
 
-/* line 27, assetic_compass3lfPzt.scss */
+/* line 27, assetic_compassvFOLEu.scss */
 .top-menu-links {
   float: right;
 }
 
-/* line 31, assetic_compass3lfPzt.scss */
+/* line 31, assetic_compassvFOLEu.scss */
 .top-menu-links a {
   text-shadow: 0 1px 2px white;
   text-shadow: 0 1px 2px white;
@@ -69,13 +65,13 @@ a:focus {
   font-size: 1.1rem;
 }
 
-/* line 38, assetic_compass3lfPzt.scss */
+/* line 38, assetic_compassvFOLEu.scss */
 nav.left-menu ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 43, assetic_compass3lfPzt.scss */
+/* line 43, assetic_compassvFOLEu.scss */
 nav.left-menu ul li {
   margin: 0 0 5px 0;
   padding: 0 0 0 42px;
@@ -97,59 +93,59 @@ nav.left-menu ul li {
   overflow: hidden;
 }
 
-/* line 57, assetic_compass3lfPzt.scss */
+/* line 57, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.black {
   border: 1px solid black;
 }
 
-/* line 61, assetic_compass3lfPzt.scss */
+/* line 61, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.grey {
   border: 1px solid #6c8087;
 }
 
-/* line 65, assetic_compass3lfPzt.scss */
+/* line 65, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.red {
   border: 1px solid #cc0000;
 }
 
-/* line 69, assetic_compass3lfPzt.scss */
+/* line 69, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.dark-red {
   border: 1px solid #9a0000;
 }
 
-/* line 73, assetic_compass3lfPzt.scss */
+/* line 73, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.orange {
   border: 1px solid #cc5200;
 }
 
-/* line 77, assetic_compass3lfPzt.scss */
+/* line 77, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.yellow {
   border: 1px solid #e6ac00;
 }
 
-/* line 81, assetic_compass3lfPzt.scss */
+/* line 81, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.green {
   border: 1px solid #137f13;
 }
 
-/* line 85, assetic_compass3lfPzt.scss */
+/* line 85, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.turquoise {
   border: 1px solid #007398;
 }
 
-/* line 89, assetic_compass3lfPzt.scss */
+/* line 89, assetic_compassvFOLEu.scss */
 nav.left-menu ul li.blue {
   border: 1px solid #003b73;
 }
 
-/* line 93, assetic_compass3lfPzt.scss */
+/* line 93, assetic_compassvFOLEu.scss */
 nav.left-menu ul li .nav-icon {
   position: absolute;
   top: 3px;
   left: 5px;
 }
 
-/* line 99, assetic_compass3lfPzt.scss */
+/* line 99, assetic_compassvFOLEu.scss */
 nav.left-menu .button {
   margin: 0;
   width: 100%;
@@ -171,64 +167,64 @@ nav.left-menu .button {
   box-sizing: border-box;
 }
 
-/* line 110, assetic_compass3lfPzt.scss */
+/* line 110, assetic_compassvFOLEu.scss */
 nav.left-menu li.black .button {
   border-left: 2px solid black;
 }
 
-/* line 114, assetic_compass3lfPzt.scss */
+/* line 114, assetic_compassvFOLEu.scss */
 nav.left-menu li.grey .button {
   border-left: 2px solid #6c8087;
 }
 
-/* line 118, assetic_compass3lfPzt.scss */
+/* line 118, assetic_compassvFOLEu.scss */
 nav.left-menu li.red .button {
   border-left: 2px solid #cc0000;
 }
 
-/* line 122, assetic_compass3lfPzt.scss */
+/* line 122, assetic_compassvFOLEu.scss */
 nav.left-menu li.dark-red .button {
   border-left: 2px solid #9a0000;
 }
 
-/* line 126, assetic_compass3lfPzt.scss */
+/* line 126, assetic_compassvFOLEu.scss */
 nav.left-menu li.orange .button {
   border-left: 2px solid #cc5200;
 }
 
-/* line 130, assetic_compass3lfPzt.scss */
+/* line 130, assetic_compassvFOLEu.scss */
 nav.left-menu li.yellow .button {
   border-left: 2px solid #e6ac00;
 }
 
-/* line 134, assetic_compass3lfPzt.scss */
+/* line 134, assetic_compassvFOLEu.scss */
 nav.left-menu li.green .button {
   border-left: 2px solid #137f13;
 }
 
-/* line 138, assetic_compass3lfPzt.scss */
+/* line 138, assetic_compassvFOLEu.scss */
 nav.left-menu li.turquoise .button {
   border-left: 2px solid #007398;
 }
 
-/* line 142, assetic_compass3lfPzt.scss */
+/* line 142, assetic_compassvFOLEu.scss */
 nav.left-menu li.blue .button {
   border-left: 2px solid #003b73;
 }
 
-/* line 146, assetic_compass3lfPzt.scss */
+/* line 146, assetic_compassvFOLEu.scss */
 nav.left-menu .button .ui-button-icon-secondary {
   position: absolute;
   top: 3px;
   right: 5px;
 }
 
-/* line 152, assetic_compass3lfPzt.scss */
+/* line 152, assetic_compassvFOLEu.scss */
 nav.left-menu .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 156, assetic_compass3lfPzt.scss */
+/* line 156, assetic_compassvFOLEu.scss */
 .main-menu {
   height: 40px;
   background: #29a3cc;
@@ -247,21 +243,26 @@ nav.left-menu .ui-button-text {
   background-image: -o-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
   background-image: linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
   background-repeat: no-repeat;
+  -webkit-box-shadow: 0 0 5px 0 black;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 0 5px 0 black;
+  -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 5px 0 black;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
 }
 
-/* line 161, assetic_compass3lfPzt.scss */
+/* line 162, assetic_compassvFOLEu.scss */
 .main-menu nav {
   position: relative;
 }
 
-/* line 165, assetic_compass3lfPzt.scss */
+/* line 166, assetic_compassvFOLEu.scss */
 .main-menu > nav > ul {
   margin: 0;
   padding: 0;
-  border-left: 1px solid #29a3cc;
 }
 
-/* line 172, assetic_compass3lfPzt.scss */
+/* line 171, assetic_compassvFOLEu.scss */
 .main-menu > nav > ul > li {
   margin: 0;
   padding: 0;
@@ -269,7 +270,7 @@ nav.left-menu .ui-button-text {
   list-style: none;
 }
 
-/* line 181, assetic_compass3lfPzt.scss */
+/* line 180, assetic_compassvFOLEu.scss */
 .main-menu nav > ul > li > a,
 .main-menu nav > ul > li > a.hover {
   padding: 0 7px;
@@ -288,7 +289,7 @@ nav.left-menu .ui-button-text {
   line-height: 16px;
 }
 
-/* line 199, assetic_compass3lfPzt.scss */
+/* line 198, assetic_compassvFOLEu.scss */
 .main-menu nav > ul > li > a:hover,
 .main-menu nav > ul > li > a.hover {
   -webkit-box-shadow: inset 0 -5px 20px 0 #384246;
@@ -299,12 +300,12 @@ nav.left-menu .ui-button-text {
   box-shadow: inset 0 -5px 20px 0 #384246;
 }
 
-/* line 203, assetic_compass3lfPzt.scss */
+/* line 202, assetic_compassvFOLEu.scss */
 .main-menu nav > ul > li > a.highlighted {
   color: #e6ac00;
 }
 
-/* line 207, assetic_compass3lfPzt.scss */
+/* line 206, assetic_compassvFOLEu.scss */
 .main-menu nav > .button {
   position: absolute;
   top: 8px;
@@ -324,12 +325,12 @@ nav.left-menu .ui-button-text {
   box-shadow: 0 -2px 5px 0 #384246;
 }
 
-/* line 217, assetic_compass3lfPzt.scss */
+/* line 216, assetic_compassvFOLEu.scss */
 .main-menu nav > .button .ui-button-text {
   line-height: 26px;
 }
 
-/* line 221, assetic_compass3lfPzt.scss */
+/* line 220, assetic_compassvFOLEu.scss */
 .submenu-container {
   width: 100%;
   height: 270px;
@@ -355,12 +356,12 @@ nav.left-menu .ui-button-text {
   box-shadow: 0 2px 20px 0 #384246;
 }
 
-/* line 238, assetic_compass3lfPzt.scss */
+/* line 237, assetic_compassvFOLEu.scss */
 .submenu-container-brands {
   height: 240px;
 }
 
-/* line 242, assetic_compass3lfPzt.scss */
+/* line 241, assetic_compassvFOLEu.scss */
 .main-menu .menu-vertical {
   width: 244px;
   height: 300px;
@@ -381,13 +382,13 @@ nav.left-menu .ui-button-text {
   border-right: 1px solid #6c8087;
 }
 
-/* line 259, assetic_compass3lfPzt.scss */
+/* line 258, assetic_compassvFOLEu.scss */
 .main-menu .menu-vertical li {
   margin: 0;
   padding: 0;
 }
 
-/* line 265, assetic_compass3lfPzt.scss */
+/* line 264, assetic_compassvFOLEu.scss */
 .main-menu .menu-vertical li a,
 .main-menu .menu-vertical li a.hover {
   height: 30px;
@@ -422,7 +423,7 @@ nav.left-menu .ui-button-text {
   white-space: nowrap;
 }
 
-/* line 279, assetic_compass3lfPzt.scss */
+/* line 278, assetic_compassvFOLEu.scss */
 .main-menu .menu-vertical li a.hover {
   -webkit-box-shadow: inset 0 0 10px 0 #384246;
   -webkit-box-shadow: inset 0 0 10px 0 #384246;
@@ -434,12 +435,12 @@ nav.left-menu .ui-button-text {
   text-shadow: 1px 0 0 white;
 }
 
-/* line 284, assetic_compass3lfPzt.scss */
+/* line 283, assetic_compassvFOLEu.scss */
 .main-menu .menu-vertical li span.ui-icon-small {
   margin: 3px 0 3px 10px;
 }
 
-/* line 288, assetic_compass3lfPzt.scss */
+/* line 287, assetic_compassvFOLEu.scss */
 a.submenu-brand {
   width: 77px;
   height: 39px;
@@ -452,7 +453,7 @@ a.submenu-brand {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 302, assetic_compass3lfPzt.scss */
+/* line 301, assetic_compassvFOLEu.scss */
 a.submenu-brand:hover {
   -webkit-box-shadow: inset 0 0 10px 0 #c5d2d6;
   -webkit-box-shadow: inset 0 0 10px 0 #c5d2d6;
@@ -462,16 +463,15 @@ a.submenu-brand:hover {
   box-shadow: inset 0 0 10px 0 #c5d2d6;
 }
 
-/* line 306, assetic_compass3lfPzt.scss */
+/* line 305, assetic_compassvFOLEu.scss */
 a.submenu-brand img {
   width: 77px;
   height: 39px;
 }
 
-/* line 311, assetic_compass3lfPzt.scss */
+/* line 310, assetic_compassvFOLEu.scss */
 .sub-menu {
   position: relative;
-  width: 100%;
   background: white;
   background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #c5d2d6));
@@ -488,32 +488,37 @@ a.submenu-brand img {
   background-image: -o-linear-gradient(top, #ffffff, #c5d2d6);
   background-image: linear-gradient(top, #ffffff, #c5d2d6);
   background-repeat: no-repeat;
-  -webkit-box-shadow: inset 0 1px 5px 0 #384246;
-  -webkit-box-shadow: inset 0 1px 5px 0 #384246;
-  -moz-box-shadow: inset 0 1px 5px 0 #384246;
-  -moz-box-shadow: inset 0 1px 5px 0 #384246;
-  box-shadow: inset 0 1px 5px 0 #384246;
-  box-shadow: inset 0 1px 5px 0 #384246;
+  -webkit-box-shadow: 0 0 5px 0 black;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 0 5px 0 black;
+  -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 5px 0 black;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
+}
+
+/* line 317, assetic_compassvFOLEu.scss */
+.sub-menu > div {
+  padding: 0 15px;
   border-bottom: 3px solid #6c8087;
 }
 
-/* line 320, assetic_compass3lfPzt.scss */
+/* line 322, assetic_compassvFOLEu.scss */
 .sub-menu .widget {
   padding: 8px 10px;
 }
 
-/* line 324, assetic_compass3lfPzt.scss */
+/* line 326, assetic_compassvFOLEu.scss */
 .sub-menu .ui-icon-small {
   margin: 0 10px 0 0;
 }
 
-/* line 328, assetic_compass3lfPzt.scss */
+/* line 330, assetic_compassvFOLEu.scss */
 .sub-menu h2 {
   margin: 0;
   padding: 0;
 }
 
-/* line 334, assetic_compass3lfPzt.scss */
+/* line 336, assetic_compassvFOLEu.scss */
 .sub-menu h2,
 .sub-menu h2 a {
   font-size: 24px;
@@ -525,13 +530,13 @@ a.submenu-brand img {
   text-decoration: none;
 }
 
-/* line 342, assetic_compass3lfPzt.scss */
+/* line 344, assetic_compassvFOLEu.scss */
 .sub-menu h3 {
   margin: 0;
   padding: 0;
 }
 
-/* line 348, assetic_compass3lfPzt.scss */
+/* line 350, assetic_compassvFOLEu.scss */
 .sub-menu h3,
 .sub-menu h3 a {
   font-size: 14px;
@@ -544,18 +549,398 @@ a.submenu-brand img {
   text-decoration: none;
 }
 
-/* line 357, assetic_compass3lfPzt.scss */
+/* line 359, assetic_compassvFOLEu.scss */
 .sub-menu p {
   padding: 2px 0 0 0;
   margin: 0;
 }
 
-/* line 363, assetic_compass3lfPzt.scss */
+/* line 365, assetic_compassvFOLEu.scss */
 .sub-menu p,
 .sub-menu p a {
   font-size: 10px;
   font-size: 1rem;
   color: #6c8087;
   line-height: 100%;
+  text-decoration: none;
+}
+
+/* line 372, assetic_compassvFOLEu.scss */
+.social-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px 5px 0;
+  background-size: 120px 60px;
+  background-repeat: no-repeat;
+  background-image: url("/bundles/kacsite/css/resources/images/social-icons.png");
+  float: left;
+}
+
+/* line 382, assetic_compassvFOLEu.scss */
+.facebook {
+  background-position: 0 0;
+}
+
+/* line 386, assetic_compassvFOLEu.scss */
+.facebook:hover {
+  background-position: 0 -30px;
+}
+
+/* line 390, assetic_compassvFOLEu.scss */
+.twitter {
+  background-position: -30px 0;
+}
+
+/* line 394, assetic_compassvFOLEu.scss */
+.twitter:hover {
+  background-position: -30px -30px;
+}
+
+/* line 398, assetic_compassvFOLEu.scss */
+.google-plus {
+  background-position: -60px 0;
+}
+
+/* line 402, assetic_compassvFOLEu.scss */
+.google-plus:hover {
+  background-position: -60px -30px;
+}
+
+/* line 406, assetic_compassvFOLEu.scss */
+.youtube {
+  background-position: -90px 0;
+}
+
+/* line 410, assetic_compassvFOLEu.scss */
+.youtube:hover {
+  background-position: -90px -30px;
+}
+
+/* line 421, assetic_compassvFOLEu.scss */
+.sf-menu {
+  position: relative;
+}
+
+/* line 425, assetic_compassvFOLEu.scss */
+.sf-menu, .sf-menu * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* line 431, assetic_compassvFOLEu.scss */
+.sf-menu .sf-mega {
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+  width: 980px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* line 441, assetic_compassvFOLEu.scss */
+.sf-menu li {
+  position: relative;
+}
+
+/* line 445, assetic_compassvFOLEu.scss */
+.sf-mega-container {
+  position: static !important;
+}
+
+/* line 449, assetic_compassvFOLEu.scss */
+.sf-menu ul {
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+}
+
+/* line 457, assetic_compassvFOLEu.scss */
+.sf-menu > li {
+  float: left;
+}
+
+/* line 462, assetic_compassvFOLEu.scss */
+.sf-menu li:hover > ul,
+.sf-menu li.sfHover > ul {
+  display: block;
+}
+
+/* line 466, assetic_compassvFOLEu.scss */
+.sf-menu a {
+  display: block;
+  position: relative;
+}
+
+/* line 471, assetic_compassvFOLEu.scss */
+.sf-menu ul ul {
+  top: 0;
+  left: 100%;
+}
+
+/* line 476, assetic_compassvFOLEu.scss */
+.sf-menu {
+  float: left;
+}
+
+/* line 480, assetic_compassvFOLEu.scss */
+.sf-menu ul {
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* line 484, assetic_compassvFOLEu.scss */
+.sf-menu > ul {
+  border-top: 3px solid #384246;
+}
+
+/* line 488, assetic_compassvFOLEu.scss */
+.sf-menu > li > ul a {
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  display: block;
+  text-shadow: 0 1px 0 #384246;
+  text-shadow: 0 1px 0 #384246;
+  text-align: left;
+  font-weight: normal;
+  text-decoration: none;
+  font-size: 11px;
+  font-size: 1.1rem;
+  color: white;
+  vertical-align: middle;
+  border-right: 1px solid #29a3cc;
+  background: #29a3cc;
+  background: -moz-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
+  background: -webkit-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -o-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -ms-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: linear-gradient(to bottom, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#29a3cc', endColorstr = '#007398', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JhZWJmYyIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiMyOWEzY2MiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDczOTgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
+  background-image: -webkit-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: -moz-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: -o-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* line 505, assetic_compassvFOLEu.scss */
+.sf-menu > li > ul a:hover {
+  -webkit-box-shadow: inset 0 -5px 20px 0 #384246;
+  -webkit-box-shadow: inset 0 -5px 20px 0 #384246;
+  -moz-box-shadow: inset 0 -5px 20px 0 #384246;
+  -moz-box-shadow: inset 0 -5px 20px 0 #384246;
+  box-shadow: inset 0 -5px 20px 0 #384246;
+  box-shadow: inset 0 -5px 20px 0 #384246;
+}
+
+/* line 509, assetic_compassvFOLEu.scss */
+.sf-menu a.highlight {
+  background: transparent;
+  color: #f7941d;
+  font-weight: bold;
+  text-shadow: 0 1px 0 #e9e9e9;
+  border-right: 1px solid #ccc;
+}
+
+/* line 517, assetic_compassvFOLEu.scss */
+.sf-menu a.highlight:hover {
+  background: #ccc;
+}
+
+/* line 521, assetic_compassvFOLEu.scss */
+.sf-menu a.button {
+  height: 32px;
+  margin: 8px 0 0 10px;
+  color: #58BB47;
+  font-weight: bold;
+  text-shadow: 0 1px 0 #e9e9e9;
+  line-height: 32px;
+  border-right: 0 none;
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+  -webkit-box-shadow: 0 -2px 5px 0 #5a6470;
+  -moz-box-shadow: 0 -2px 5px 0 #5a6470;
+  box-shadow: 0 -2px 5px 0 #5a6470;
+  background: transparent;
+}
+
+/* line 539, assetic_compassvFOLEu.scss */
+.sf-menu a.button:hover {
+  background: #ccc;
+}
+
+/* line 543, assetic_compassvFOLEu.scss */
+.sf-menu a.highlight:hover {
+  background: #ccc;
+}
+
+/* line 547, assetic_compassvFOLEu.scss */
+.sf-menu ul a {
+  text-align: left;
+}
+
+/* line 551, assetic_compassvFOLEu.scss */
+.sf-menu li {
+  white-space: nowrap;
+  *white-space: normal;
+  -webkit-transition: background .2s;
+  transition: background .2s;
+}
+
+/* line 559, assetic_compassvFOLEu.scss */
+.sf-menu li:hover,
+.sf-menu li.sfHover {
+  -webkit-transition: none;
+  transition: none;
+}
+
+/* line 565, assetic_compassvFOLEu.scss */
+.sf-menu li:hover > .sf-mega,
+.sf-menu li.sfHover > .sf-mega {
+  display: block;
+}
+
+/* line 569, assetic_compassvFOLEu.scss */
+.sf-mega {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAQAAAAnZu5uAAAAEklEQVR4nGP6/wkGmRjggCATAOIwCcDkQqcfAAAAAElFTkSuQmCC');
+  background: rgba(255, 255, 255, 0.95);
+  box-sizing: border-box;
+}
+
+/* line 573, assetic_compassvFOLEu.scss */
+.sf-mega-section {
+  float: left;
+  width: 8em;
+  /* optional */
+  padding: 0 1em 1em 0;
+  margin-right: 1em;
+  border-right: 1px solid #b4c8f5;
+}
+
+/* line 581, assetic_compassvFOLEu.scss */
+.sf-arrows .sf-with-ul {
+  padding-right: 30px;
+  *padding-right: 10px;
+}
+
+/* line 586, assetic_compassvFOLEu.scss */
+.sf-arrows .sf-with-ul:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: -3px;
+  height: 0;
+  width: 0;
+  border: 5px solid transparent;
+  border-top-color: #ccc;
+  border-top-color: rgba(255, 255, 255, 0.5);
+}
+
+/* line 601, assetic_compassvFOLEu.scss */
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: #fff;
+}
+
+/* line 605, assetic_compassvFOLEu.scss */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: #ccc;
+  border-left-color: rgba(255, 255, 255, 0.5);
+}
+
+/* line 615, assetic_compassvFOLEu.scss */
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: #fff;
+}
+
+/* line 619, assetic_compassvFOLEu.scss */
+.sf-menu > li > a {
+  padding-right: 10px !important;
+}
+
+/* line 623, assetic_compassvFOLEu.scss */
+.sf-menu > li > a.sf-with-ul:after {
+  right: 99999px !important;
+}
+
+/* line 627, assetic_compassvFOLEu.scss */
+.sf-mega table {
+  border-collapse: collapse;
+  border: 0 none !important;
+  table-layout: fixed !important;
+}
+
+/* line 634, assetic_compassvFOLEu.scss */
+.sf-mega table th,
+.sf-mega table td {
+  padding: 15px;
+  border-collapse: collapse;
+  border: 1px solid #ECECEC;
+  vertical-align: top !important;
+}
+
+/* line 642, assetic_compassvFOLEu.scss */
+.sf-mega .menu-image {
+  width: 100%;
+  height: 80px;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 649, assetic_compassvFOLEu.scss */
+.sf-mega .menu-image a {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 80px;
+  display: block;
+}
+
+/* line 658, assetic_compassvFOLEu.scss */
+.sf-mega h3 {
+  margin: 0;
+  padding: 5px 0 0 0;
+  color: #384246;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+
+/* line 666, assetic_compassvFOLEu.scss */
+.sf-mega h3 a {
+  margin: 0 !important;
+  color: #6c8087;
+  font-weight: bold;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+
+/* line 674, assetic_compassvFOLEu.scss */
+.sf-mega a {
+  margin: 5px 0 0 0;
+  padding: 0;
+  width: 100%;
+  height: 14px;
+  line-height: 14px;
+  display: block;
+  float: left;
+  color: #6c8087;
+  font-size: 10px;
+  font-size: 1rem;
   text-decoration: none;
 }

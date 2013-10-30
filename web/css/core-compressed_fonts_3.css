@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,76 +7,113 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassb2NqFg.scss */
+/* line 4, assetic_compassnwVTye.scss */
 .uppercase {
   text-transform: uppercase;
 }
 
-/* line 8, assetic_compassb2NqFg.scss */
+/* line 8, assetic_compassnwVTye.scss */
 .strikethrough {
   text-decoration: line-through;
 }
 
-/* line 12, assetic_compassb2NqFg.scss */
+/* line 12, assetic_compassnwVTye.scss */
 .important {
   text-transform: uppercase;
   color: #cc0000;
   font-weight: bold;
 }
 
-/* line 18, assetic_compassb2NqFg.scss */
+/* line 18, assetic_compassnwVTye.scss */
 .small {
   color: #384246;
   font-size: 10px;
   font-size: 1rem;
 }
 
-/* line 23, assetic_compassb2NqFg.scss */
+/* line 23, assetic_compassnwVTye.scss */
 .colour-black {
-  color: black;
+  color: black !important;
 }
 
-/* line 27, assetic_compassb2NqFg.scss */
+/* line 27, assetic_compassnwVTye.scss */
 .colour-white {
-  color: white;
+  color: white !important;
 }
 
-/* line 31, assetic_compassb2NqFg.scss */
+/* line 31, assetic_compassnwVTye.scss */
 .colour-grey {
-  color: #6c8087;
+  color: #6c8087 !important;
 }
 
-/* line 35, assetic_compassb2NqFg.scss */
+/* line 35, assetic_compassnwVTye.scss */
+.colour-grey-dark {
+  color: #384246 !important;
+}
+
+/* line 39, assetic_compassnwVTye.scss */
 .colour-red {
-  color: #cc0000;
+  color: #cc0000 !important;
 }
 
-/* line 39, assetic_compassb2NqFg.scss */
+/* line 43, assetic_compassnwVTye.scss */
 .colour-dark-red {
-  color: #9a0000;
+  color: #9a0000 !important;
 }
 
-/* line 43, assetic_compassb2NqFg.scss */
+/* line 47, assetic_compassnwVTye.scss */
 .colour-orange {
-  color: #cc5200;
+  color: #cc5200 !important;
 }
 
-/* line 47, assetic_compassb2NqFg.scss */
+/* line 51, assetic_compassnwVTye.scss */
 .colour-yellow {
-  color: #e6ac00;
+  color: #e6ac00 !important;
 }
 
-/* line 51, assetic_compassb2NqFg.scss */
+/* line 55, assetic_compassnwVTye.scss */
 .colour-green {
-  color: #137f13;
+  color: #137f13 !important;
 }
 
-/* line 55, assetic_compassb2NqFg.scss */
+/* line 59, assetic_compassnwVTye.scss */
 .colour-blue {
-  color: #003b73;
+  color: #003b73 !important;
 }
 
-/* line 59, assetic_compassb2NqFg.scss */
+/* line 63, assetic_compassnwVTye.scss */
 .colour-turquoise {
-  color: #007398;
+  color: #007398 !important;
+}
+
+/* line 67, assetic_compassnwVTye.scss */
+.lh100pc {
+  line-height: 100% !important;
+}
+
+/* line 71, assetic_compassnwVTye.scss */
+.lh120pc {
+  line-height: 120% !important;
+}
+
+/* line 75, assetic_compassnwVTye.scss */
+.lh125pc {
+  line-height: 125% !important;
+}
+
+/* line 79, assetic_compassnwVTye.scss */
+.lh150pc {
+  line-height: 150% !important;
+}
+
+/* line 83, assetic_compassnwVTye.scss */
+.fs9 {
+  font-size: 0.9rem !important;
+  font-size: 9px !important;
+}
+
+/* line 88, assetic_compassnwVTye.scss */
+.fs10 {
+  font-size: 1.0rem !important;
+  font-size: 10px !important;
 }

@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,14 +7,14 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassFhpubL.scss */
+/* line 4, assetic_compassRE0KGQ.scss */
 .search-container {
   padding: 0;
   margin: 0;
   width: 440px;
   height: 38px;
   position: absolute;
-  top: 12px;
+  top: 22px;
   left: 239px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -50,7 +46,7 @@
   background-repeat: no-repeat;
 }
 
-/* line 20, assetic_compassFhpubL.scss */
+/* line 20, assetic_compassRE0KGQ.scss */
 .search-container:hover,
 .search-container:focus {
   -webkit-box-shadow: 0 0 10px 5px #e6ac00;
@@ -61,14 +57,14 @@
   box-shadow: 0 0 10px 5px #e6ac00;
 }
 
-/* line 24, assetic_compassFhpubL.scss */
+/* line 24, assetic_compassRE0KGQ.scss */
 .search-container .icon-grey {
   position: absolute;
   top: 3px;
   left: 5px;
 }
 
-/* line 33, assetic_compassFhpubL.scss */
+/* line 33, assetic_compassRE0KGQ.scss */
 .search-container .twitter-typeahead,
 .search-container input,
 .search-container input:hover,
@@ -90,17 +86,17 @@
   box-shadow: none !important;
 }
 
-/* line 44, assetic_compassFhpubL.scss */
+/* line 44, assetic_compassRE0KGQ.scss */
 .search-container .twitter-typeahead {
   padding-top: 0;
 }
 
-/* line 48, assetic_compassFhpubL.scss */
+/* line 48, assetic_compassRE0KGQ.scss */
 .search-container .twitter-typeahead input {
   padding: 0;
 }
 
-/* line 52, assetic_compassFhpubL.scss */
+/* line 52, assetic_compassRE0KGQ.scss */
 .search-container .icon-dark-red {
   position: absolute;
   top: 3px;
@@ -109,7 +105,7 @@
   cursor: pointer;
 }
 
-/* line 63, assetic_compassFhpubL.scss */
+/* line 63, assetic_compassRE0KGQ.scss */
 .search-container .button,
 .search-container .button:hover {
   position: absolute;
@@ -128,12 +124,12 @@
   box-shadow: none !important;
 }
 
-/* line 74, assetic_compassFhpubL.scss */
+/* line 74, assetic_compassRE0KGQ.scss */
 .search-container .button .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 78, assetic_compassFhpubL.scss */
+/* line 78, assetic_compassRE0KGQ.scss */
 .tt-hint {
   padding: 8px 65px 8px 50px !important;
   width: 440px;
@@ -141,13 +137,13 @@
   color: #999;
 }
 
-/* line 85, assetic_compassFhpubL.scss */
+/* line 85, assetic_compassRE0KGQ.scss */
 .tt-dropdown-menu {
   width: 440px;
   margin-top: 10px;
   padding: 5px 0;
   background-color: #fff;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -157,20 +153,20 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* line 100, assetic_compassFhpubL.scss */
+/* line 100, assetic_compassRE0KGQ.scss */
 .tt-suggestion {
   padding: 3px 20px;
   font-size: 14px;
   line-height: 24px;
 }
 
-/* line 106, assetic_compassFhpubL.scss */
+/* line 106, assetic_compassRE0KGQ.scss */
 .tt-suggestion.tt-is-under-cursor {
   color: #fff;
   background-color: #0097cf;
 }
 
-/* line 112, assetic_compassFhpubL.scss */
+/* line 112, assetic_compassRE0KGQ.scss */
 .tt-suggestion p {
   margin: 0;
 }

@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,13 +7,13 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassrtHR48.scss */
+/* line 4, assetic_compassDIJ5Jf.scss */
 .slider-wrapper {
   position: relative;
   overflow: hidden;
 }
 
-/* line 10, assetic_compassrtHR48.scss */
+/* line 10, assetic_compassDIJ5Jf.scss */
 .slider-wrapper h1,
 .product .slider-wrapper h1 {
   padding: 20px;
@@ -25,7 +21,7 @@
   top: 40px;
   border: 0 none !important;
   color: white;
-  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNi2AwAALwAtgXXY6AAAAAASUVORK5CYII=');
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAQAAAAnZu5uAAAAEklEQVR4nGNi2AyDTAxwQJAJAKzQA4qwRcwCAAAAAElFTkSuQmCC');
   background: rgba(0, 0, 0, 0.7);
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
   font-size: 36px;
@@ -35,32 +31,32 @@
   font-weight: normal;
 }
 
-/* line 25, assetic_compassrtHR48.scss */
+/* line 25, assetic_compassDIJ5Jf.scss */
 .slider-wrapper h1.left {
   left: 0;
   text-align: left;
 }
 
-/* line 30, assetic_compassrtHR48.scss */
+/* line 30, assetic_compassDIJ5Jf.scss */
 .slider-wrapper h1.right {
   right: 0;
   text-align: right;
 }
 
-/* line 35, assetic_compassrtHR48.scss */
+/* line 35, assetic_compassDIJ5Jf.scss */
 .slider-wrapper img.logo {
   position: absolute;
   top: 15px;
   right: 15px;
 }
 
-/* line 41, assetic_compassrtHR48.scss */
+/* line 41, assetic_compassDIJ5Jf.scss */
 .slider {
   padding: 0;
   margin: 0;
 }
 
-/* line 46, assetic_compassrtHR48.scss */
+/* line 46, assetic_compassDIJ5Jf.scss */
 .rhino-btn {
   display: block;
   background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite.png");
@@ -75,7 +71,7 @@
   user-select: none;
 }
 
-/* line 57, assetic_compassrtHR48.scss */
+/* line 57, assetic_compassDIJ5Jf.scss */
 .rhino-prev, .rhino-next {
   width: 32px;
   height: 32px;
@@ -83,29 +79,29 @@
   top: 50%;
 }
 
-/* line 65, assetic_compassrtHR48.scss */
+/* line 65, assetic_compassDIJ5Jf.scss */
 .rhino-prev {
   left: 10px;
   background-position: 0 0;
 }
 
-/* line 70, assetic_compassrtHR48.scss */
+/* line 70, assetic_compassDIJ5Jf.scss */
 .rhino-next {
   right: 10px;
   background-position: -32px 0;
 }
 
-/* line 75, assetic_compassrtHR48.scss */
+/* line 75, assetic_compassDIJ5Jf.scss */
 .rhino-prev:hover {
   background-position: 0 -32px;
 }
 
-/* line 79, assetic_compassrtHR48.scss */
+/* line 79, assetic_compassDIJ5Jf.scss */
 .rhino-next:hover {
   background-position: -32px -32px;
 }
 
-/* line 83, assetic_compassrtHR48.scss */
+/* line 83, assetic_compassDIJ5Jf.scss */
 .rhino-toggle {
   width: 17px;
   height: 20px;
@@ -113,34 +109,34 @@
   top: 10px;
 }
 
-/* line 91, assetic_compassrtHR48.scss */
+/* line 91, assetic_compassDIJ5Jf.scss */
 .rhino-play {
   background-position: -64px 0;
 }
 
-/* line 95, assetic_compassrtHR48.scss */
+/* line 95, assetic_compassDIJ5Jf.scss */
 .rhino-play:hover {
   background-position: -64px -20px;
 }
 
-/* line 99, assetic_compassrtHR48.scss */
+/* line 99, assetic_compassDIJ5Jf.scss */
 .rhino-pause {
   background-position: -81px 0;
 }
 
-/* line 103, assetic_compassrtHR48.scss */
+/* line 103, assetic_compassDIJ5Jf.scss */
 .rhino-pause:hover {
   background-position: -81px -20px;
 }
 
-/* line 107, assetic_compassrtHR48.scss */
+/* line 107, assetic_compassDIJ5Jf.scss */
 .rhino-container {
   position: relative;
   padding: 0;
   margin: 0;
 }
 
-/* line 113, assetic_compassrtHR48.scss */
+/* line 113, assetic_compassDIJ5Jf.scss */
 .rhino-caption {
   padding: 10px;
   display: none;
@@ -160,7 +156,7 @@
   user-select: none;
 }
 
-/* line 130, assetic_compassrtHR48.scss */
+/* line 130, assetic_compassDIJ5Jf.scss */
 .rhino-bullets {
   margin: 0 0 0 -50px;
   padding: 0;
@@ -169,14 +165,14 @@
   left: 50%;
 }
 
-/* line 139, assetic_compassrtHR48.scss */
+/* line 139, assetic_compassDIJ5Jf.scss */
 .rhino-bullets li {
   margin: 0;
   float: left;
   display: inline;
 }
 
-/* line 146, assetic_compassrtHR48.scss */
+/* line 146, assetic_compassDIJ5Jf.scss */
 .rhino-bullets li a.rhino-bullet {
   width: 20px;
   height: 20px;
@@ -202,24 +198,24 @@
   user-select: none;
 }
 
-/* line 168, assetic_compassrtHR48.scss */
+/* line 168, assetic_compassDIJ5Jf.scss */
 .rhino-bullets li a.rhino-bullet:hover, .rhino-bullets li a.rhino-bullet:focus {
   background-position: -118px -20px;
 }
 
-/* line 172, assetic_compassrtHR48.scss */
+/* line 172, assetic_compassDIJ5Jf.scss */
 .rhino-bullets li a.rhino-bullet.rhino-active-bullet {
   background-position: -98px 0;
 }
 
-/* line 177, assetic_compassrtHR48.scss */
+/* line 177, assetic_compassDIJ5Jf.scss */
 .rhino-container,
 .rhino-container ul {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 186, assetic_compassrtHR48.scss */
+/* line 186, assetic_compassDIJ5Jf.scss */
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
@@ -229,13 +225,23 @@
   height: 250px;
 }
 
-/* line 191, assetic_compassrtHR48.scss */
+/* line 195, assetic_compassDIJ5Jf.scss */
+.slider-customer-reviews,
+.slider-customer-reviews .rhino-container,
+.slider-customer-reviews .rhino-container ul,
+.slider-customer-reviews .rhino-container ul li,
+.slider-customer-reviews .rhino-container ul li img {
+  width: 730px;
+  height: 42px;
+}
+
+/* line 200, assetic_compassDIJ5Jf.scss */
 .slider-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 20px -10px;
 }
 
-/* line 200, assetic_compassrtHR48.scss */
+/* line 209, assetic_compassDIJ5Jf.scss */
 .slider-gallery,
 .slider-gallery .rhino-container,
 .slider-gallery .rhino-container ul,
@@ -245,12 +251,12 @@
   height: 200px;
 }
 
-/* line 205, assetic_compassrtHR48.scss */
+/* line 214, assetic_compassDIJ5Jf.scss */
 .slider-gallery .rhino-prev, .slider-gallery .rhino-next {
   margin: 32px 0 0 0;
 }
 
-/* line 209, assetic_compassrtHR48.scss */
+/* line 218, assetic_compassDIJ5Jf.scss */
 .slider-gallery .rhino-container ul li img {
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
@@ -260,13 +266,13 @@
   background-clip: padding-box;
 }
 
-/* line 213, assetic_compassrtHR48.scss */
+/* line 222, assetic_compassDIJ5Jf.scss */
 .slider-dialog-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 10px -10px;
 }
 
-/* line 222, assetic_compassrtHR48.scss */
+/* line 231, assetic_compassDIJ5Jf.scss */
 .slider-dialog-gallery,
 .slider-dialog-gallery .rhino-container,
 .slider-dialog-gallery .rhino-container ul,
@@ -277,12 +283,12 @@
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 252, assetic_compassrtHR48.scss */
+  /* line 261, assetic_compassDIJ5Jf.scss */
   .rhino-btn {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }
 
-  /* line 256, assetic_compassrtHR48.scss */
+  /* line 265, assetic_compassDIJ5Jf.scss */
   .rhino-bullets li a.rhino-bullet {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }

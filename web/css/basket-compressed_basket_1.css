@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,22 +7,22 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassaGPe9l.scss */
+/* line 4, assetic_compass3hc3Ec.scss */
 .basket-message {
   color: #cc0000;
   font-size: 13px;
   font-size: 1.3rem;
 }
 
-/* line 9, assetic_compassaGPe9l.scss */
+/* line 9, assetic_compass3hc3Ec.scss */
 #basket-summary {
   width: 230px;
   height: 50px;
   margin: 0;
   padding: 5px 10px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 15px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -57,19 +53,19 @@
   box-shadow: 0 -2px 5px 0 #384246;
 }
 
-/* line 24, assetic_compassaGPe9l.scss */
+/* line 24, assetic_compass3hc3Ec.scss */
 #basket-summary.expanded {
   width: 600px;
   height: auto;
 }
 
-/* line 29, assetic_compassaGPe9l.scss */
+/* line 29, assetic_compass3hc3Ec.scss */
 .basket-summary-header {
   min-height: 50px;
   cursor: pointer;
 }
 
-/* line 35, assetic_compassaGPe9l.scss */
+/* line 35, assetic_compass3hc3Ec.scss */
 .basket-summary-header h2 {
   margin: 0;
   padding: 0;
@@ -82,7 +78,7 @@
   text-shadow: 0 1px 0 white;
 }
 
-/* line 46, assetic_compassaGPe9l.scss */
+/* line 46, assetic_compass3hc3Ec.scss */
 .basket-summary-header p {
   margin: 0;
   padding: 0;
@@ -92,40 +88,40 @@
   color: #6c8087;
 }
 
-/* line 55, assetic_compassaGPe9l.scss */
+/* line 55, assetic_compass3hc3Ec.scss */
 .basket-items-table {
   background: white;
 }
 
-/* line 59, assetic_compassaGPe9l.scss */
+/* line 59, assetic_compass3hc3Ec.scss */
 .basket-buttons {
   margin: 5px 0;
 }
 
-/* line 63, assetic_compassaGPe9l.scss */
+/* line 63, assetic_compass3hc3Ec.scss */
 .basket-buttons .button:first-child {
   margin-left: 5px;
 }
 
-/* line 67, assetic_compassaGPe9l.scss */
+/* line 67, assetic_compass3hc3Ec.scss */
 #basket-contents .add-to-basket {
   width: 63px;
   margin: 0;
 }
 
-/* line 72, assetic_compassaGPe9l.scss */
+/* line 72, assetic_compass3hc3Ec.scss */
 #basket-totals td {
   padding: 5px 10px;
 }
 
-/* line 77, assetic_compassaGPe9l.scss */
+/* line 77, assetic_compass3hc3Ec.scss */
 #basket-delivery-options .form-helper,
 #order-information .form-helper {
   top: 0;
   right: 10px;
 }
 
-/* line 82, assetic_compassaGPe9l.scss */
+/* line 82, assetic_compass3hc3Ec.scss */
 .basket-product-info .items-added {
   margin: 10px 0 0 0;
   padding: 10px;
@@ -139,16 +135,108 @@
   background-clip: padding-box;
 }
 
-/* line 91, assetic_compassaGPe9l.scss */
+/* line 91, assetic_compass3hc3Ec.scss */
 .basket-product-info .items-added h4 {
   padding: 0;
   margin: 0 0 5px 0;
   line-height: 100%;
 }
 
-/* line 98, assetic_compassaGPe9l.scss */
+/* line 98, assetic_compass3hc3Ec.scss */
 .basket-product-info .items-added p {
   padding: 0;
   margin: 0 0 10px 0;
   line-height: 100%;
+}
+
+/* line 105, assetic_compass3hc3Ec.scss */
+.small-basket-product-info {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFAQMAAAC3obSmAAAAA1BMVEUTfxOVAwQUAAAAAXRSTlOzEo46UAAAAAxJREFUeJxjYmCCQgAARgALnYW8OgAAAABJRU5ErkJggg==');
+  background: rgba(19, 127, 19, 0.7);
+}
+
+/* line 113, assetic_compass3hc3Ec.scss */
+.small-basket-product-info p {
+  margin: 0 !important;
+  padding: 5px 10px !important;
+  color: white !important;
+  line-height: 100% !important;
+}
+
+/* line 121, assetic_compass3hc3Ec.scss */
+.small-basket-product-info p a {
+  color: white !important;
+  text-decoration: underline !important;
+}
+
+/* line 126, assetic_compass3hc3Ec.scss */
+.small-basket-product-info p a:hover {
+  text-decoration: none !important;
+}
+
+/* line 130, assetic_compass3hc3Ec.scss */
+.delivery-information {
+  padding: 10px 10px 0 10px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  background: #fffadd;
+}
+
+/* line 138, assetic_compass3hc3Ec.scss */
+.basket-message-success,
+.basket-message-notice {
+  margin: 10px 0 0 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+/* line 143, assetic_compass3hc3Ec.scss */
+.basket-message-success {
+  padding: 5px 5px 0 26px;
+  border: 1px solid #b0e2ae;
+  background-color: #ebf7eb;
+  background-repeat: no-repeat;
+  background-size: 16px 12px;
+  background-image: url("/bundles/kacsite/css/resources/images/icons/green-tick.png");
+  background-position: 5px 7px;
+  line-height: 16px;
+}
+
+/* line 155, assetic_compass3hc3Ec.scss */
+.basket-message-notice {
+  padding: 5px 5px 0 5px;
+  line-height: 16px;
+  background: #fffadd;
+}
+
+/* line 163, assetic_compass3hc3Ec.scss */
+.basket-message-success p,
+.basket-message-notice p {
+  padding: 0 0 5px 0;
+  margin: 0;
+  font-size: 11px;
+  font-size: 1.1rem;
+  line-height: 16px;
+}
+
+/* line 171, assetic_compass3hc3Ec.scss */
+.basket-message-success p {
+  color: #137f13;
+}
+
+/* line 175, assetic_compass3hc3Ec.scss */
+.basket-message-notice p {
+  color: #384246;
 }

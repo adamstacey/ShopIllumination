@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,21 +7,21 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassvLaaqG.scss */
+/* line 4, assetic_compassXyJrIy.scss */
 .pagination {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* line 9, assetic_compassvLaaqG.scss */
+/* line 9, assetic_compassXyJrIy.scss */
 .pagination li {
   display: inline-block;
   float: left;
   margin: 0 2px;
 }
 
-/* line 14, assetic_compassvLaaqG.scss */
+/* line 14, assetic_compassXyJrIy.scss */
 .pagination li a {
   border-width: 1px;
   border-style: solid;
@@ -34,7 +30,7 @@
   border-radius: 3px;
   cursor: pointer;
   display: block;
-  font-family: Arial, "Bitstream Vera Sans", sans-serif;
+  font-family: Arial, 'Bitstream Vera Sans', sans-serif;
   height: 20px;
   line-height: 20px;
   outline: none !important;
@@ -43,9 +39,9 @@
   text-decoration: none;
 }
 
-/* line 30, assetic_compassvLaaqG.scss */
+/* line 30, assetic_compassXyJrIy.scss */
 .pagination li.current a {
-  background: #6c8087!important;
+  background: #6c8087 !important;
   /* Old browsers */
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZjODA4NyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzODQyNDYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+) !important;
@@ -63,12 +59,12 @@
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c8087', endColorstr='#384246',GradientType=0 ) !important;
   /* IE6-8 */
-  color: #FFF!important;
+  color: white !important;
   text-shadow: 0 1px 0 #384246 !important;
   border: 1px solid #384246 !important;
 }
 
-/* line 45, assetic_compassvLaaqG.scss */
+/* line 45, assetic_compassXyJrIy.scss */
 .pagination li.current a:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;

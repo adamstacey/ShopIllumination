@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,7 +7,7 @@
   font-style: normal;
 }
 
-/* line 5, assetic_compass86WM86.scss */
+/* line 5, assetic_compassI8grbc.scss */
 h1,
 .h1 {
   font-size: 24px;
@@ -23,7 +19,7 @@ h1,
   text-shadow: 0 1px 0 white;
 }
 
-/* line 14, assetic_compass86WM86.scss */
+/* line 14, assetic_compassI8grbc.scss */
 h2,
 .h2 {
   font-size: 18px;
@@ -35,7 +31,7 @@ h2,
   text-shadow: 0 1px 0 white;
 }
 
-/* line 23, assetic_compass86WM86.scss */
+/* line 23, assetic_compassI8grbc.scss */
 h3,
 .h3 {
   font-size: 14px;
@@ -45,7 +41,7 @@ h3,
   color: #4ec0e3;
 }
 
-/* line 30, assetic_compass86WM86.scss */
+/* line 30, assetic_compassI8grbc.scss */
 h3.separator {
   padding: 10px;
   margin: 0 -10px 10px -10px;
@@ -72,7 +68,7 @@ h3.separator {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 41, assetic_compass86WM86.scss */
+/* line 41, assetic_compassI8grbc.scss */
 h4,
 .h4 {
   font-size: 14px;
@@ -82,7 +78,7 @@ h4,
   color: #4ec0e3;
 }
 
-/* line 49, assetic_compass86WM86.scss */
+/* line 49, assetic_compassI8grbc.scss */
 h5,
 .h5 {
   font-size: 14px;
@@ -91,7 +87,7 @@ h5,
   font-style: normal;
 }
 
-/* line 56, assetic_compass86WM86.scss */
+/* line 56, assetic_compassI8grbc.scss */
 h6,
 .h6 {
   font-size: 14px;
@@ -100,7 +96,7 @@ h6,
   font-style: italic;
 }
 
-/* line 62, assetic_compass86WM86.scss */
+/* line 62, assetic_compassI8grbc.scss */
 header.sticky {
   padding: 5px 20px;
   margin: 0 -20px 5px -20px;
@@ -128,7 +124,7 @@ header.sticky {
   box-shadow: 0 1px 5px 0 #384246;
 }
 
-/* line 71, assetic_compass86WM86.scss */
+/* line 71, assetic_compassI8grbc.scss */
 header.sticky h1,
 header.sticky h2,
 header.sticky h3 {
@@ -136,7 +132,7 @@ header.sticky h3 {
   margin: 0;
 }
 
-/* line 76, assetic_compass86WM86.scss */
+/* line 76, assetic_compassI8grbc.scss */
 header.stuck {
   width: 940px;
 }

@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,12 +7,12 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassrn1mk1.scss */
+/* line 4, assetic_compassTFGevt.scss */
 .document {
   background: #fffadd;
 }
 
-/* line 8, assetic_compassrn1mk1.scss */
+/* line 8, assetic_compassTFGevt.scss */
 .sub-menu {
   background: #ffd634;
   background: -moz-linear-gradient(top, #fffadd 0%, #ffd634 5%, #e6ac00 100%);
@@ -37,7 +33,7 @@
   border-bottom: 3px solid #384246;
 }
 
-/* line 13, assetic_compassrn1mk1.scss */
+/* line 13, assetic_compassTFGevt.scss */
 .sub-menu h3 {
   margin: 0;
   padding: 0;
@@ -49,7 +45,7 @@
   text-shadow: 0 1px 0 #ffd634;
 }
 
-/* line 24, assetic_compassrn1mk1.scss */
+/* line 24, assetic_compassTFGevt.scss */
 .sub-menu .widget {
   padding: 8px 10px 5px 10px;
 }

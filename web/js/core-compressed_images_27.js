@@ -3,27 +3,29 @@ $(document).ready(function() {
 
     $(".etalage").etalage({
         autoplay: false,
-        smallthumbs_position: 'left',
-        thumb_image_width: 376,
-        thumb_image_height: 376,
+        smallthumbs_position: 'bottom',
+        thumb_image_width: 271,
+        thumb_image_height: 271,
         source_image_width: 800,
         source_image_height: 800,
         small_thumbs: 3,
-        zoom_area_width: 398,
-        zoom_area_height: 398,
-        smallthumb_hide_single: false
+        zoom_area_width: 293,
+        zoom_area_height: 293,
+        smallthumb_hide_single: false,
+        smallthumb_inactive_opacity: 1
     });
 
     $(".etalage-inset").etalage({
         autoplay: false,
-        smallthumbs_position: 'left',
+        smallthumbs_position: 'bottom',
         thumb_image_width: 200,
         thumb_image_height: 200,
         source_image_width: 400,
         source_image_height: 400,
         small_thumbs: 3,
         zoom_area_width: 222,
-        zoom_area_height: 222
+        zoom_area_height: 222,
+        smallthumb_inactive_opacity: 1
     });
 
     $(document).on("click", ".etalage_magnifier > div > img", function() {

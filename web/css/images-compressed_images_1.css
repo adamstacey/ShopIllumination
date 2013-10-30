@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,19 +7,24 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassXxAatY.scss */
+/* line 4, assetic_compassWZFXI7.scss */
 .etalage {
   display: none;
   margin-bottom: 50px;
 }
 
-/* line 9, assetic_compassXxAatY.scss */
-.etalage-inset {
-  margin-top: -75px !important;
-  margin-left: 38px !important;
+/* line 10, assetic_compassWZFXI7.scss */
+.etalage,
+.etalage ul {
+  margin: 0 !important;
 }
 
-/* line 16, assetic_compassXxAatY.scss */
+/* line 14, assetic_compassWZFXI7.scss */
+.etalage-inset {
+  margin: -95px 0 0 38px !important;
+}
+
+/* line 20, assetic_compassWZFXI7.scss */
 .etalage .etalage_thumb,
 .etalage .etalage_zoom_area,
 .etalage_zoom_area {
@@ -31,14 +32,14 @@
   background: white url("/bundles/kacsite/css/resources/images/loaders/loader.gif") center no-repeat;
   border: 1px solid #e4eaec;
   -webkit-box-shadow: 0 0 10px 0 #384246;
-  -webkit-box-shadow: 0 0 10px 0 #384246;
+  -webkit-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.5);
   -moz-box-shadow: 0 0 10px 0 #384246;
-  -moz-box-shadow: 0 0 10px 0 #384246;
+  -moz-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.5);
   box-shadow: 0 0 10px 0 #384246;
-  box-shadow: 0 0 10px 0 #384246;
+  box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.5);
 }
 
-/* line 24, assetic_compassXxAatY.scss */
+/* line 28, assetic_compassWZFXI7.scss */
 .etalage .etalage_small_thumbs li {
   background: white;
   border: 1px solid #e4eaec;
@@ -47,26 +48,26 @@
   cursor: pointer;
 }
 
-/* line 32, assetic_compassXxAatY.scss */
+/* line 36, assetic_compassWZFXI7.scss */
 .etalage ul li.etalage_smallthumb_active {
   border: 1px solid #4ec0e3;
 }
 
-/* line 36, assetic_compassXxAatY.scss */
+/* line 40, assetic_compassWZFXI7.scss */
 .etalage .etalage_magnifier {
   background: white;
   border: 1px solid #e4eaec;
   cursor: pointer;
 }
 
-/* line 42, assetic_compassXxAatY.scss */
+/* line 46, assetic_compassWZFXI7.scss */
 .etalage .etalage_icon {
   background: transparent url("/bundles/kacsite/css/resources/images/icons/zoom.png") no-repeat;
   width: 20px;
   height: 20px;
 }
 
-/* line 48, assetic_compassXxAatY.scss */
+/* line 52, assetic_compassWZFXI7.scss */
 .etalage .etalage_description {
   background: white;
   font-style: italic;
@@ -74,7 +75,7 @@
   padding: 10px;
 }
 
-/* line 61, assetic_compassXxAatY.scss */
+/* line 65, assetic_compassWZFXI7.scss */
 .etalage,
 .etalage_thumb,
 .etalage_thumb_image,
@@ -85,7 +86,7 @@
   display: none;
 }
 
-/* line 71, assetic_compassXxAatY.scss */
+/* line 75, assetic_compassWZFXI7.scss */
 .etalage,
 .etalage ul,
 .etalage li,
@@ -99,7 +100,7 @@
   list-style: none;
 }
 
-/* line 85, assetic_compassXxAatY.scss */
+/* line 89, assetic_compassWZFXI7.scss */
 .etalage,
 .etalage_magnifier div,
 .etalage_magnifier div img,
@@ -110,7 +111,7 @@ ul .etalage_small_thumbs li,
   position: relative;
 }
 
-/* line 90, assetic_compassXxAatY.scss */
+/* line 94, assetic_compassWZFXI7.scss */
 .etalage img,
 .etalage li {
   -webkit-user-select: none;
@@ -123,50 +124,50 @@ ul .etalage_small_thumbs li,
   user-drag: none;
 }
 
-/* line 102, assetic_compassXxAatY.scss */
+/* line 106, assetic_compassWZFXI7.scss */
 .etalage,
 .etalage_small_thumbs li {
   float: left;
 }
 
-/* line 106, assetic_compassXxAatY.scss */
+/* line 110, assetic_compassWZFXI7.scss */
 .etalage_right {
   float: right;
 }
 
-/* line 110, assetic_compassXxAatY.scss */
+/* line 114, assetic_compassWZFXI7.scss */
 .etalage li {
   position: absolute;
 }
 
-/* line 114, assetic_compassXxAatY.scss */
+/* line 118, assetic_compassWZFXI7.scss */
 .etalage img {
   vertical-align: bottom;
   max-width: none;
 }
 
-/* line 119, assetic_compassXxAatY.scss */
+/* line 123, assetic_compassWZFXI7.scss */
 .etalage_magnifier {
   cursor: default;
 }
 
-/* line 123, assetic_compassXxAatY.scss */
+/* line 127, assetic_compassWZFXI7.scss */
 .etalage_magnifier div {
   overflow: hidden;
 }
 
-/* line 126, assetic_compassXxAatY.scss */
+/* line 130, assetic_compassWZFXI7.scss */
 .etalage_small_thumbs {
   overflow-x: hidden;
   overflow-y: visible;
 }
 
-/* line 131, assetic_compassXxAatY.scss */
+/* line 135, assetic_compassWZFXI7.scss */
 .etalage_magnifier div img {
   display: none;
 }
 
-/* line 136, assetic_compassXxAatY.scss */
+/* line 140, assetic_compassWZFXI7.scss */
 .etalage_icon,
 .etalage_hint {
   cursor: default;
@@ -175,46 +176,51 @@ ul .etalage_small_thumbs li,
   overflow: hidden;
 }
 
-/* line 143, assetic_compassXxAatY.scss */
+/* line 147, assetic_compassWZFXI7.scss */
 .etalage_small_thumbs li.vertical {
   float: none;
 }
 
-/* line 147, assetic_compassXxAatY.scss */
+/* line 151, assetic_compassWZFXI7.scss */
 .etalage_zoom_area div {
   overflow: hidden;
 }
 
-/* line 151, assetic_compassXxAatY.scss */
+/* line 155, assetic_compassWZFXI7.scss */
 .etalage_zoom_preview {
   position: absolute;
 }
 
-/* line 155, assetic_compassXxAatY.scss */
+/* line 159, assetic_compassWZFXI7.scss */
 .etalage {
   direction: ltr;
 }
 
-/* line 159, assetic_compassXxAatY.scss */
+/* line 163, assetic_compassWZFXI7.scss */
 div.etalage_description {
   position: absolute;
   bottom: 0;
   left: 0;
 }
 
-/* line 165, assetic_compassXxAatY.scss */
+/* line 169, assetic_compassWZFXI7.scss */
 div.etalage_description.rtl {
   direction: rtl;
   text-align: right;
 }
 
-/* line 170, assetic_compassXxAatY.scss */
+/* line 174, assetic_compassWZFXI7.scss */
+img.etalage_thumb_image {
+  display: block;
+}
+
+/* line 178, assetic_compassWZFXI7.scss */
 .jquery-lightbox-overlay {
   background: black;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-/* line 175, assetic_compassXxAatY.scss */
+/* line 183, assetic_compassWZFXI7.scss */
 .jquery-lightbox {
   padding: 17px 0;
   position: relative;
@@ -226,7 +232,7 @@ div.etalage_description.rtl {
   box-shadow: 0 0 10px 0 black;
 }
 
-/* line 186, assetic_compassXxAatY.scss */
+/* line 194, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-top-left,
 .jquery-lightbox-border-top-right,
 .jquery-lightbox-border-bottom-left,
@@ -236,21 +242,21 @@ div.etalage_description.rtl {
   position: absolute;
 }
 
-/* line 193, assetic_compassXxAatY.scss */
+/* line 201, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-top-left {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat 0 0;
   top: 0;
   left: 0;
 }
 
-/* line 199, assetic_compassXxAatY.scss */
+/* line 207, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-top-right {
   top: 0;
   right: 0;
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat right 0;
 }
 
-/* line 206, assetic_compassXxAatY.scss */
+/* line 214, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-top-middle {
   height: 7px;
   width: 78%;
@@ -261,21 +267,21 @@ div.etalage_description.rtl {
   overflow: hidden;
 }
 
-/* line 218, assetic_compassXxAatY.scss */
+/* line 226, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-bottom-left {
   bottom: 0;
   left: 0;
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat 0 bottom;
 }
 
-/* line 225, assetic_compassXxAatY.scss */
+/* line 233, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-bottom-right {
   bottom: 0;
   right: 0;
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat right bottom;
 }
 
-/* line 232, assetic_compassXxAatY.scss */
+/* line 240, assetic_compassWZFXI7.scss */
 .jquery-lightbox-border-bottom-middle {
   height: 7px;
   width: 78%;
@@ -286,7 +292,7 @@ div.etalage_description.rtl {
   background: white;
 }
 
-/* line 244, assetic_compassXxAatY.scss */
+/* line 252, assetic_compassWZFXI7.scss */
 .jquery-lightbox-title {
   padding: 5px 8px;
   margin: 3px;
@@ -301,7 +307,7 @@ div.etalage_description.rtl {
   opacity: 0.9;
 }
 
-/* line 259, assetic_compassXxAatY.scss */
+/* line 267, assetic_compassWZFXI7.scss */
 .jquery-lightbox-html {
   padding: 0px 15px;
   position: relative;
@@ -311,7 +317,7 @@ div.etalage_description.rtl {
   vertical-align: top;
 }
 
-/* line 271, assetic_compassXxAatY.scss */
+/* line 279, assetic_compassWZFXI7.scss */
 .jquery-lightbox-html embed,
 .jquery-lightbox-html object,
 .jquery-lightbox-html iframe {
@@ -319,7 +325,7 @@ div.etalage_description.rtl {
   display: block;
 }
 
-/* line 276, assetic_compassXxAatY.scss */
+/* line 284, assetic_compassWZFXI7.scss */
 .jquery-lightbox-background {
   padding: 0;
   position: absolute;
@@ -328,7 +334,7 @@ div.etalage_description.rtl {
   float: left;
 }
 
-/* line 286, assetic_compassXxAatY.scss */
+/* line 294, assetic_compassWZFXI7.scss */
 .jquery-lightbox-background img {
   margin: 0;
   padding: 0;
@@ -339,28 +345,28 @@ div.etalage_description.rtl {
   border: 0;
 }
 
-/* line 298, assetic_compassXxAatY.scss */
+/* line 306, assetic_compassWZFXI7.scss */
 .jquery-lightbox-mode-image .jquery-lightbox-html {
   padding: 0;
 }
 
-/* line 302, assetic_compassXxAatY.scss */
+/* line 310, assetic_compassWZFXI7.scss */
 .jquery-lightbox-mode-html .jquery-lightbox-background {
   background: white;
 }
 
-/* line 306, assetic_compassXxAatY.scss */
+/* line 314, assetic_compassWZFXI7.scss */
 .jquery-lightbox-mode-html .jquery-lightbox-html {
   overflow: auto;
 }
 
-/* line 311, assetic_compassXxAatY.scss */
+/* line 319, assetic_compassWZFXI7.scss */
 .jquery-lightbox-loading,
 .jquery-lightbox-mode-html .jquery-lightbox-loading {
   background: white url("/bundles/kacsite/css/resources/images/loaders/loader.gif") center no-repeat;
 }
 
-/* line 315, assetic_compassXxAatY.scss */
+/* line 323, assetic_compassWZFXI7.scss */
 .jquery-lightbox-button-close {
   width: 29px;
   height: 29px;
@@ -370,23 +376,23 @@ div.etalage_description.rtl {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -190px -115px;
 }
 
-/* line 326, assetic_compassXxAatY.scss */
+/* line 334, assetic_compassWZFXI7.scss */
 .jquery-lightbox-button-close:hover {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -220px -115px;
 }
 
-/* line 331, assetic_compassXxAatY.scss */
+/* line 339, assetic_compassWZFXI7.scss */
 .jquery-lightbox-button-close span,
 .jquery-lightbox-buttons span {
   display: none;
 }
 
-/* line 335, assetic_compassXxAatY.scss */
+/* line 343, assetic_compassWZFXI7.scss */
 .jquery-lightbox-mode-image .jquery-lightbox-button-close {
   right: 14px;
 }
 
-/* line 339, assetic_compassXxAatY.scss */
+/* line 347, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons {
   height: 39px;
   position: absolute;
@@ -395,7 +401,7 @@ div.etalage_description.rtl {
   display: none;
 }
 
-/* line 350, assetic_compassXxAatY.scss */
+/* line 358, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-buttons-init,
 .jquery-lightbox-buttons .jquery-lightbox-buttons-end {
   width: 5px;
@@ -404,19 +410,19 @@ div.etalage_description.rtl {
   display: inline;
 }
 
-/* line 359, assetic_compassXxAatY.scss */
+/* line 367, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-buttons-init {
   margin: 7px 0 0 7px;
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -151px -153px;
 }
 
-/* line 365, assetic_compassXxAatY.scss */
+/* line 373, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-buttons-end {
   margin: 7px 0 0 0;
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -244px -153px;
 }
 
-/* line 371, assetic_compassXxAatY.scss */
+/* line 379, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-left {
   width: 24px;
   height: 39px;
@@ -426,12 +432,12 @@ div.etalage_description.rtl {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -156px -153px;
 }
 
-/* line 382, assetic_compassXxAatY.scss */
+/* line 390, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-left:hover {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -156px -194px;
 }
 
-/* line 386, assetic_compassXxAatY.scss */
+/* line 394, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-right {
   height: 39px;
   width: 24px;
@@ -441,12 +447,12 @@ div.etalage_description.rtl {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -220px -153px;
 }
 
-/* line 397, assetic_compassXxAatY.scss */
+/* line 405, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-right:hover {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -220px -194px;
 }
 
-/* line 401, assetic_compassXxAatY.scss */
+/* line 409, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-max {
   width: 36px;
   height: 39px;
@@ -456,12 +462,12 @@ div.etalage_description.rtl {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -182px -153px;
 }
 
-/* line 412, assetic_compassXxAatY.scss */
+/* line 420, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-max:hover {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -182px -194px;
 }
 
-/* line 416, assetic_compassXxAatY.scss */
+/* line 424, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-min {
   margin: 7px 0 0 0;
   width: 36px;
@@ -471,12 +477,12 @@ div.etalage_description.rtl {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -162px -235px;
 }
 
-/* line 427, assetic_compassXxAatY.scss */
+/* line 435, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons .jquery-lightbox-button-min:hover {
   background: url("/bundles/kacsite/css/resources/images/icons/lightbox.png") no-repeat -207px -235px;
 }
 
-/* line 431, assetic_compassXxAatY.scss */
+/* line 439, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons-custom {
   height: 39px;
   margin: 7px 0 0 0;
@@ -488,7 +494,7 @@ div.etalage_description.rtl {
   font-size: 1rem;
 }
 
-/* line 443, assetic_compassXxAatY.scss */
+/* line 451, assetic_compassWZFXI7.scss */
 .jquery-lightbox-buttons-custom a {
   padding: 0 3px;
   display: inline;
@@ -499,29 +505,29 @@ div.etalage_description.rtl {
   text-decoration: underline;
 }
 
-/* line 455, assetic_compassXxAatY.scss */
+/* line 463, assetic_compassWZFXI7.scss */
 .jquery-lightbox-mode-image .jquery-lightbox-button-close,
 .jquery-lightbox-mode-image .jquery-lightbox-buttons {
   opacity: 0.8;
 }
 
-/* line 460, assetic_compassXxAatY.scss */
+/* line 468, assetic_compassWZFXI7.scss */
 .jquery-lightbox-mode-image:hover .jquery-lightbox-buttons,
 .jquery-lightbox-mode-image:hover .jquery-lightbox-button-close {
   opacity: 1;
 }
 
-/* line 464, assetic_compassXxAatY.scss */
+/* line 472, assetic_compassWZFXI7.scss */
 .jquery-lightbox-navigator {
   display: none;
 }
 
-/* line 468, assetic_compassXxAatY.scss */
+/* line 476, assetic_compassWZFXI7.scss */
 .jquery-lightbox-hide {
   display: none;
 }
 
-/* line 472, assetic_compassXxAatY.scss */
+/* line 480, assetic_compassWZFXI7.scss */
 .db {
   display: block;
 }

@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,7 +7,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassuYfLFU.scss */
+/* line 4, assetic_compass849UW8.scss */
 .ui-icon {
   width: 32px;
   height: 32px;
@@ -22,7 +18,7 @@
   background-size: 1280px 1120px;
 }
 
-/* line 17, assetic_compassuYfLFU.scss */
+/* line 17, assetic_compass849UW8.scss */
 .ui-button .ui-icon,
 .button .ui-icon,
 .ui-icon-small {
@@ -35,72 +31,72 @@
   background-size: 960px 840px;
 }
 
-/* line 28, assetic_compassuYfLFU.scss */
+/* line 28, assetic_compass849UW8.scss */
 .button .ui-icon {
   margin: 4px 2px 0 0;
 }
 
-/* line 33, assetic_compassuYfLFU.scss */
+/* line 33, assetic_compass849UW8.scss */
 .icon-black span.ui-icon,
 span.icon-black {
   background-image: url("/bundles/kacsite/css/resources/images/icons/black.png");
 }
 
-/* line 38, assetic_compassuYfLFU.scss */
+/* line 38, assetic_compass849UW8.scss */
 .icon-grey span.ui-icon,
 span.icon-grey {
   background-image: url("/bundles/kacsite/css/resources/images/icons/grey.png");
 }
 
-/* line 43, assetic_compassuYfLFU.scss */
+/* line 43, assetic_compass849UW8.scss */
 .icon-white span.ui-icon,
 span.icon-white {
   background-image: url("/bundles/kacsite/css/resources/images/icons/white.png");
 }
 
-/* line 48, assetic_compassuYfLFU.scss */
+/* line 48, assetic_compass849UW8.scss */
 .icon-dark-red span.ui-icon,
 span.icon-dark-red {
   background-image: url("/bundles/kacsite/css/resources/images/icons/dark_red.png");
 }
 
-/* line 53, assetic_compassuYfLFU.scss */
+/* line 53, assetic_compass849UW8.scss */
 .icon-red span.ui-icon,
 span.icon-red {
   background-image: url("/bundles/kacsite/css/resources/images/icons/red.png");
 }
 
-/* line 58, assetic_compassuYfLFU.scss */
+/* line 58, assetic_compass849UW8.scss */
 .icon-orange span.ui-icon,
 span.icon-orange {
   background-image: url("/bundles/kacsite/css/resources/images/icons/orange.png");
 }
 
-/* line 63, assetic_compassuYfLFU.scss */
+/* line 63, assetic_compass849UW8.scss */
 .icon-yellow span.ui-icon,
 span.icon-yellow {
   background-image: url("/bundles/kacsite/css/resources/images/icons/yellow.png");
 }
 
-/* line 68, assetic_compassuYfLFU.scss */
+/* line 68, assetic_compass849UW8.scss */
 .icon-green span.ui-icon,
 span.icon-green {
   background-image: url("/bundles/kacsite/css/resources/images/icons/green.png");
 }
 
-/* line 73, assetic_compassuYfLFU.scss */
+/* line 73, assetic_compass849UW8.scss */
 .icon-turquoise span.ui-icon,
 span.icon-turquoise {
   background-image: url("/bundles/kacsite/css/resources/images/icons/turquoise.png");
 }
 
-/* line 78, assetic_compassuYfLFU.scss */
+/* line 78, assetic_compass849UW8.scss */
 .icon-blue span.ui-icon,
 span.icon-blue {
   background-image: url("/bundles/kacsite/css/resources/images/icons/blue.png");
 }
 
-/* line 87, assetic_compassuYfLFU.scss */
+/* line 87, assetic_compass849UW8.scss */
 .ui-button .icon-black span.ui-icon,
 .ui-button span.icon-black,
 .button .icon-black span.ui-icon,
@@ -110,7 +106,7 @@ span.icon-small-black {
   background-image: url("/bundles/kacsite/css/resources/images/icons/black_small.png");
 }
 
-/* line 96, assetic_compassuYfLFU.scss */
+/* line 96, assetic_compass849UW8.scss */
 .ui-button .icon-grey span.ui-icon,
 .ui-button span.icon-grey,
 .button .icon-grey span.ui-icon,
@@ -120,7 +116,7 @@ span.icon-small-grey {
   background-image: url("/bundles/kacsite/css/resources/images/icons/grey_small.png");
 }
 
-/* line 106, assetic_compassuYfLFU.scss */
+/* line 106, assetic_compass849UW8.scss */
 .ui-icon-closethick,
 .ui-button .icon-white span.ui-icon,
 .ui-button span.icon-white,
@@ -131,7 +127,7 @@ span.icon-small-white {
   background-image: url("/bundles/kacsite/css/resources/images/icons/white_small.png");
 }
 
-/* line 115, assetic_compassuYfLFU.scss */
+/* line 115, assetic_compass849UW8.scss */
 .ui-button .icon-dark-red span.ui-icon,
 .ui-button span.icon-dark-red,
 .button .icon-dark-red span.ui-icon,
@@ -141,7 +137,7 @@ span.icon-small-dark-red {
   background-image: url("/bundles/kacsite/css/resources/images/icons/dark_red_small.png");
 }
 
-/* line 124, assetic_compassuYfLFU.scss */
+/* line 124, assetic_compass849UW8.scss */
 .ui-button .icon-red span.ui-icon,
 .ui-button span.icon-red,
 .button .icon-red span.ui-icon,
@@ -151,7 +147,7 @@ span.icon-small-red {
   background-image: url("/bundles/kacsite/css/resources/images/icons/red_small.png");
 }
 
-/* line 133, assetic_compassuYfLFU.scss */
+/* line 133, assetic_compass849UW8.scss */
 .ui-button .icon-orange span.ui-icon,
 .ui-button span.icon-orange,
 .button .icon-orange span.ui-icon,
@@ -161,7 +157,7 @@ span.icon-small-orange {
   background-image: url("/bundles/kacsite/css/resources/images/icons/orange_small.png");
 }
 
-/* line 142, assetic_compassuYfLFU.scss */
+/* line 142, assetic_compass849UW8.scss */
 .ui-button .icon-yellow span.ui-icon,
 .ui-button span.icon-yellow,
 .button .icon-yellow span.ui-icon,
@@ -171,7 +167,7 @@ span.icon-small-yellow {
   background-image: url("/bundles/kacsite/css/resources/images/icons/yellow_small.png");
 }
 
-/* line 151, assetic_compassuYfLFU.scss */
+/* line 151, assetic_compass849UW8.scss */
 .ui-button .icon-green span.ui-icon,
 .ui-button span.icon-green,
 .button .icon-green span.ui-icon,
@@ -181,7 +177,7 @@ span.icon-small-green {
   background-image: url("/bundles/kacsite/css/resources/images/icons/green_small.png");
 }
 
-/* line 160, assetic_compassuYfLFU.scss */
+/* line 160, assetic_compass849UW8.scss */
 .ui-button .icon-turquoise span.ui-icon,
 .ui-button span.icon-turquoise,
 .button .icon-turquoise span.ui-icon,
@@ -191,7 +187,7 @@ span.icon-small-turquoise {
   background-image: url("/bundles/kacsite/css/resources/images/icons/turquoise_small.png");
 }
 
-/* line 169, assetic_compassuYfLFU.scss */
+/* line 169, assetic_compass849UW8.scss */
 .ui-button .icon-blue span.ui-icon,
 .ui-button span.icon-blue,
 .button .icon-blue span.ui-icon,
@@ -202,67 +198,67 @@ span.icon-small-blue {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 199, assetic_compassuYfLFU.scss */
+  /* line 199, assetic_compass849UW8.scss */
   .icon-black span.ui-icon,
   span.icon-black {
     background-image: url("/bundles/kacsite/css/resources/images/icons/black@2x.png");
   }
 
-  /* line 204, assetic_compassuYfLFU.scss */
+  /* line 204, assetic_compass849UW8.scss */
   .icon-grey span.ui-icon,
   span.icon-grey {
     background-image: url("/bundles/kacsite/css/resources/images/icons/grey@2x.png");
   }
 
-  /* line 209, assetic_compassuYfLFU.scss */
+  /* line 209, assetic_compass849UW8.scss */
   .icon-white span.ui-icon,
   span.icon-white {
     background-image: url("/bundles/kacsite/css/resources/images/icons/white@2x.png");
   }
 
-  /* line 214, assetic_compassuYfLFU.scss */
+  /* line 214, assetic_compass849UW8.scss */
   .icon-dark-red span.ui-icon,
   span.icon-dark-red {
     background-image: url("/bundles/kacsite/css/resources/images/icons/dark_red@2x.png");
   }
 
-  /* line 219, assetic_compassuYfLFU.scss */
+  /* line 219, assetic_compass849UW8.scss */
   .icon-red span.ui-icon,
   span.icon-red {
     background-image: url("/bundles/kacsite/css/resources/images/icons/red@2x.png");
   }
 
-  /* line 224, assetic_compassuYfLFU.scss */
+  /* line 224, assetic_compass849UW8.scss */
   .icon-orange span.ui-icon,
   span.icon-orange {
     background-image: url("/bundles/kacsite/css/resources/images/icons/orange@2x.png");
   }
 
-  /* line 229, assetic_compassuYfLFU.scss */
+  /* line 229, assetic_compass849UW8.scss */
   .icon-yellow span.ui-icon,
   span.icon-yellow {
     background-image: url("/bundles/kacsite/css/resources/images/icons/yellow@2x.png");
   }
 
-  /* line 234, assetic_compassuYfLFU.scss */
+  /* line 234, assetic_compass849UW8.scss */
   .icon-green span.ui-icon,
   span.icon-green {
     background-image: url("/bundles/kacsite/css/resources/images/icons/green@2x.png");
   }
 
-  /* line 239, assetic_compassuYfLFU.scss */
+  /* line 239, assetic_compass849UW8.scss */
   .icon-turquoise span.ui-icon,
   span.icon-turquoise {
     background-image: url("/bundles/kacsite/css/resources/images/icons/turquoise@2x.png");
   }
 
-  /* line 244, assetic_compassuYfLFU.scss */
+  /* line 244, assetic_compass849UW8.scss */
   .icon-blue span.ui-icon,
   span.icon-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/blue@2x.png");
   }
 
-  /* line 253, assetic_compassuYfLFU.scss */
+  /* line 253, assetic_compass849UW8.scss */
   .ui-button .icon-black span.ui-icon,
   .ui-button span.icon-black,
   .button .icon-black span.ui-icon,
@@ -272,7 +268,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/black_small@2x.png");
   }
 
-  /* line 262, assetic_compassuYfLFU.scss */
+  /* line 262, assetic_compass849UW8.scss */
   .ui-button .icon-grey span.ui-icon,
   .ui-button span.icon-grey,
   .button .icon-grey span.ui-icon,
@@ -282,7 +278,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/grey_small@2x.png");
   }
 
-  /* line 272, assetic_compassuYfLFU.scss */
+  /* line 272, assetic_compass849UW8.scss */
   .ui-icon-closethick,
   .ui-button .icon-white span.ui-icon,
   .ui-button span.icon-white,
@@ -293,7 +289,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/white_small@2x.png");
   }
 
-  /* line 281, assetic_compassuYfLFU.scss */
+  /* line 281, assetic_compass849UW8.scss */
   .ui-button .icon-dark-red span.ui-icon,
   .ui-button span.icon-dark-red,
   .button .icon-dark-red span.ui-icon,
@@ -303,7 +299,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/dark_red_small@2x.png");
   }
 
-  /* line 290, assetic_compassuYfLFU.scss */
+  /* line 290, assetic_compass849UW8.scss */
   .ui-button .icon-red span.ui-icon,
   .ui-button span.icon-red,
   .button .icon-red span.ui-icon,
@@ -313,7 +309,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/red_small@2x.png");
   }
 
-  /* line 299, assetic_compassuYfLFU.scss */
+  /* line 299, assetic_compass849UW8.scss */
   .ui-button .icon-orange span.ui-icon,
   .ui-button span.icon-orange,
   .button .icon-orange span.ui-icon,
@@ -323,7 +319,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/orange_small@2x.png");
   }
 
-  /* line 308, assetic_compassuYfLFU.scss */
+  /* line 308, assetic_compass849UW8.scss */
   .ui-button .icon-yellow span.ui-icon,
   .ui-button span.icon-yellow,
   .button .icon-yellow span.ui-icon,
@@ -333,7 +329,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/yellow_small@2x.png");
   }
 
-  /* line 317, assetic_compassuYfLFU.scss */
+  /* line 317, assetic_compass849UW8.scss */
   .ui-button .icon-green span.ui-icon,
   .ui-button span.icon-green,
   .button .icon-green span.ui-icon,
@@ -343,7 +339,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/green_small@2x.png");
   }
 
-  /* line 326, assetic_compassuYfLFU.scss */
+  /* line 326, assetic_compass849UW8.scss */
   .ui-button .icon-turquoise span.ui-icon,
   .ui-button span.icon-turquoise,
   .button .icon-turquoise span.ui-icon,
@@ -353,7 +349,7 @@ span.icon-small-blue {
     background-image: url("/bundles/kacsite/css/resources/images/icons/turquoise_small@2x.png");
   }
 
-  /* line 335, assetic_compassuYfLFU.scss */
+  /* line 335, assetic_compass849UW8.scss */
   .ui-button .icon-blue span.ui-icon,
   .ui-button span.icon-blue,
   .button .icon-blue span.ui-icon,

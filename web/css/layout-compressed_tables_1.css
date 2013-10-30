@@ -1,8 +1,4 @@
 @charset "UTF-8";
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -11,7 +7,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassixYcUW.scss */
+/* line 4, assetic_compass4nQjQc.scss */
 table.basic-table {
   width: 100%;
   border-collapse: collapse;
@@ -24,7 +20,7 @@ table.basic-table {
   background-clip: padding-box;
 }
 
-/* line 12, assetic_compassixYcUW.scss */
+/* line 12, assetic_compass4nQjQc.scss */
 table.basic-table th {
   border-collapse: collapse;
   padding: 10px 5px;
@@ -32,20 +28,20 @@ table.basic-table th {
   color: black;
 }
 
-/* line 19, assetic_compassixYcUW.scss */
+/* line 19, assetic_compass4nQjQc.scss */
 table.basic-table td {
   border-collapse: collapse;
   padding: 10px;
   vertical-align: middle;
 }
 
-/* line 25, assetic_compassixYcUW.scss */
+/* line 25, assetic_compass4nQjQc.scss */
 table.basic-table ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 30, assetic_compassixYcUW.scss */
+/* line 30, assetic_compass4nQjQc.scss */
 table.basic-table ul li {
   margin: 0;
   padding: 0;
@@ -54,12 +50,12 @@ table.basic-table ul li {
   line-height: 14px;
 }
 
-/* line 38, assetic_compassixYcUW.scss */
+/* line 38, assetic_compass4nQjQc.scss */
 table.basic-table td.nowrap {
   white-space: nowrap !important;
 }
 
-/* line 42, assetic_compassixYcUW.scss */
+/* line 42, assetic_compass4nQjQc.scss */
 table.data-table {
   width: 100%;
   border-collapse: collapse;
@@ -72,7 +68,7 @@ table.data-table {
   background-clip: padding-box;
 }
 
-/* line 50, assetic_compassixYcUW.scss */
+/* line 50, assetic_compass4nQjQc.scss */
 table.data-table th {
   border-collapse: collapse;
   border: 1px solid #6c8087;
@@ -97,14 +93,14 @@ table.data-table th {
   background-repeat: no-repeat;
 }
 
-/* line 59, assetic_compassixYcUW.scss */
+/* line 59, assetic_compass4nQjQc.scss */
 table.data-table th a {
   color: black;
   text-shadow: 0 1px 0 #ededed;
   text-shadow: 0 1px 0 #ededed;
 }
 
-/* line 64, assetic_compassixYcUW.scss */
+/* line 64, assetic_compass4nQjQc.scss */
 table.data-table td {
   border-collapse: collapse;
   padding: 10px;
@@ -112,13 +108,13 @@ table.data-table td {
   vertical-align: middle;
 }
 
-/* line 71, assetic_compassixYcUW.scss */
+/* line 71, assetic_compass4nQjQc.scss */
 table.data-table ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 76, assetic_compassixYcUW.scss */
+/* line 76, assetic_compass4nQjQc.scss */
 table.data-table ul li {
   margin: 0;
   padding: 0;
@@ -127,68 +123,68 @@ table.data-table ul li {
   line-height: 14px;
 }
 
-/* line 84, assetic_compassixYcUW.scss */
+/* line 84, assetic_compass4nQjQc.scss */
 table.data-table tr.odd {
   background: #ededed;
 }
 
-/* line 88, assetic_compassixYcUW.scss */
+/* line 88, assetic_compass4nQjQc.scss */
 table.data-table tr.even {
   background: white;
 }
 
-/* line 92, assetic_compassixYcUW.scss */
+/* line 92, assetic_compass4nQjQc.scss */
 table.data-table td.nowrap {
   white-space: nowrap !important;
 }
 
-/* line 96, assetic_compassixYcUW.scss */
+/* line 96, assetic_compass4nQjQc.scss */
 table.data-table td.image {
   padding: 0;
   background: white;
 }
 
-/* line 103, assetic_compassixYcUW.scss */
+/* line 103, assetic_compass4nQjQc.scss */
 .tac,
 table .tac,
 table tr .tac {
   text-align: center;
 }
 
-/* line 107, assetic_compassixYcUW.scss */
+/* line 107, assetic_compass4nQjQc.scss */
 td.tac .image-preview {
   margin: 0 auto;
 }
 
-/* line 113, assetic_compassixYcUW.scss */
+/* line 113, assetic_compass4nQjQc.scss */
 .tal,
 table .tal,
 table tr .tal {
   text-align: left;
 }
 
-/* line 119, assetic_compassixYcUW.scss */
+/* line 119, assetic_compass4nQjQc.scss */
 .tar,
 table .tar,
 table tr .tar {
   text-align: right;
 }
 
-/* line 125, assetic_compassixYcUW.scss */
+/* line 125, assetic_compass4nQjQc.scss */
 .vat,
 table .vat,
 table tr .vat {
   vertical-align: top;
 }
 
-/* line 131, assetic_compassixYcUW.scss */
+/* line 131, assetic_compass4nQjQc.scss */
 .vab,
 table .vab,
 table tr .vab {
   vertical-align: bottom;
 }
 
-/* line 137, assetic_compassixYcUW.scss */
+/* line 137, assetic_compass4nQjQc.scss */
 .vam,
 table .vam,
 table tr .vam {
