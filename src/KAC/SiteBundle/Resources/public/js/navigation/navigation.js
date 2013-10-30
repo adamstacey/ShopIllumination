@@ -1,19 +1,3 @@
-function resetSubmenu() {
-    $(".menu-horizontal > li > a.hover").removeClass("hover");
-    $(".submenu-container").hide();
-}
-
-$(document).on("mousemove", "body", function(e) {
-    if ($("div.submenu-container:visible").length > 0) {
-        var minX = (parseInt($(document).width()) - parseInt($("div.main-menu nav").width())) / 2;
-        var maxX = minX + parseInt($("div.main-menu nav").width());
-        var minY = $("div.main-menu nav").position().top;
-        var maxY = minY + $("div.submenu-container:visible").height() + $("div.main-menu nav").height();
-        if (((e.pageY < minY) || (e.pageY > maxY)) || ((e.pageX < minX) || (e.pageX > maxX))) {
-            resetSubmenu();
-        }
-    }
-});
 
 $(document).on("click", ".actionLoadPageDialog", function() {
     var $url = $(this).attr("href");
@@ -60,18 +44,5 @@ $(document).on("click", ".actionClose", function() {
 
 $(document).ready(function() {
     $("ul.sf-menu").superfish().supposition();
-
-    $("ul.sf-menu > li > a").hover(function() {
-        resetSubmenu();
-    });
-
-    $(".main-menu nav > a.ui-button").hoverIntent(function() {
-        resetSubmenu();
-        var $submenu = $("#" + $(this).data("submenu"));
-        var $submenuContainer = $(this).next(".submenu-container");
-        $submenu.css({ left: 0 });
-        $submenuContainer.show();
-        $submenu.show();
-    });
 });
 
