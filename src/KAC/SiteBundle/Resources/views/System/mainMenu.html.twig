@@ -12,28 +12,63 @@
         {% endfor %}
     </ul>
 {% endmacro %}
-
 <div class="main-menu container">
     <nav class="pr clearfix">
         <ul class="sf-menu">
             {% for department in departments %}
                 {% if department.url %}
-                    <li>
+                    <li class="sf-mega-container">
                         <a class="{% if loop.last %}highlighted{% endif %}" href="{{ path('routing', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a>
-                        {{ _self.menuItem(department.id, department.children) }}
+                        {% if department.children|length > 0 %}
+                            <div class="sf-mega">
+                                <table class="fill">
+                                    {% if department.children|length >= 5 %}
+                                        {% set tdlimit = 5 %}
+                                    {% else %}
+                                        {% set tdlimit = department.children|length %}
+                                    {% endif %}
+                                    {% for subdepartment in department.children %}
+                                        {% if (loop.index % tdlimit) == 1 %}
+                                            <tr>
+                                        {% endif %}
+                                        <td data-loop-index="{{ loop.index }}" data-modulus-loop-index="{{ (loop.index % tdlimit) }}" class="widget-1-of-{{ tdlimit }}">
+                                            <div class="menu-image">
+                                                <a href="{{ path('routing', {'url': subdepartment.url}) }}"><img src="{{ asset('/bundles/kacsite/images/departments/' ~ subdepartment.id ~ '.png') }}" border="0" alt="{{ subdepartment.description.name|raw }}" height="80" /></a>
+                                            </div>
+                                            <h3><a href="{{ path('routing', {'url': subdepartment.url}) }}">{{ subdepartment.description.name|raw }} ({{ subdepartment.id }})</a></h3>
+                                            {% if subdepartment.children|length > 0 %}
+                                                {% for subsubdepartment in subdepartment.children %}
+                                                    <a href="{{ path('routing', {'url': subsubdepartment.url}) }}">{{ subsubdepartment.description.name|raw }}</a>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </td>
+                                        {% if (loop.index % tdlimit) == 0 %}
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if (department.children|length % tdlimit) > 0 %}
+                                        {% set tdcount = (tdlimit - (department.children|length % tdlimit)) %}
+                                        {% for td in 1..tdcount %}
+                                            <td class="widget-1-of-{{ tdlimit }}">&nbsp;</td>
+                                        {% endfor %}
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        {% endif %}
                     </li>
                 {% endif %}
             {% endfor %}
+            <li class="sf-mega-container">
+                <a class="ui-button button button-turquoise uppercase mrs" href="{{ path('listing_products') }}">Brands</a>
+                <div class="sf-mega">
+                    {% for brand in brands %}
+                        {% if brand.images.0.publicPath is defined and brand.url %}
+                            <a class="brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ asset(brand.images.0.publicPath | apply_filter('logo_medium')) }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </li>
         </ul>
-        <a data-submenu="submenu-department-brands" class="ui-button button button-turquoise uppercase mrs" href="{{ path('listing_products') }}">Brands</a>
-        <div class="submenu-container submenu-container-brands">
-            <div id="submenu-department-brands">
-                {% for brand in brands %}
-                    {% if brand.images.0.publicPath is defined and brand.url %}
-                        <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ asset(brand.images.0.publicPath | apply_filter('logo_medium')) }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
     </nav>
 </div>
