@@ -43,7 +43,7 @@
 <div class="clearfix">
 	{% for deliveryOption in basket.delivery.deliveryOptions %}
         <div data-delivery-option="{{ loop.index }}" class="form-element mlm delivery-option widget-group clearfix">
-            <span title="{{ deliveryOption.description|raw }}" class="form-helper pbn ui-button-icon-primary ui-icon-small icon-small-763"></span>
+            <img title="{{ deliveryOption.description|raw }}" class="fr" src="{{ asset('/bundles/kacsite/images/icons/more-info.png') }}" style="margin-right: -5px;" border="0" width="47" height="20" alt="More Info" />
             <div class="widget radio-group man widget-1-of-1">
                 <div class="clearfix">
                     <input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" id="deliveryOption{{ loop.index }}" name="delivery-option" value="{{ deliveryOption.service }}" />
@@ -52,7 +52,7 @@
                         {% if deliveryOption.surcharge > 0 %}
                             <br /><span class="colour-red">{{ deliveryOption.surchargeDescription|raw }}</span>
                         {% endif %}
-                        <br /><span class="small"><em>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days){% else %}(We will contact you when your order is ready){% endif %}</em></span>
+                        <br /><span class="small"><em>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days){% else %}(We will contact you when your order is ready){% endif %}</em>{% if "Pallet" in deliveryOption.service %} - <span class="colour-grey">Kerbside Delivery</span>{% endif %}</span>
                     </label>
                 </div>
             </div>
@@ -77,12 +77,12 @@
 <img src="{{ asset('bundles/kacsite/images/icons/small-cards.png') }}" class="fr mts" border="0" alt="Cards we accept" />
 <div class="clear"></div>
 {% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.start != '') %}
-	<div class="estimated-delivery ui-corner-all clearfix">
-		<p class="tac mbn">
-            <span><strong>Earliest Delivery From:</strong></span> <span class="colour-green">{{ basket.estimatedDeliveryDays.start }}</span>
-        </p>
-		<p class="colour-grey mbn tac small"><em>Estimated dates are subject to availability, selected delivery options and locations.</em></p>
-	</div>
+	{#<div class="estimated-delivery ui-corner-all clearfix">#}
+		{#<p class="tac mbn">#}
+            {#<span><strong>Earliest Delivery From:</strong></span> <span class="colour-green">{{ basket.estimatedDeliveryDays.start }}</span>#}
+        {#</p>#}
+		{#<p class="colour-grey mbn tac small"><em>Estimated dates are subject to availability, selected delivery options and locations.</em></p>#}
+	{#</div>#}
 {% endif %}
 <script defer="defer" type="text/javascript">
 	$(document).ready(function() {

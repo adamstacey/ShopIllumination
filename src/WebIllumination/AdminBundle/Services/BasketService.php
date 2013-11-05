@@ -433,7 +433,7 @@ class BasketService {
                     case 3:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 0;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
@@ -449,7 +449,7 @@ class BasketService {
                     case 4:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 0;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
@@ -465,7 +465,7 @@ class BasketService {
                     case 5:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 0;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
@@ -535,7 +535,7 @@ class BasketService {
                     case 3:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 19.95;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
@@ -551,7 +551,7 @@ class BasketService {
                     case 4:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 19.95;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
@@ -567,7 +567,7 @@ class BasketService {
                     case 5:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 19.95;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
@@ -622,7 +622,7 @@ class BasketService {
                     case 3:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 3;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
@@ -631,7 +631,7 @@ class BasketService {
                     case 4:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 3;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
@@ -640,7 +640,7 @@ class BasketService {
                     case 5:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Express';
-                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 3;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 9;
@@ -672,7 +672,7 @@ class BasketService {
                     case 3:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
@@ -681,7 +681,7 @@ class BasketService {
                     case 4:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
@@ -690,7 +690,7 @@ class BasketService {
                     case 5:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 69;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
@@ -729,7 +729,7 @@ class BasketService {
                     case 3:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 99;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
@@ -738,7 +738,7 @@ class BasketService {
                     case 4:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 99;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
@@ -747,7 +747,7 @@ class BasketService {
                     case 5:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 99;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 4;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 10;
@@ -786,7 +786,7 @@ class BasketService {
                     case 3:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 149;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 5;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 11;
@@ -795,7 +795,7 @@ class BasketService {
                     case 4:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 149;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 5;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 11;
@@ -804,7 +804,7 @@ class BasketService {
                     case 5:
                         $deliveryOption = array();
                         $deliveryOption['service'] = 'Pallet Delivery Service';
-                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+                        $deliveryOption['description'] = 'Pallet service by Palletways. This is a kerbside delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
                         $deliveryOption['price'] = 149;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 5;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 11;
