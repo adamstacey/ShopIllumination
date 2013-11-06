@@ -35,7 +35,7 @@
                                             <div class="menu-image">
                                                 <a href="{{ path('routing', {'url': subdepartment.url}) }}"><img src="{{ asset('/bundles/kacsite/images/departments/' ~ subdepartment.id ~ '.png') }}" border="0" alt="{{ subdepartment.description.name|raw }}" height="80" /></a>
                                             </div>
-                                            <h3><a href="{{ path('routing', {'url': subdepartment.url}) }}">{{ subdepartment.description.name|raw }} ({{ subdepartment.id }})</a></h3>
+                                            <h3><a href="{{ path('routing', {'url': subdepartment.url}) }}">{{ subdepartment.description.name|raw }}</a></h3>
                                             {% if subdepartment.children|length > 0 %}
                                                 {% for subsubdepartment in subdepartment.children %}
                                                     <a href="{{ path('routing', {'url': subsubdepartment.url}) }}">{{ subsubdepartment.description.name|raw }}</a>
