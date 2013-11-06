@@ -52,14 +52,14 @@
                         $u.css('margin-left', ($u.parents('ul').length == 1 ? totalRight - menuRight : -(menuWidth + parentWidth)) + 'px');
                     }
 
-                    var windowHeight = $w.height(),
-                        offsetTop = $u.offset().top,
-                        menuHeight = $u.height(),
-                        baseline = windowHeight + _offset('y');
-                    var expandUp = (offsetTop + menuHeight > baseline);
-                    if (expandUp) {
-                        $u.css('margin-top',baseline - (menuHeight + offsetTop));
-                    }
+//                    var windowHeight = $w.height(),
+//                        offsetTop = $u.offset().top,
+//                        menuHeight = $u.height(),
+//                        baseline = windowHeight + _offset('y');
+//                    var expandUp = (offsetTop + menuHeight > baseline);
+//                    if (expandUp) {
+//                        $u.css('margin-top',baseline - (menuHeight + offsetTop));
+//                    }
                     $u.css('display','none');
                 });
             };

@@ -173,9 +173,11 @@
                                                     <span class="currency-tax">(inc. VAT)</span>
                                                 </div>
                                             </div>
-                                            <ul class="tick-list mbm">
-                                                <li><span class="colour-grey"><strong>FREE Delivery</strong> to most UK areas</span></li>
-                                            </ul>
+                                            {% if product.variant.deliveryBand < 2 %}
+                                                <ul class="tick-list mbm">
+                                                    <li><span class="colour-grey"><strong>FREE Delivery</strong> to most UK areas</span></li>
+                                                </ul>
+                                            {% endif %}
                                             <p class="summary pan">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                             <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="20" border="0" alt="loading" /></div>
                                             <div class="basket-product-info pbm" data-variantId="{{ variant.id }}">

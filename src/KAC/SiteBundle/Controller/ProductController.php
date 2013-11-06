@@ -1004,7 +1004,8 @@ class ProductController extends Controller {
             $response = new Response();
             $filename = $brand->getUrl().'-vs-export-'.date("Y-m-d-His").'.csv';
             $response->setStatusCode(200);
-            $response->headers->set('Content-Type', 'text/csv');
+            $response->setCharset('UTF-8');
+            $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
             $response->headers->set('Content-Description', 'Visual Soft Export');
             $response->headers->set('Content-Disposition', 'attachment;filename='.$filename);
             $response->headers->set('Pragma', 'no-cache');
