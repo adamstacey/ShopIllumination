@@ -841,7 +841,7 @@ class ProductController extends Controller {
                                         $featureName = $variantToFeature->getFeature()->getName();
                                         if (($featureName != 'N/A') && ($featureName != '*** NOT SET ***') && ($featureName != ''))
                                         {
-                                            $bullets[] = str_replace('"', '', $variantToFeature->getFeatureGroup()->getName().': <strong>'.$featureName.'</strong>');
+                                            $bullets[] = str_replace('"', '', '<strong>'.$variantToFeature->getFeatureGroup()->getName().':</strong> '.$featureName);
                                         }
                                     }
                                 }
