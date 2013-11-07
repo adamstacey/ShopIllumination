@@ -139,7 +139,7 @@ class Department implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department", mappedBy="parent")
-     * @ORM\OrderBy({"displayOrder" = "ASC"})
+     * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
 
