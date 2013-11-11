@@ -22,7 +22,7 @@
                 {% for department in departments %}
                     {% if department.lvl != 0 %}
                         <tr data-tt-id="{{ department.id }}" {% if department.parent and department.parent.lvl != 0 %}data-tt-parent-id="{{ department.parent.id }}"{% endif %}>
-                            <td>{{ department.description.name }}</td>
+                            <td>{{ department.description.menuTitle }}</td>
                             <td class="tac">{% if department.status == 'a' %}Available{% elseif department.status == 'd' %}Disabled{% elseif department.status == 'h' %}Hidden{% endif %}</td>
                             <td class="tar">
                                 <a href="{{ path('departments_moveup', {'departmentId': department.id}) }}" class="button icon-black" data-icon-primary="icon-467" data-icon-only="true">Move Up</a>

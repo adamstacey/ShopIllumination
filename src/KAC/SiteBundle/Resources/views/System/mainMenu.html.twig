@@ -3,7 +3,7 @@
         {% for department in departments %}
             {% if department.url %}
                 <li>
-                    <a href="{{ path('routing', {'url': department.url}) }}">{{ department.description.name|raw }}</a>
+                    <a href="{{ path('routing', {'url': department.url}) }}">{{ department.description.menuTitle|raw }}</a>
                     {% if department.children|length > 0 %}
                         {{ _self.menuItem(department.id, department.children) }}
                     {% endif %}
@@ -33,12 +33,12 @@
                                         {% endif %}
                                         <td data-loop-index="{{ loop.index }}" data-modulus-loop-index="{{ (loop.index % tdlimit) }}" class="widget-1-of-{{ tdlimit }}">
                                             <div class="menu-image">
-                                                <a href="{{ path('routing', {'url': subdepartment.url}) }}"><img src="{{ asset('/bundles/kacsite/images/departments/' ~ subdepartment.id ~ '.png') }}" border="0" alt="{{ subdepartment.description.name|raw }}" height="80" /></a>
+                                                <a href="{{ path('routing', {'url': subdepartment.url}) }}"><img src="{{ asset('/bundles/kacsite/images/departments/' ~ subdepartment.id ~ '.png') }}" border="0" alt="{{ subdepartment.description.menuTitle|raw }}" height="80" /></a>
                                             </div>
-                                            <h3><a href="{{ path('routing', {'url': subdepartment.url}) }}">{{ subdepartment.description.name|raw }}</a></h3>
+                                            <h3><a href="{{ path('routing', {'url': subdepartment.url}) }}">{{ subdepartment.description.menuTitle|raw }}</a></h3>
                                             {% if subdepartment.children|length > 0 %}
                                                 {% for subsubdepartment in subdepartment.children %}
-                                                    <a href="{{ path('routing', {'url': subsubdepartment.url}) }}">{{ subsubdepartment.description.name|raw }}</a>
+                                                    <a href="{{ path('routing', {'url': subsubdepartment.url}) }}">{{ subsubdepartment.description.menuTitle|raw }}</a>
                                                 {% endfor %}
                                             {% endif %}
                                         </td>
