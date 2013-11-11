@@ -878,11 +878,11 @@ class ProductController extends Controller {
                     }
                     $departments = array();
                     $department = $product->getDepartment()->getDepartment();
-                    $departments[] = $department->getDescription()->getName();
+                    $departments[] = $department->getDescription()->getMenuTitle();
                     while ($department->getParent())
                     {
                         $department = $department->getParent();
-                        array_unshift($departments, $department->getDescription()->getName());
+                        array_unshift($departments, $department->getDescription()->getMenuTitle());
                     }
                     if (count($departments) > 0)
                     {
