@@ -1,12 +1,6 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 
 {% block admin_submenu %}
-    <div class="widget widget-1-of-4">
-        <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-947"></span></a>
-        <h3 class="pts pbs"><a href="{{ path('departments_index') }}">View Departments</a></h3>
-    </div>
-    <div class="widget widget-1-of-4">
-        <a class="fl" href="{{ path('departments_new') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1121"></span></a>
-        <h3 class="pts pbs"><a href="{{ path('departments_new') }}">New Department</a></h3>
-    </div>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-399" href="{{ path('departments_index') }}">View Departments</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-1122" href="{{ path('departments_new') }}">Add Department</a>
 {% endblock %}

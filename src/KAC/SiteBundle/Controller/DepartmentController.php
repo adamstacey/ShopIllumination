@@ -24,6 +24,7 @@ use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Entity\Department;
 use KAC\SiteBundle\Entity\Department\Description;
 use KAC\SiteBundle\Manager\DepartmentManager;
+use KAC\SiteBundle\Manager\ProductManager;
 use KAC\SiteBundle\Manager\SeoManager;
 
 /**
@@ -292,6 +293,78 @@ class DepartmentController extends Controller
     }
 
     /**
+     * @Route("/admin/departments/{departmentId}/rebuildProducts", name="departments_edit_rebuild_products")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editRebuildProductsAction(Request $request, $departmentId)
+    {
+        $productManager = $this->getProductManager();
+        $em = $this->getDoctrine()->getManager();
+        $updates = array();
+        $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find($departmentId);
+        if ($department)
+        {
+            $productToDepartments = $em->getRepository("KAC\\SiteBundle\\Entity\\ProductToDepartment")->findBy(array('department' => $department));
+            foreach ($productToDepartments as $productToDepartment)
+            {
+                $product = $productToDepartment->getProduct();
+                if ($product)
+                {
+                    foreach ($product->getVariants() as $variant)
+                    {
+                        if ($variant)
+                        {
+                            $variantDescription = $variant->getDescription();
+                            if ($variantDescription)
+                            {
+                                if (!isset($updates[$variant->getId()]))
+                                {
+                                    $updates[$variant->getId()] = array();
+                                }
+                                $updates[$variant->getId()]['productCode'] = $variant->getProductCode();
+                                $updates[$variant->getId()]['existingPageTitle'] = $variantDescription->getPageTitle();
+                                $updates[$variant->getId()]['existingHeader'] = $variantDescription->getHeader();
+                                $updates[$variant->getId()]['existingMetaDescription'] = $variantDescription->getMetaDescription();
+                                $updates[$variant->getId()]['existingMetaKeywords'] = $variantDescription->getMetaKeywords();
+                                $updates[$variant->getId()]['existingUrl'] = $variant->getUrl();
+                            }
+                        }
+                    }
+
+                    // Update the product
+                    $productManager->updateProduct($product);
+
+                    $em->persist($product);
+                    $em->flush();
+
+                    foreach ($product->getVariants() as $variant)
+                    {
+                        if ($variant)
+                        {
+                            $variantDescription = $variant->getDescription();
+                            if ($variantDescription)
+                            {
+                                if (!isset($updates[$variant->getId()]))
+                                {
+                                    $updates[$variant->getId()] = array();
+                                }
+                                $updates[$variant->getId()]['updatedPageTitle'] = $variantDescription->getPageTitle();
+                                $updates[$variant->getId()]['updatedHeader'] = $variantDescription->getHeader();
+                                $updates[$variant->getId()]['updatedMetaDescription'] = $variantDescription->getMetaDescription();
+                                $updates[$variant->getId()]['updatedMetaKeywords'] = $variantDescription->getMetaKeywords();
+                                $updates[$variant->getId()]['updatedUrl'] = $variant->getUrl();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Parameters to template
+        return $this->render('KACSiteBundle:Department:edit_rebuild_products.html.twig', array('department' => $department, 'updates' => $updates));
+    }
+
+    /**
      * Fetch project manager from container
      *
      * @return \KAC\SiteBundle\Manager\DepartmentManager
@@ -299,5 +372,15 @@ class DepartmentController extends Controller
     private function getManager()
     {
         return $this->get('kac_site.manager.department');
+    }
+
+    /**
+     * Fetch project manager from container
+     *
+     * @return \KAC\SiteBundle\Manager\ProductManager
+     */
+    private function getProductManager()
+    {
+        return $this->get('kac_site.manager.product');
     }
 }

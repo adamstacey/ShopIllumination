@@ -1,82 +1,99 @@
 {% extends 'KACSiteBundle:Department:base.html.twig' %}
 
-{% block title %}SEO | {{ department.description.name }}{% endblock %}
+{% block title %}Search Engine Optimisation (SEO) | {{ department.description.name }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1 class="ptm">{{ department.description.name }}: Search Engine Optimisation (SEO)</h1>
+    </header>
+{% endblock %}
 
 {% block body %}
-    <div class="widget-group clearfix">
+    {% if app.request.query.get('modal') != true %}
+        <section>
+        <div class="widget-group clearfix">
         <div class="widget widget-2-of-7">
             {% include 'KACSiteBundle:Department:editLeftMenu.html.twig' %}
         </div>
         <div class="widget widget-5-of-7">
-            <section>
-                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
-                    <div class="widget-group clearfix">
-                        <div class="widget widget-1-of-1">
-                            <div class="ui-widget">
-                                <header class="ui-widget-header ui-corner-top">
-                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                                    <h2>Search Engine Optimisation</h2>
-                                </header>
-                                <section class="ui-widget-content ui-corner-all">
-                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                                    <fieldset>
-                                        {{ form_rest(form) }}
-                                    </fieldset>
-                                    
-                                    <div class="clearfix">
-                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Department</button>
-                                    </div>
-                                </section>
+    {% endif %}
+    <section>
+        <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
+            <div class="widget-group clearfix">
+                <div class="widget widget-1-of-1">
+                    <div class="ui-widget">
+                        <header class="ui-widget-header ui-corner-top">
+                            <span class="ui-button-icon-primary ui-icon icon-white icon-370"></span>
+                            <h2>Search Engine Optimisation (SEO)</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                            <fieldset>
+                                {{ form_rest(form) }}
+                            </fieldset>
+
+                            <div class="clearfix">
+                                <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1119">Save</button>
                             </div>
-                        </div>
+                        </section>
                     </div>
-                </form>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        var googleDepartmentsUrl = "{{ path('api_taxonomies_get') }}";
-                        var googleDepartmentUrl = "{{ path('api_taxonomies_get_taxonomy', {'id': -1}) }}";
-                        $(".select-google-department").select2({
-                            placeholder: "- Select a Google Department -",
-                            minimumInputLength: 1,
-                            quietMillis: 100,
-                            ajax: {
-                                url: googleDepartmentsUrl,
-                                dataType: 'json',
-                                data: function (term, page) {
-                                    return {
-                                        q: term,
-                                        page: page
-                                    };
-                                },
-                                results: function (data, page) {
-                                    var more = (page * 10) < data.total;
-                                    return {results: data.taxonomies, more: more};
-                                }
-                            },
-                            initSelection: function(element, callback) {
-                                var id = $(element).val();
-                                if (id !== "") {
-                                    $.ajax(googleDepartmentUrl.replace(/-1/, id), {
-                                        dataType: "json"
-                                    }).done(function(data) { callback(data); });
-                                }
-                            },
-                            formatResult: function(taxonomy) {
-                                if (taxonomy != 'undefined') {
-                                    return taxonomy.name;
-                                }
-                                return "";
-                            },
-                            formatSelection: function(taxonomy) {
-                                if (taxonomy != 'undefined') {
-                                    return taxonomy.name;
-                                }
-                                return "";
-                            }
-                        });
-                    });
-                </script>
-            </section>
+                </div>
+            </div>
+        </form>
+    </section>
+    {% if app.request.query.get('modal') != true %}
         </div>
-    </div>
+        </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var googleDepartmentsUrl = "{{ path('api_taxonomies_get') }}";
+            var googleDepartmentUrl = "{{ path('api_taxonomies_get_taxonomy', {'id': -1}) }}";
+            $(".select-google-department").select2({
+                placeholder: "- Select a Google Department -",
+                minimumInputLength: 1,
+                quietMillis: 100,
+                ajax: {
+                    url: googleDepartmentsUrl,
+                    dataType: 'json',
+                    data: function (term, page) {
+                        return {
+                            q: term,
+                            page: page
+                        };
+                    },
+                    results: function (data, page) {
+                        var more = (page * 10) < data.total;
+                        return {results: data.taxonomies, more: more};
+                    }
+                },
+                initSelection: function(element, callback) {
+                    var id = $(element).val();
+                    if (id !== "") {
+                        $.ajax(googleDepartmentUrl.replace(/-1/, id), {
+                            dataType: "json"
+                        }).done(function(data) { callback(data); });
+                    }
+                },
+                formatResult: function(taxonomy) {
+                    if (taxonomy != 'undefined') {
+                        return taxonomy.name;
+                    }
+                    return "";
+                },
+                formatSelection: function(taxonomy) {
+                    if (taxonomy != 'undefined') {
+                        return taxonomy.name;
+                    }
+                    return "";
+                }
+            });
+        });
+    </script>
 {% endblock %}

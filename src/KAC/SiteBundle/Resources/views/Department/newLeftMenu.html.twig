@@ -7,18 +7,18 @@
             <ul class="clearfix">
                 {% for stepLabel in flow.getStepLabels() %}
                     {% if loop.index == flow.getCurrentStepNumber() %}
-                        {% set statusIcon = 'icon-471' %}
+                        {% set statusIcon = 'icon-472' %}
                         {% set statusIconColour = 'icon-white' %}
                         {% set buttonColour = ' button-turquoise' %}
                         {% set iconColour = 'turquoise' %}
                     {% else %}
                         {% if flow.isStepDone(loop.index) %}
-                            {% set statusIcon = 'icon-1119' %}
+                            {% set statusIcon = 'icon-1120' %}
                             {% set statusIconColour = 'icon-white' %}
                             {% set buttonColour = ' button-green' %}
                             {% set iconColour = 'green' %}
                         {% else %}
-                            {% set statusIcon = 'icon-1116' %}
+                            {% set statusIcon = 'icon-1117' %}
                             {% set statusIconColour = 'icon-red' %}
                             {% set buttonColour = '' %}
                             {% set iconColour = 'grey' %}
@@ -27,17 +27,17 @@
 
                     <li class="clearfix {{ iconColour }}{% if loop.last %} mbn{% endif %}">
                         {% if loop.index == 1 %}
-                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-398"></span>
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-947"></span>
                         {% elseif loop.index == 2 %}
-                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-369"></span>
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-370"></span>
                         {% elseif loop.index == 3 %}
-                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-1113"></span>
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-450"></span>
                         {% elseif loop.index == 4 %}
                             <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-69"></span>
                         {% elseif loop.index == 5 %}
-                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-1256"></span>
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-945"></span>
                         {% else %}
-                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-276"></span>
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-947"></span>
                         {% endif %}
 
                         {% if flow.isAllowDynamicStepNavigation() and (loop.index != flow.getCurrentStepNumber()) and flow.isStepDone(loop.index) and (not flow.isStepSkipped(loop.index)) %}

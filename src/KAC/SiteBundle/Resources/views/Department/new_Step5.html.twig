@@ -3,12 +3,12 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="ui-button-icon-primary ui-icon icon-white icon-1256"></span>
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-945"></span>
                     <h2>5. Product Templates</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     <div class="message message-help">
-                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
                         <p>The product templates allow you to build page title, header and meta description templates for the products in this department. These templates ensure the SEO for the products are relevant, consistent and more importantly set. The template is followed for all new products added to this department.</p>
                     </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -41,7 +41,7 @@
                                     <option value="brand">Brand</option>
                                     <option value="productCode">Product Code</option>
                                     <option value="department">Department</option>
-                                    <option value="tagline">Tagline</option>
+                                    <option value="extraKeywords">Extra Keywords</option>
                                     <option value="keyMessage">Key Message</option>
                                     <option value="@VariantToFeature">Feature</option>
                                     <optgroup label="Symbols">
@@ -88,7 +88,7 @@
                                 <label for="formNewTemplatePart">Feature</label>
                             </div>
                             <div class="widget widget-2-of-3">
-                                <select id="formFeature" class="free-text fill">
+                                <select id="formFeature" class="fill">
                                     {% for feature in form.vars.value.features %}
                                         <option value="{{ feature.featureGroup.id }}">{{ feature.featureGroup.name }}</option>
                                     {% else %}
