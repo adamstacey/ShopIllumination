@@ -11,30 +11,28 @@
 {% endblock %}
 {% block body %}
     <section>
-        <fieldset class="pbm">
-            <table class="form-table treetable" id="departments">
-                <tr>
-                    {# sorting of properties based on query components #}
-                    <th class="tal">Name</th>
-                    <th>Status</th>
-                    <th>&nbsp;</th>
-                </tr>
-                {% for department in departments %}
-                    {% if department.lvl != 0 %}
-                        <tr data-tt-id="{{ department.id }}" {% if department.parent and department.parent.lvl != 0 %}data-tt-parent-id="{{ department.parent.id }}"{% endif %}>
-                            <td>{{ department.description.menuTitle }}</td>
-                            <td class="tac">{% if department.status == 'a' %}Available{% elseif department.status == 'd' %}Disabled{% elseif department.status == 'h' %}Hidden{% endif %}</td>
-                            <td class="tar">
-                                <a href="{{ path('departments_moveup', {'departmentId': department.id}) }}" class="button icon-black" data-icon-primary="icon-467" data-icon-only="true">Move Up</a>
-                                <a href="{{ path('departments_movedown', {'departmentId': department.id}) }}" class="button icon-black" data-icon-primary="icon-466" data-icon-only="true">Move Down</a>
-                                <a href="{{ path('departments_edit', {'departmentId': department.id}) }}" class="button">Edit</a>
-                                <a href="{{ path('departments_delete', {'departmentId': department.id}) }}" class="button button-red icon-white" data-icon-primary="icon-1118" data-icon-only="true">Delete</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </fieldset>
+        <table class="form-table treetable" id="departments">
+            <tr>
+                {# sorting of properties based on query components #}
+                <th class="tal">Name</th>
+                <th>Status</th>
+                <th>&nbsp;</th>
+            </tr>
+            {% for department in departments %}
+                {% if department.lvl != 0 %}
+                    <tr data-tt-id="{{ department.id }}" {% if department.parent and department.parent.lvl != 0 %}data-tt-parent-id="{{ department.parent.id }}"{% endif %}>
+                        <td>{{ department.description.menuTitle }}</td>
+                        <td class="tac">{% if department.status == 'a' %}Available{% elseif department.status == 'd' %}Disabled{% elseif department.status == 'h' %}Hidden{% endif %}</td>
+                        <td class="tar">
+                            <a href="{{ path('departments_moveup', {'departmentId': department.id}) }}" class="button icon-black" data-icon-primary="icon-467" data-icon-only="true">Move Up</a>
+                            <a href="{{ path('departments_movedown', {'departmentId': department.id}) }}" class="button icon-black" data-icon-primary="icon-466" data-icon-only="true">Move Down</a>
+                            <a target="_blank" href="{{ path('departments_edit', {'departmentId': department.id}) }}" class="button">Edit</a>
+                            <a href="{{ path('departments_delete', {'departmentId': department.id}) }}" class="button button-red icon-white" data-icon-primary="icon-1118" data-icon-only="true">Delete</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
     </section>
 {% endblock %}
 {% block javascripts %}
