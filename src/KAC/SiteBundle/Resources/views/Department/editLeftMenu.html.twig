@@ -30,30 +30,39 @@
         <nav class="left-menu">
             <ul class="clearfix">
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_overview') }} icon-944"></span>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_overview') }} icon-947"></span>
                     <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_overview') }} icon-{{ helpers.getStatusIconColour('departments_edit_overview') }}" href="{{ path('departments_edit_overview', {'departmentId': department.id}) }}">
                         Overview
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_seo') }} icon-369"></span>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_seo') }} icon-370"></span>
                     <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_seo') }} icon-{{ helpers.getStatusIconColour('departments_edit_seo') }}" href="{{ path('departments_edit_seo', {'departmentId': department.id}) }}">
                         SEO
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_delivery') }} icon-1305"></span>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_delivery') }} icon-450"></span>
                     <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_delivery') }} icon-{{ helpers.getStatusIconColour('departments_edit_delivery') }}" href="{{ path('departments_edit_delivery', {'departmentId': department.id}) }}">
                         Delivery
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_features') }} icon-51"></span>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_features') }} icon-69"></span>
                     <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_features') }} icon-{{ helpers.getStatusIconColour('departments_edit_features') }}" href="{{ path('departments_edit_features', {'departmentId': department.id}) }}">
                         Feature Templates
                     </a>
                 </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_product_templates') }} icon-945"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_product_templates') }} icon-{{ helpers.getStatusIconColour('departments_edit_product_templates') }}" href="{{ path('departments_edit_product_templates', {'departmentId': department.id}) }}">
+                        Product Templates
+                    </a>
+                </li>
             </ul>
         </nav>
+        <div class="tac">
+            <a class="button mtm button-green icon-white" data-icon-primary="icon-1113" href="{{ path('departments_edit_rebuild_products', {'departmentId': department.id}) }}">Rebuild Products</a>
+        </div>
     </section>
 </div>

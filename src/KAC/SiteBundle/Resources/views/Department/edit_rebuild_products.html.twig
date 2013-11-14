@@ -1,0 +1,86 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Rebuild Products | {{ department.description.name }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1 class="ptm">{{ department.description.name }}: Rebuild Products</h1>
+    </header>
+{% endblock %}
+
+{% block body %}
+    {% if app.request.query.get('modal') != true %}
+        <section>
+        <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'KACSiteBundle:Department:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+    {% endif %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <span class="ui-button-icon-primary ui-icon icon-white icon-1113"></span>
+                        <h2>Rebuild Products</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        {% for update in updates %}
+                            <h5>Product: {{ update.productCode }}</h5>
+                            <table class="form-table mbm">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th title="The existing values." class="tal">Existing</th>
+                                        <th width="1">&nbsp;</th>
+                                        <th title="The updated values." class="tal">Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="background-grey-extra-light tal"><strong>Product Title</strong></td>
+                                        <td class="tal">{{ update.existingPageTitle }}</td>
+                                        <td class="background-turquoise colour-white tac" width="1">&gt;</td>
+                                        <td class="tal">{{ update.updatedPageTitle }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="background-grey-extra-light tal"><strong>Header</strong></td>
+                                        <td class="tal">{{ update.existingHeader }}</td>
+                                        <td class="background-turquoise colour-white tac" width="1">&gt;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="background-grey-extra-light tal"><strong>Meta Description</strong></td>
+                                        <td class="tal">{{ update.existingMetaDescription }}</td>
+                                        <td class="background-turquoise colour-white tac" width="1">&gt;</td>
+                                        <td class="tal">{{ update.updatedMetaDescription }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="background-grey-extra-light tal"><strong>Meta Keywords</strong></td>
+                                        <td class="tal">{{ update.existingMetaKeywords }}</td>
+                                        <td class="background-turquoise colour-white tac" width="1">&gt;</td>
+                                        <td class="tal">{{ update.updatedMetaKeywords }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="background-grey-extra-light tal"><strong>URL</strong></td>
+                                        <td class="tal">{{ update.existingUrl }}</td>
+                                        <td class="background-turquoise colour-white tac" width="1">&gt;</td>
+                                        <td class="tal">{{ update.updatedUrl }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>There are no products to update.</p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if app.request.query.get('modal') != true %}
+        </div>
+        </div>
+        </section>
+    {% endif %}
+{% endblock %}

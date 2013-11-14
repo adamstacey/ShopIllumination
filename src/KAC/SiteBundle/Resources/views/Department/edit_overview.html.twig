@@ -2,46 +2,63 @@
 
 {% block title %}Overview | {{ department.description.name }}{% endblock %}
 
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1 class="ptm">{{ department.description.name }}: Overview</h1>
+    </header>
+{% endblock %}
+
 {% block body %}
-    <div class="widget-group clearfix">
+    {% if app.request.query.get('modal') != true %}
+        <section>
+        <div class="widget-group clearfix">
         <div class="widget widget-2-of-7">
             {% include 'KACSiteBundle:Department:editLeftMenu.html.twig' %}
         </div>
         <div class="widget widget-5-of-7">
-            <section>
-                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
-                    <div class="widget-group clearfix">
-                        <div class="widget widget-1-of-1">
-                            <div class="ui-widget">
-                                <header class="ui-widget-header ui-corner-top">
-                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                                    <h2>Overview</h2>
-                                </header>
-                                <section class="ui-widget-content ui-corner-all">
-                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                                    <fieldset>
-                                        {{ form_rest(form) }}
-                                    </fieldset>
+    {% endif %}
+    <section>
+        <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
+            <div class="widget-group clearfix">
+                <div class="widget widget-1-of-1">
+                    <div class="ui-widget">
+                        <header class="ui-widget-header ui-corner-top">
+                            <span class="ui-button-icon-primary ui-icon icon-white icon-947"></span>
+                            <h2>Overview</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                            <fieldset>
+                                {{ form_rest(form) }}
+                            </fieldset>
 
-                                    <div class="clearfix">
-                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Product</button>
-                                    </div>
-                                </section>
+                            <div class="clearfix">
+                                <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1119">Save</button>
                             </div>
-                        </div>
+                        </section>
                     </div>
-                </form>
-                <script>
-                    $(document).ready(function() {
-                        $("#site_new_product_brand").select2();
-                        $("select.select-department").select2({
-                            matcher: function(term, text) {
-                                return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase())>=0;
-                            }
-                        });
-                    })
-                </script>
-            </section>
+                </div>
+            </div>
+        </form>
+    </section>
+    {% if app.request.query.get('modal') != true %}
         </div>
-    </div>
+        </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#site_new_product_brand").select2();
+            $("select.select-department").select2({
+                matcher: function(term, text) {
+                    return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase())>=0;
+                }
+            });
+        })
+    </script>
 {% endblock %}

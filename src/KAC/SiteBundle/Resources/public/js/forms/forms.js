@@ -184,14 +184,16 @@ function generateTemplateParts() {
                     break;
                 default:
                     if ($templatePartKey) {
-                        if ($templatePartKey.substring(0, 1) == '"' && $templatePartKey.slice(-1) == '"') {
+                        if ($templatePartKey.indexOf("@VariantToFeature") > -1) {
+                            $templatePartContent = $templatePartKey.split("|")[1];
+                            $templatePartName = "Feature: " + $("#formFeature").find("option[value='" + $templatePartContent + "']").text();
+                        } else if ($templatePartKey.substring(0, 1) == '"' && $templatePartKey.slice(-1) == '"') {
                             $templatePartName = $templatePartKey.substring(1, $templatePartKey.length-1);
                             $templatePartContent = $templatePartName;
                         }
                     }
                     break;
             }
-
             if ($templatePartName) {
                 var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartName);
                 $newTemplatePart.data('type', $templatePartKey);
@@ -430,15 +432,25 @@ $(document).ready(function() {
             $templatePartTypeName = $templatePartContent;
         } else if ($("#formTemplatePart").val() == '@VariantToFeature') {
             $templatePartContent = $("#formFeature").val();
-            $templatePartTypeName = "Feature #" + $("#formFeature").val();
+            $templatePartTypeName = "Feature: " + $("#formFeature").find("option:selected").text();
         }
 
-        if ($templatePartTypeName != '' && ($templatePartType == '@VariantToFeature' && $templatePartContent != '')) {
-            var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartTypeName);
-            $newTemplatePart.data('type', $templatePartType);
-            $newTemplatePart.data('content', $templatePartContent);
-            $templateObject.append($newTemplatePart);
-            updateTemplatePartHiddenFields();
+        if ($templatePartTypeName != '') {
+            if ($templatePartType == '@VariantToFeature') {
+                if ($templatePartContent != '') {
+                    var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartTypeName);
+                    $newTemplatePart.data('type', $templatePartType);
+                    $newTemplatePart.data('content', $templatePartContent);
+                    $templateObject.append($newTemplatePart);
+                    updateTemplatePartHiddenFields();
+                }
+            } else {
+                var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartTypeName);
+                $newTemplatePart.data('type', $templatePartType);
+                $newTemplatePart.data('content', $templatePartContent);
+                $templateObject.append($newTemplatePart);
+                updateTemplatePartHiddenFields();
+            }
         }
     });
 

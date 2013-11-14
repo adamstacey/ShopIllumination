@@ -5,7 +5,7 @@
 {% block header %}
     <header>
         {{ parent() }}
-        <h1>{{ department.description.name }}: Feature Templates</h1>
+        <h1 class="ptm">{{ department.description.name }}: Feature Templates</h1>
     </header>
 {% endblock %}
 
@@ -23,7 +23,7 @@
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
                     <header class="ui-widget-header ui-corner-top">
-                        <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                        <span class="ui-button-icon-primary ui-icon icon-white icon-69"></span>
                         <h2>Feature Templates</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
@@ -34,7 +34,7 @@
                         {% endif %}
                         <form class="form" method="post" novalidate="novalidate" action="{{ formAction }}" {{ form_enctype(form) }}>
                             <div class="message message-help">
-                                <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                                <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
                                 <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
                             </div>
                             {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -66,7 +66,7 @@
                             <div class="clearfix">
                                 <a href="{{ path('products_new_feature_groups', {'modal': true, 'departmentId': department.id}) }}" title="Add Feature Group" class="actionLoadPageDialog button button-small button mrm fl">Add Feature Group</a>
                                 <a href="{{ path('products_new_features', {'modal': true, 'departmentId': department.id}) }}" title="Add Feature" class="actionLoadPageDialog button button-small button mrm fl">Add Feature</a>
-                                <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1119">Save</button>
                                 <button type="button" data-table-object="featureList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
                             </div>
                         </form>
