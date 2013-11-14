@@ -91,7 +91,7 @@
                             {% for department in departments|reverse %}
                                 {% if department.level != 0  %}
                                     <li style="z-index: {{ loop.revindex }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                        <a href="{{ path('routing', {'url': department.url}) }}" itemprop="url"><span itemprop="title">{{ department.description.header }}</span></a>
+                                        <a href="{{ path('routing', {'url': department.url}) }}" itemprop="url"><span itemprop="title">{{ department.description.menuTitle }}</span></a>
                                     </li>
                                 {% endif %}
                             {% endfor %}

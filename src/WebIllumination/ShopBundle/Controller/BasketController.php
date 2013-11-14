@@ -57,7 +57,7 @@ class BasketController extends Controller
             $product = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($lastBasketProduct['productId']);
             if ($product)
             {
-                $lastBasketProductDepartment = $product->getDepartment()->getDepartment()->getDescription()->getName();
+                $lastBasketProductDepartment = $product->getDepartment()->getDepartment()->getDescription()->getMenuTitle();
                 $lastBasketProductDepartmentUrl = $product->getDepartment()->getDepartment()->getUrl();
             }
         }
