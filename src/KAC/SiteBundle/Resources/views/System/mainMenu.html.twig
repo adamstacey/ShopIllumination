@@ -22,8 +22,8 @@
                         {% if department.children|length > 0 %}
                             <div class="sf-mega">
                                 <table class="fill">
-                                    {% if department.children|length >= 5 %}
-                                        {% set tdlimit = 5 %}
+                                    {% if department.children|length >= 4 %}
+                                        {% set tdlimit = 4 %}
                                     {% else %}
                                         {% set tdlimit = department.children|length %}
                                     {% endif %}
