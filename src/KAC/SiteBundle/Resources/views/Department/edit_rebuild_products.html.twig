@@ -49,6 +49,7 @@
                                         <td class="background-grey-extra-light tal"><strong>Header</strong></td>
                                         <td class="tal">{{ update.existingHeader }}</td>
                                         <td class="background-turquoise colour-white tac" width="1">&gt;</td>
+                                        <td class="tal">{{ update.updatedHeader }}</td>
                                     </tr>
                                     <tr>
                                         <td class="background-grey-extra-light tal"><strong>Meta Description</strong></td>
@@ -72,7 +73,7 @@
                             </table>
                         {% else %}
                             <p>There are no products to update.</p>
-                        {% endif %}
+                        {% endfor %}
                     </section>
                 </div>
             </div>
