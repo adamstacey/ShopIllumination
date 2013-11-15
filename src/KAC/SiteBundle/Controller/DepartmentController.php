@@ -299,6 +299,7 @@ class DepartmentController extends Controller
     public function editRebuildProductsAction(Request $request, $departmentId)
     {
         ini_set('memory_limit', '1024M');
+        ini_set('max_execution_time', '600');
         $productManager = $this->getProductManager();
         $em = $this->getDoctrine()->getManager();
         $updates = array();
