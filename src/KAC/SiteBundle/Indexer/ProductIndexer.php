@@ -116,7 +116,7 @@ class ProductIndexer extends Indexer
 
         $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder")
             ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
-            ->execute();
+            ->getResult();
 
         /** @var $variant Product\Variant */
         // Add product codes from each variant
@@ -173,7 +173,7 @@ class ProductIndexer extends Indexer
                 foreach ($variant->getFeatures() as $feature)
                 {
                     // Check for common features
-                    if ($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnListing())
+                    if ($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature->getDisplayOnListing())
                     {
                         if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
                         {
