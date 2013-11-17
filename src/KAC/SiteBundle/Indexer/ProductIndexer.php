@@ -179,11 +179,14 @@ class ProductIndexer extends Indexer
                         {
                             if ($departmentToFeature->getFeatureGroup()->getId() == $feature->getFeatureGroup()->getId())
                             {
-                                if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                if ($feature->getFeatureGroup() && $feature->getFeature())
                                 {
-                                    $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                                } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
-                                    unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                    if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                    {
+                                        $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                                    } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
+                                        unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                    }
                                 }
                             }
                         }
