@@ -114,6 +114,10 @@ class ProductIndexer extends Indexer
             $document->setField('url', $product->getRouting()->getUrl());
         }
 
+        $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder")
+            ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
+            ->execute();
+
         /** @var $variant Product\Variant */
         // Add product codes from each variant
         $numVariants = 0;
@@ -154,26 +158,24 @@ class ProductIndexer extends Indexer
             /** @var $feature VariantToFeature */
             foreach ($variant->getFeatures() as $feature)
             {
-                if($feature && $feature->getFeatureGroup() && $feature->getFeature())
+                if ($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
                     $document->addField(
                         $helper->escapeTerm(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
                         $feature->getFeature()->getName()
                     );
+                }
+            }
 
-                    // Fetch the relevant department to feature entity
-                    $departmentToFeature = $em->createQuery("
-                        SELECT dtf
-                        FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf
-                        WHERE dtf.featureGroup = ?1 AND dtf.department = ?2")
-                        ->setParameter(1, $feature->getFeatureGroup()->getId())
-                        ->setParameter(2, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
-                        ->execute();
-
+            // Get the common features
+            foreach ($departmentToFeatures as $departmentToFeature)
+            {
+                foreach ($variant->getFeatures() as $feature)
+                {
                     // Check for common features
-                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnListing())
+                    if ($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnListing())
                     {
-                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
                         {
                             $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
                         }
