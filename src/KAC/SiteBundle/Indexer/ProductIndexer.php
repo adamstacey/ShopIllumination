@@ -114,7 +114,7 @@ class ProductIndexer extends Indexer
             $document->setField('url', $product->getRouting()->getUrl());
         }
 
-        $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder")
+        $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder ASC")
             ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
             ->getResult();
 
@@ -173,15 +173,19 @@ class ProductIndexer extends Indexer
                 foreach ($variant->getFeatures() as $feature)
                 {
                     // Check for common features
-                    if ($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature->getDisplayOnListing())
+                    if ($departmentToFeature)
                     {
-                        if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        if ($departmentToFeature->getDisplayOnListing())
                         {
-                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                        }
-                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
-                        {
-                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                            if ($departmentToFeature->getFeatureGroup()->getId() == $feature->getFeatureGroup()->getId())
+                            {
+                                if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                {
+                                    $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                                } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
+                                    unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                }
+                            }
                         }
                     }
                 }
