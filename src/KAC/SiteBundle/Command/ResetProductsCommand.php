@@ -23,63 +23,54 @@ class ResetProductsCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $productManager = $this->getContainer()->get('kac_site.manager.product');
         $productCount = 1;
+        $variantCount = 1;
 
-        // Fetch the products
-        $products = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->findAll();
-        $totalNumberOfProducts = count($products);
-        foreach ($products as $product)
+        // Check the products
+        $productDescriptions = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Description")->findBy(array('override' => 1));
+        $totalNumberOfProducts = count($productDescriptions);
+        $output->writeln('Checking Products...');
+        foreach ($productDescriptions as $productDescription)
         {
-            $resetProduct = false;
             $percentage = number_format(($productCount / $totalNumberOfProducts) * 100, 1);
-            $output->writeln($percentage.'% - Checking Product: '.$product->getId().' ('.$productCount.' of '.$totalNumberOfProducts.')');
-            if ($product->getDescription())
+            $output->writeln($percentage.'% - Resetting Product: '.$productDescription->getId().' ('.$productCount.' of '.$totalNumberOfProducts.')');
+            $product = $productDescription->getProduct();
+            if ($product)
             {
-                if ($product->getDescription()->getOverride() > 0)
-                {
-                    $resetProduct = true;
-                }
+                $productDescription->setOverride(0);
+                $em->persist($productDescription);
+                $em->flush();
+                $productManager->updateProduct($product);
+                $em->persist($product);
+                $em->flush();
             }
-            if (!$resetProduct)
-            {
-                foreach ($product->getVariants() as $variant)
-                {
-                    if ($variant)
-                    {
-                        if ($variant->getDescription())
-                        {
-                            if ($variant->getDescription()->getOverride() > 0)
-                            {
-                                $resetProduct = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            if ($resetProduct)
-            {
-                if ($product->getDescription())
-                {
-                    $product->getDescription()->setOverride(0);
-                }
-                foreach ($product->getVariants() as $variant)
-                {
-                    if ($variant)
-                    {
-                        if ($variant->getDescription())
-                        {
-                            $variant->getDescription()->setOverride(0);
-                        }
-                    }
-                }
-            }
-            $em->persist($product);
-            $em->flush();
-            $productManager->updateProduct($product);
-            $em->persist($product);
-            $em->flush();
             $productCount++;
         }
+
+        // Check the variants
+        $variantDescriptions = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Variant\\Description")->findBy(array('override' => 1));
+        $totalNumberOfVariants = count($variantDescriptions);
+        $output->writeln('Checking Variants...');
+        foreach ($variantDescriptions as $variantDescription)
+        {
+            $percentage = number_format(($variantCount / $totalNumberOfVariants) * 100, 1);
+            $output->writeln($percentage.'% - Resetting Variant: '.$variantDescription->getId().' ('.$variantCount.' of '.$totalNumberOfVariants.')');
+            $variant = $variantDescription->getVariant();
+            if ($variant)
+            {
+                $product = $variant->getProduct();
+                if ($product)
+                {
+                    $variantDescription->setOverride(0);
+                    $em->persist($variantDescription);
+                    $em->flush();
+                    $productManager->updateProduct($product);
+                    $em->persist($product);
+                    $em->flush();
+                }
+            }
+            $variantCount++;
+        }
+
         $output->writeln('Finished!');
     }
 }
