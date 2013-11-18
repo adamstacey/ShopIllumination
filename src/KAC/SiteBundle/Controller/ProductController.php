@@ -918,6 +918,7 @@ class ProductController extends Controller {
                     $cleansedHeader = str_replace($brandName, '', $header);
                     $cleansedHeader = str_replace($productCode, '', $cleansedHeader);
                     $cleansedHeader = str_replace('  ', ' ', trim($cleansedHeader));
+                    $keyMessage = str_replace('"', '', $product->getVariant()->getDescription()->getKeyMessage());
                     $metaDescription = str_replace('"', '', $product->getVariant()->getDescription()->getMetaDescription());
                     if (!$metaDescription)
                     {
@@ -951,8 +952,7 @@ class ProductController extends Controller {
                     $csv .= ','; // -
                     $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
                     $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
-                    //$csv .= ($colour ? '"'.$colour.'"' : '').','; // Product Subtitle
-                    $csv .= ','; // Product Subtitle
+                    $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
                     $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
                     $csv .= '"'.$description.'",'; // Product Description
                     $csv .= ','; // -
