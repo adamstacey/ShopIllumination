@@ -32,12 +32,14 @@ class UpdateProductsCommand extends ContainerAwareCommand
         $totalNumberOfProducts = count($products);
         foreach ($products as $product)
         {
+            $productManager->updateProduct($product);
             $em->persist($product);
             if (($i % $batchSize) === 0)
             {
                 $em->flush();
             }
-            $output->writeln('Updating Product: '.$product->getId().' ('.$productCount.' of '.$totalNumberOfProducts.')');
+            $percentage = number_format(($productCount / $totalNumberOfProducts) * 100, 1);
+            $output->writeln($percentage.'% - Updating Product: '.$product->getId().' ('.$productCount.' of '.$totalNumberOfProducts.')');
             $productCount++;
         }
 

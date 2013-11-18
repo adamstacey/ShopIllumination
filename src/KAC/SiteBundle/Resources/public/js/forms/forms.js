@@ -344,6 +344,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".actionDeleteParent", function() {
         $(this).parent().remove();
+        updateTemplatePartHiddenFields();
     });
 
     $(document).on("keypress keyup focus", ".uppercase", function() {
