@@ -178,6 +178,9 @@ function generateTemplateParts() {
                 case "keyMessage":
                     $templatePartName = "Key Message";
                     break;
+                case "extraKeywords":
+                    $templatePartName = "Extra Keywords";
+                    break;
                 case "@VariantToFeature":
                     $templatePartName = "Feature";
                     $templatePartContent = $templatePartKey.split("|")[1];
