@@ -28,11 +28,12 @@ class UpdateProductsCommand extends ContainerAwareCommand
         $productCount = 1;
 
         // Fetch the products
-        $products = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->findAll();
+        $products = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->findBy(array('new' => 1));
         $totalNumberOfProducts = count($products);
         foreach ($products as $product)
         {
             $productManager->updateProduct($product);
+            $product->setNew(0);
             $em->persist($product);
             if (($i % $batchSize) === 0)
             {
