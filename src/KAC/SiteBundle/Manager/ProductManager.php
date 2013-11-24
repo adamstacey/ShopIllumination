@@ -127,8 +127,11 @@ class ProductManager extends Manager
         if ($variantDescription->getOverride()) return;
 
         // Get the department
-        $department = $variantDescription->getVariant()->getProduct()->getDepartment()->getDepartment();
-
+        $variantToDepartment = $variantDescription->getVariant()->getProduct()->getDepartment();
+        if ($variantToDepartment)
+        {
+            $department = $variantToDepartment->getDepartment();
+        }
         if ($department)
         {
             // Get the SEO data from the department templates
