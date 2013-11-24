@@ -127,7 +127,11 @@ class ProductManager extends Manager
         if ($variantDescription->getOverride()) return;
 
         // Get the department
-        $product = $variantDescription->getVariant()->getProduct();
+        $variant = $variantDescription->getVariant();
+        if ($variant)
+        {
+            $product = $variant->getProduct();
+        }
         if ($product)
         {
             $variantToDepartment = $product->getDepartment();
