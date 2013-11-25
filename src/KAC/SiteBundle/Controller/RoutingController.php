@@ -32,17 +32,17 @@ class RoutingController extends Controller
         // Tidy up URL
         $url = trim($url);
 
-        // Check if the user should be redirected
-        $redirectObject = $this->getDoctrine()->getRepository('KACSiteBundle:Redirect')->findOneBy(array('redirectFrom' => $url));
-        if ($redirectObject)
-        {
-            return $this->redirect($this->get('router')->generate('routing', array('url' => $redirectObject->getRedirectTo())), $redirectObject->getRedirectCode());
-        }
-
         // Try and find the routing
         $routingObject = $this->getDoctrine()->getRepository('KACSiteBundle:Routing')->findOneBy(array('url' => $url, 'locale' => 'en'));
-        if ($routingObject)
+        if (!$routingObject)
         {
+            // If no route was found check to see if the user should be redirected
+            $redirectObject = $this->getDoctrine()->getRepository('KACSiteBundle:Redirect')->findOneBy(array('redirectFrom' => $url));
+            if ($redirectObject)
+            {
+                return $this->redirect($this->get('router')->generate('routing', array('url' => $redirectObject->getRedirectTo())), $redirectObject->getRedirectCode());
+            }
+        } else {
             if ($this->isObjectViewable($routingObject))
             {
                 // Forward request to relevant controller
