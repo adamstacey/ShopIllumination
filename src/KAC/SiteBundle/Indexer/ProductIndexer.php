@@ -94,7 +94,10 @@ class ProductIndexer extends Indexer
             $currDepartment = $department->getDepartment();
             do {
                 $departmentNamesPath = $currDepartment . "|" . $departmentNamesPath;
-                $currDepartment = $currDepartment->getParent();
+                if ($currDepartment)
+                {
+                    $currDepartment = $currDepartment->getParent();
+                }
             } while ($currDepartment !== null);
             $document->addField("department_path", ltrim(rtrim($departmentNamesPath, "|"), "|"));
         }
@@ -114,103 +117,116 @@ class ProductIndexer extends Indexer
             $document->setField('url', $product->getRouting()->getUrl());
         }
 
-        $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder ASC")
-            ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
-            ->getResult();
+        if ($product->getDepartments()->first()->getDepartment())
+        {
+            $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder ASC")
+                ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
+                ->getResult();
+        }
 
         /** @var $variant Product\Variant */
         // Add product codes from each variant
         $numVariants = 0;
-        foreach ($product->getVariants() as $variant) {
-            // Check that the variant is not disabled
-            $numVariants++;
-
-            $document->addField('variant_ids', $variant->getId());
-
-            // Add all product codes
-            $productCodes = explode(',', $variant->getAlternativeProductCodes());
-            array_unshift($productCodes, $variant->getProductCode());
-            foreach ($productCodes as $productCode) {
-                if (!empty($productCode)) {
-                    $document->addField('product_code', $productCode);
-                }
-            }
-
-            // Add prices
-            foreach ($variant->getPrices() as $price) {
-                if ($lowestPrice === -1 || $price->getListPrice() < $lowestPrice) {
-                    $lowestPrice = $price->getListPrice();
-                }
-                if ($highestPrice === -1 || $price->getListPrice() > $highestPrice) {
-                    $highestPrice = $price->getListPrice();
-                }
-                if ($lowestRrp === -1 || $price->getRecommendedRetailPrice() < $lowestRrp) {
-                    $lowestRrp = $price->getRecommendedRetailPrice();
-                }
-                if ($highestRrp === -1 || $price->getRecommendedRetailPrice() > $highestRrp) {
-                    $highestRrp = $price->getRecommendedRetailPrice();
-                }
-                $document->addField('list_prices', $price->getListPrice());
-                $document->addField('rrps', $price->getRecommendedRetailPrice());
-            }
-
-            // Add all features
-            /** @var $feature VariantToFeature */
-            foreach ($variant->getFeatures() as $feature)
+        foreach ($product->getVariants() as $variant)
+        {
+            if ($variant)
             {
-                if ($feature && $feature->getFeatureGroup() && $feature->getFeature())
+                // Check that the variant is not disabled
+                $numVariants++;
+
+                $document->addField('variant_ids', $variant->getId());
+
+                // Add all product codes
+                if ($variant->getAlternativeProductCodes())
                 {
-                    $document->addField(
-                        $helper->escapeTerm(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
-                        $feature->getFeature()->getName()
-                    );
+                    $productCodes = $variant->getAlternativeProductCodes();
+                    if (is_array($productCodes))
+                    {
+                        array_unshift($productCodes, $variant->getProductCode());
+                        foreach ($productCodes as $productCode) {
+                            if (!empty($productCode)) {
+                                $document->addField('product_code', $productCode);
+                            }
+                        }
+                    }
                 }
-            }
 
-            // Get the common features
-            foreach ($departmentToFeatures as $departmentToFeature)
-            {
+                // Add prices
+                foreach ($variant->getPrices() as $price) {
+                    if ($lowestPrice === -1 || $price->getListPrice() < $lowestPrice) {
+                        $lowestPrice = $price->getListPrice();
+                    }
+                    if ($highestPrice === -1 || $price->getListPrice() > $highestPrice) {
+                        $highestPrice = $price->getListPrice();
+                    }
+                    if ($lowestRrp === -1 || $price->getRecommendedRetailPrice() < $lowestRrp) {
+                        $lowestRrp = $price->getRecommendedRetailPrice();
+                    }
+                    if ($highestRrp === -1 || $price->getRecommendedRetailPrice() > $highestRrp) {
+                        $highestRrp = $price->getRecommendedRetailPrice();
+                    }
+                    $document->addField('list_prices', $price->getListPrice());
+                    $document->addField('rrps', $price->getRecommendedRetailPrice());
+                }
+
+                // Add all features
+                /** @var $feature VariantToFeature */
                 foreach ($variant->getFeatures() as $feature)
                 {
-                    // Check for common features
-                    if ($departmentToFeature)
+                    if ($feature && $feature->getFeatureGroup() && $feature->getFeature())
                     {
-                        if ($departmentToFeature->getDisplayOnListing())
+                        $document->addField(
+                            $helper->escapeTerm(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
+                            $feature->getFeature()->getName()
+                        );
+                    }
+                }
+
+                // Get the common features
+                foreach ($departmentToFeatures as $departmentToFeature)
+                {
+                    foreach ($variant->getFeatures() as $feature)
+                    {
+                        // Check for common features
+                        if ($departmentToFeature)
                         {
-                            if ($departmentToFeature->getFeatureGroup()->getId() == $feature->getFeatureGroup()->getId())
+                            if ($departmentToFeature->getDisplayOnListing())
                             {
-                                if ($feature->getFeatureGroup() && $feature->getFeature())
+                                if ($departmentToFeature->getFeatureGroup()->getId() == $feature->getFeatureGroup()->getId())
                                 {
-                                    if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                    if ($feature->getFeatureGroup() && $feature->getFeature())
                                     {
-                                        $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                                    } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
-                                        unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                        if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                        {
+                                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                                        } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
+                                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            // Add the image for the variant
-            $variantImages = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant\Image')->findBy(array(
-                'variant' => $variant->getId(),
-            ));
+                // Add the image for the variant
+                $variantImages = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant\Image')->findBy(array(
+                    'variant' => $variant->getId(),
+                ));
 
-            if(count($variantImages) > 0) {
-                $document->setField("variant_thumbnail_path", $variantImages[0]->getPublicPath());
-                foreach($variantImages as $image)
-                {
-                    $document->addField("variant_image_paths", $image->getPublicPath());
+                if(count($variantImages) > 0) {
+                    $document->setField("variant_thumbnail_path", $variantImages[0]->getPublicPath());
+                    foreach($variantImages as $image)
+                    {
+                        $document->addField("variant_image_paths", $image->getPublicPath());
+                    }
                 }
-            }
 
-            $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
-            $document->setField('high_price', $highestPrice === -1 ? 0 : $highestPrice);
-            $document->setField('low_rrp', $lowestRrp === -1 ? 0 : $lowestRrp);
-            $document->setField('high_rrp', $highestRrp === -1 ? 0 : $highestRrp);
+                $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
+                $document->setField('high_price', $highestPrice === -1 ? 0 : $highestPrice);
+                $document->setField('low_rrp', $lowestRrp === -1 ? 0 : $lowestRrp);
+                $document->setField('high_rrp', $highestRrp === -1 ? 0 : $highestRrp);
+            }
         }
 
         // Add the common features to the document
