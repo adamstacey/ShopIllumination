@@ -11,6 +11,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ContentController extends Controller
 {
     /**
+     * @Route("/e9e077e0e57264522e00e0154661596198e3a768.html", name="content_mcafee_validation")
+     */
+    public function mcafeeValidationAction(Request $request)
+    {
+        $response = new Response();
+        $response->setStatusCode(200);
+        $response->setCharset('UTF-8');
+        $response->headers->set('Content-Type', 'text/plain; charset=utf-8');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+        $response->setContent('08c36eb7ffbd95237541aebbaa6a6ece');
+        return $response;
+    }
+
+    /**
      * @Route("/cookie-policy.html", name="content_cookie_policy")
      */
     public function cookiePolicyAction(Request $request)
