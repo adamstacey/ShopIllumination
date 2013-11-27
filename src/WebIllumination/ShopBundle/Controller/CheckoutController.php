@@ -51,8 +51,14 @@ class CheckoutController extends Controller
 		    // Forward to the last catalogue page
 		    return $this->redirect($this->get('router')->generate('routing', array('url' => $departmentHistory[0])));
    		}
-    	
-        return $this->render('WebIlluminationShopBundle:Checkout:index.html.twig', array('order' => $order, 'basket' => $basket, 'backUrl' => $backUrl));
+
+        $response = $this->render('WebIlluminationShopBundle:Checkout:index.html.twig', array('order' => $order, 'basket' => $basket, 'backUrl' => $backUrl));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
         
     // Check email address
@@ -80,8 +86,14 @@ class CheckoutController extends Controller
 		{
 			$userAccountExists = true;
 		}
-    		
-		return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order, 'userAccountExists' => $userAccountExists)), ENT_NOQUOTES));
+
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order, 'userAccountExists' => $userAccountExists)), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
     
     // Create user
@@ -128,8 +140,14 @@ class CheckoutController extends Controller
     	// Save to the session
 		$this->get('session')->set('order', $order);
 		$this->get('session')->set('customer', $customer);
-		        		
-		return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
+
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
         
     // Save order
@@ -260,8 +278,14 @@ class CheckoutController extends Controller
 		
 		// Get the order
 		$order = $this->get('session')->get('order');
-					
-		return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
+
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
     
     // Get the order information
@@ -333,8 +357,14 @@ class CheckoutController extends Controller
 			
 		// Get the order
 		$order = $this->get('session')->get('order');
-    		
-		return $this->render('WebIlluminationShopBundle:Checkout:ajaxGetOrderInformation.html.twig', array('basket' => $basket, 'order' => $order));
+
+        $response = $this->render('WebIlluminationShopBundle:Checkout:ajaxGetOrderInformation.html.twig', array('basket' => $basket, 'order' => $order));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
     
     // Add notes
@@ -362,8 +392,14 @@ class CheckoutController extends Controller
 		
 		// Get the order
 		$order = $this->get('session')->get('order');
-								
-		return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
+
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
      
     // Order placed
@@ -481,8 +517,14 @@ class CheckoutController extends Controller
 		
 		// Send the invoice
 		$this->sendInvoice($orderId);
-		
-    	return $this->render('WebIlluminationShopBundle:Checkout:orderPlaced.html.twig', array('order' => $order));
+
+        $response = $this->render('WebIlluminationShopBundle:Checkout:orderPlaced.html.twig', array('order' => $order));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
     
     // Order failed
@@ -590,8 +632,14 @@ class CheckoutController extends Controller
 		    // Forward to the last catalogue page
 		    return $this->redirect($this->get('router')->generate('routing', array('url' => $departmentHistory[0])));
    		}
-    	
-        return $this->render('WebIlluminationShopBundle:Checkout:index.html.twig', array('order' => $orderSession, 'orderObject' => $orderObject, 'basket' => $basket, 'backUrl' => $backUrl));
+
+        $response = $this->render('WebIlluminationShopBundle:Checkout:index.html.twig', array('order' => $orderSession, 'orderObject' => $orderObject, 'basket' => $basket, 'backUrl' => $backUrl));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
     
     // Send the invoice
