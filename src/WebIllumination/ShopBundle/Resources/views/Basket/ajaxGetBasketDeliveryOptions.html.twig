@@ -52,7 +52,7 @@
                         {% if deliveryOption.surcharge > 0 %}
                             <br /><span class="colour-red">{{ deliveryOption.surchargeDescription|raw }}</span>
                         {% endif %}
-                        <br /><span class="small"><em>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days){% else %}(We will contact you when your order is ready){% endif %}</em>{% if "Pallet" in deliveryOption.service %} - <span class="colour-grey">Kerbside Delivery</span>{% endif %}</span>
+                        <br /><span class="small"><em>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days){% else %}(We will contact you when your order is ready){% endif %}</em>{% if "Pallet" in deliveryOption.service %}{# - <span class="colour-grey">Kerbside Delivery</span>#}{% endif %}</span>
                     </label>
                 </div>
             </div>
