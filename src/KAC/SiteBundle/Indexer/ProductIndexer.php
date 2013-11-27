@@ -116,12 +116,14 @@ class ProductIndexer extends Indexer
         if($product->getRouting()) {
             $document->setField('url', $product->getRouting()->getUrl());
         }
-
-        if ($product->getDepartments()->first()->getDepartment())
+        if ($product->getDepartments()->first())
         {
-            $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder ASC")
-                ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
-                ->getResult();
+            if ($product->getDepartments()->first()->getDepartment())
+            {
+                $departmentToFeatures = $em->createQuery("SELECT dtf FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf WHERE dtf.department = ?1 ORDER BY dtf.displayOrder ASC")
+                    ->setParameter(1, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
+                    ->getResult();
+            }
         }
 
         /** @var $variant Product\Variant */
@@ -183,24 +185,27 @@ class ProductIndexer extends Indexer
                 }
 
                 // Get the common features
-                foreach ($departmentToFeatures as $departmentToFeature)
+                if ($departmentToFeatures)
                 {
-                    foreach ($variant->getFeatures() as $feature)
+                    foreach ($departmentToFeatures as $departmentToFeature)
                     {
-                        // Check for common features
-                        if ($departmentToFeature)
+                        foreach ($variant->getFeatures() as $feature)
                         {
-                            if ($departmentToFeature->getDisplayOnListing())
+                            // Check for common features
+                            if ($departmentToFeature)
                             {
-                                if ($departmentToFeature->getFeatureGroup()->getId() == $feature->getFeatureGroup()->getId())
+                                if ($departmentToFeature->getDisplayOnListing())
                                 {
-                                    if ($feature->getFeatureGroup() && $feature->getFeature())
+                                    if ($departmentToFeature->getFeatureGroup()->getId() == $feature->getFeatureGroup()->getId())
                                     {
-                                        if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                        if ($feature->getFeatureGroup() && $feature->getFeature())
                                         {
-                                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                                        } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
-                                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                            if (!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                                            {
+                                                $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                                            } else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName()) {
+                                                unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                                            }
                                         }
                                     }
                                 }
