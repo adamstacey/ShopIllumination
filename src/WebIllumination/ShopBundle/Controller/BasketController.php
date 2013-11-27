@@ -72,7 +72,13 @@ class BasketController extends Controller
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        return $this->render('WebIlluminationShopBundle:Basket:index.html.twig', array('basket' => $basket, 'lastBasketProductBrand' => $lastBasketProductBrand, 'lastBasketProductBrandUrl' => $lastBasketProductBrandUrl, 'lastBasketProductDepartment' => $lastBasketProductDepartment, 'lastBasketProductDepartmentUrl' => $lastBasketProductDepartmentUrl));
+        $response = $this->render('WebIlluminationShopBundle:Basket:index.html.twig', array('basket' => $basket, 'lastBasketProductBrand' => $lastBasketProductBrand, 'lastBasketProductBrandUrl' => $lastBasketProductBrandUrl, 'lastBasketProductDepartment' => $lastBasketProductDepartment, 'lastBasketProductDepartmentUrl' => $lastBasketProductDepartmentUrl));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Get basket contents
@@ -90,7 +96,13 @@ class BasketController extends Controller
         // Get the basket
         $basket = $this->get('session')->get('basket');
 
-        return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));
+        $response = $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
     // Update delivery options
     public function ajaxUpdateDeliveryOptionsAction(Request $request)
@@ -145,7 +157,13 @@ class BasketController extends Controller
         // Update the basket totals
         $basketService->updateBasketTotals();
 
-        return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Get basket totals
@@ -154,7 +172,13 @@ class BasketController extends Controller
         // Get the basket
         $basket = $this->get('session')->get('basket');
 
-        return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketTotals.html.twig', array('basket' => $basket));
+        $response = $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketTotals.html.twig', array('basket' => $basket));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Get basket totals
@@ -163,7 +187,13 @@ class BasketController extends Controller
         // Get the basket
         $basket = $this->get('session')->get('basket');
 
-        return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketDeliveryOptions.html.twig', array('basket' => $basket));
+        $response = $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketDeliveryOptions.html.twig', array('basket' => $basket));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Add to basket
@@ -285,7 +315,7 @@ class BasketController extends Controller
         // Update the basket totals
         $basketService->updateBasketTotals();
 
-        return new Response(json_encode(array(
+        $response = new Response(json_encode(array(
             'response' => 'success',
             'header' => $header,
             'url' => $url,
@@ -297,22 +327,41 @@ class BasketController extends Controller
             'product_html' => $this->ajaxGetBasketProductInfoAction($request, $productId, $variantId)->getContent(),
             'small_product_html' => $this->ajaxGetBasketSmallProductInfoAction($request, $productId, $variantId)->getContent(),
         )));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     public function ajaxGetBasketProductInfoAction(Request $request, $productId, $variantId=null)
     {
-        return $this->render('KACSiteBundle:Product:basketInfo.html.twig', array(
+
+        $response = $this->render('KACSiteBundle:Product:basketInfo.html.twig', array(
             'productId' => $productId,
             'variantId' => $variantId,
         ));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     public function ajaxGetBasketSmallProductInfoAction(Request $request, $productId, $variantId=null)
     {
-        return $this->render('KACSiteBundle:Product:smallBasketInfo.html.twig', array(
+        $response = $this->render('KACSiteBundle:Product:smallBasketInfo.html.twig', array(
             'productId' => $productId,
             'variantId' => $variantId,
         ));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Add to basket
@@ -419,7 +468,7 @@ class BasketController extends Controller
         // Update the basket totals
         $basketService->updateBasketTotals();
 
-        return new Response(json_encode(array(
+        $response = new Response(json_encode(array(
             'response' => 'success',
             'header' => $header,
             'url' => $url,
@@ -429,6 +478,12 @@ class BasketController extends Controller
             'summary_html' => $this->get('fragment.handler')->render($this->generateUrl('basket_summary')),
             'product_html' => $this->ajaxGetBasketProductInfoAction($request, $productId)->getContent(),
         )));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Redeem voucher code
@@ -463,7 +518,14 @@ class BasketController extends Controller
 
         // Update the basket totals
         $basketService->updateBasketTotals();
-        return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Delete voucher code
@@ -487,7 +549,13 @@ class BasketController extends Controller
         // Update the basket totals
         $basketService->updateBasketTotals();
 
-        return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Update basket item
@@ -524,7 +592,13 @@ class BasketController extends Controller
     	// Update the basket totals
     	$basketService->updateBasketTotals();
 
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Delete a basket item
@@ -551,7 +625,13 @@ class BasketController extends Controller
     	// Update the basket totals
     	$basketService->updateBasketTotals();
 
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
     // Clear the basket
@@ -563,7 +643,13 @@ class BasketController extends Controller
     	// Reset the basket
     	$basketService->resetBasketSession();
 
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response = new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 
 	// Basket summary
@@ -572,6 +658,12 @@ class BasketController extends Controller
 		// Get the basket
 		$basket = $this->get('session')->get('basket');
 
-		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketSummary.html.twig', array('basket' => $basket));
+        $response = $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketSummary.html.twig', array('basket' => $basket));
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('max-age', 0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+
+        return $response;
     }
 }
