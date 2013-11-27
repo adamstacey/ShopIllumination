@@ -1089,7 +1089,7 @@ class BasketService {
                     if ($productEntity && $variantEntity)
                     {
                         // Check for Stellar Pans
-                        $hobDepartmentIds = array(936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170);
+                        $hobDepartmentIds = array(25, 1121, 935, 1219, 68, 1057, 1058, 1122, 22, 69, 177, 65, 67, 80, 92, 1170, 66);
                         foreach ($productEntity->getDepartments() as $department)
                         {
                             if (in_array($department->getDepartment()->getId(), $hobDepartmentIds))
