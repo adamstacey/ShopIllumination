@@ -12,6 +12,10 @@ use KAC\SiteBundle\Entity\Product\Description as ProductDescription;
 use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Entity\Product\Variant\Description as VariantDescription;
 use KAC\SiteBundle\Entity\ProductToDepartment;
+use KAC\SiteBundle\Entity\Product\Price;
+use KAC\SiteBundle\Entity\Product\Variant\Routing;
+use KAC\SiteBundle\Entity\Product\VariantToFeature;
+use KAC\SiteBundle\Entity\Product\Image;
 use KAC\SiteBundle\Entity\Department;
 
 class BuildMaiaProductsCommand extends ContainerAwareCommand
@@ -1459,7 +1463,6 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
         $maiaProducts[] = array('price' => 59, 'worktopColour' => 'Vulcano', 'url' => 'maia-vulcano', 'productCode' => 'VUL/CB', 'deliveryBand' => 1, 'header' => 'Chopping Board');
 
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $productManager = $this->getContainer()->get('kac_site.manager.product');
         $seoManager = $this->getContainer()->get('kac_site.manager.seo');
 
         // Get some objects used to add
@@ -1475,10 +1478,11 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
             {
                 $output->writeln('Removing product '.$existingMaiaProduct->getId().'!');
                 $em->remove($existingMaiaProduct);
-                $em->flush();
             }
         }
-
+        $em->flush();
+        $batchSize = 20;
+        $batchCount = 0;
         $output->writeln('Adding new maia products...');
         foreach ($maiaProducts as $maiaProduct)
         {
@@ -1486,48 +1490,93 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
             {
                 case 'Ammonite':
                     $description = 'Ammonite is a dark grey with silver and brown metallic particles. Developed to look stunning with contemporary white and grey kitchens, and also a modern twist on a more traditional look to work with light and medium oaks.';
+                    $imagePath = '/uploads/demo/maia-ammonite@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5640);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3958);
                     break;
                 case 'Calcite':
                     $description = 'Delivering a fresher look than Vanilla, Calcite contains light grey particles suspended in a creamy white background. Works well with light and medium oaks as well as black. A youthful take on a traditional classic.';
+                    $imagePath = '/uploads/demo/maia-calcite@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5641);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3966);
                     break;
                 case 'Fossil':
                     $description = 'Particles of silver and pearl combine in Fossil to bring a stunning new colour that will work with the majority of kitchen colours and designs.';
+                    $imagePath = '/uploads/demo/maia-fossil@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(456);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3953);
                     break;
                 case 'Meteorite':
                     $description = 'Gorgeous browns and olives combine with copper metallic particles to deliver luxurious warmth. Not as stark as black, Meteorite works well with cream, white and light coloured woods.';
+                    $imagePath = '/uploads/demo/maia-meteorite@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5642);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3958);
                     break;
                 case 'Pearlstone':
                     $description = 'Bright and crisp with the look of stone, Pearlstone is a pearl white colour with clear granular particles. Works well with truffle, taupe, blacks and browns.';
+                    $imagePath = '/uploads/demo/maia-pearlstone@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5643);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3966);
                     break;
                 case 'Sandstone':
                     $description = 'Bringing natural warmth, Sandstone will complement both light and dark coloured kitchens.';
+                    $imagePath = '/uploads/demo/maia-sandstone@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5644);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3953);
                     break;
                 case 'Cappuccino':
                     $description = 'Cappuccino is a stylish choice to complement woods and plain doors. Add dark doors, cream and brown for a relaxed feel, or vibrant zebrano doors to make a real impact.';
+                    $imagePath = '/uploads/demo/maia-cappuccino@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(349);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3953);
                     break;
                 case 'Cristallo':
                     $description = 'Cristallo is a crisp, solid white with contrasting grey granules. Perfect with silver doors for a modern, industrial feel, or with walnut for classic style.';
+                    $imagePath = '/uploads/demo/maia-cristallo@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(351);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3966);
                     break;
                 case 'Galaxy':
                     $description = 'Galaxy’s metallic flecks bring sparkle to your worktop – metallic particles catch the light and complement the deep black background.';
+                    $imagePath = '/uploads/demo/maia-galaxy@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(358);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3954);
                     break;
                 case 'Iceberg':
                     $description = 'Iceberg’s beauty lies in its purity. White has become a strong trend for worksurfaces – team with matching doors for a simple, calm style, or with splashes of colour to make a statement.';
+                    $imagePath = '/uploads/demo/maia-iceberg@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(352);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3966);
                     break;
                 case 'Latte':
                     $description = 'Latte is another ‘natural neutral’ in the maia range. Lighter than Mocha but with deeper tones than maia’s original coffee décor, Cappuccino, Latte has quickly become a popular choice.';
+                    $imagePath = '/uploads/demo/maia-latte@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(353);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3953);
                     break;
                 case 'Lava':
                     $description = 'Lava is grey with small speckles of brown to create a natural stone effect. Stunning in a blue kitchen with glass, wood and white accessories, or stylishly industrial with glossy black or metallic doors.';
+                    $imagePath = '/uploads/demo/maia-lava@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(354);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3958);
                     break;
                 case 'Mocha':
                     $description = 'Mocha brings a deep brown to the maia range. As neutral door colours such as latte and cream grow in popularity, so Mocha really comes into its own.';
+                    $imagePath = '/uploads/demo/maia-mocha@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(355);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3958);
                     break;
                 case 'Vanilla':
                     $description = 'Vanilla is an elegant colour which complements many kitchen designs. Its coloured flecks make it the perfect match for a range of door colours. Contrast with black for added drama.';
+                    $imagePath = '/uploads/demo/maia-vanilla@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(356);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3966);
                     break;
                 case 'Vulcano':
                     $description = 'Vulcano is the most popular colour in the maia range. Its sophisticated black background is interspersed with contrasting white flecks and subtle hints of yellow.';
+                    $imagePath = '/uploads/demo/maia-vulcano@2x.jpg';
+                    $colourFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(357);
+                    $colourGroupFeature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3954);
                     break;
                 default:
                     $description = 'Maia surfaces are manufactured from acrylic resin, two thirds aluminium hydroxide and colour pigments and come with a ten year guarantee. The final result is a product that is not only highly durable, offering a number of benefits that stone just can’t deliver, such as greater heat resistance and a non-porous surface that naturally repels stains from household products, but also incredibly attractive. The seamless corner joints, natural granite look and a super smooth finish makes maia® one of the most popular choices for a timeless and effortlessly stunning kitchen. The combination of function and beauty never goes out of style, and neither will your maia® worktops!';
@@ -1539,6 +1588,33 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
             $metaDescription = $pageTitle.' available to buy with fast UK delivery.';
             $metaKeywords = $seoManager->generateKeywords($pageTitle);
             $deliveryBand = $maiaProduct['deliveryBand'];
+            $url = $seoManager->createUrl($pageTitle);
+            if (strrpos($header, 'Edging Strip') !== false)
+            {
+                $imagePath = '/uploads/demo/edging-strip.jpg';
+            } elseif (strrpos($header, 'Maia Installation DVD') !== false) {
+                $imagePath = '/uploads/demo/maia-installation-dvd.jpg';
+            } elseif (strrpos($header, 'Jointing Kit') !== false) {
+                $imagePath = '/uploads/demo/jointing-kit.jpg';
+            } elseif (strrpos($header, '75ml Adhesive Sachet') !== false) {
+                $imagePath = '/uploads/demo/75ml-adhesive-sachet.jpg';
+            } elseif (strrpos($header, '250ml Cartridge Gun') !== false) {
+                $imagePath = '/uploads/demo/250ml-cartridge-gun.jpg';
+            } elseif (strrpos($header, '250ml Adhesive Cartridge') !== false) {
+                $imagePath = '/uploads/demo/250ml-adhesive-cartridge.jpg';
+            } elseif (strrpos($header, '50ml Cartridge Joint Kit') !== false) {
+                $imagePath = '/uploads/demo/50ml-cartridge-joint-kit.jpg';
+            } elseif (strrpos($header, '50ml Cartridge Gun') !== false) {
+                $imagePath = '/uploads/demo/50ml-cartridge-gun.jpg';
+            } elseif (strrpos($header, '50ml Adhesive Cartridge') !== false) {
+                $imagePath = '/uploads/demo/50ml-adhesive-cartridge.jpg';
+            } elseif (strrpos($header, 'Care Kit') !== false) {
+                $imagePath = '/uploads/demo/care-kit.jpg';
+            } elseif (strrpos($header, 'Chopping Board') !== false) {
+                $imagePath = '/uploads/demo/chopping-board.jpg';
+            } elseif (strrpos($header, 'Hot Rods (Worktop Protector)') !== false) {
+                $imagePath = '/uploads/demo/hot-rods.jpg';
+            }
             switch ($deliveryBand)
             {
                 case 1:
@@ -1561,6 +1637,7 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
                     $weight = 7500;
                     break;
             }
+            $listPrice = $maiaProduct['price'];
             if (strrpos($header, 'Island Worktop (square corners)') !== false)
             {
                 $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find(41);
@@ -1571,6 +1648,8 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
             } elseif (strrpos($header, '"D-Radius" Breakfast Bar (240mm radius)') !== false) {
                 $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find(41);
             } elseif (strrpos($header, '"D-Radius" Island Worktop (240mm radius)') !== false) {
+                $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find(41);
+            } elseif (strrpos($header, 'Worktop (square corners)') !== false) {
                 $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find(41);
             } elseif (strrpos($header, 'Sink Module') !== false) {
                 $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find(1167);
@@ -1624,13 +1703,434 @@ class BuildMaiaProductsCommand extends ContainerAwareCommand
             $variantDescription->setMetaDescription($metaDescription);
             $variantDescription->setMetaKeywords($metaKeywords);
             $variantDescription->setOverride(true);
+            $price = new Price();
+            $price->setVariant($variant);
+            $price->setListPrice($listPrice);
+            $routing = new Routing();
+            $routing->setVariant($variant);
+            $routing->setUrl($url);
             $variant->addDescription($variantDescription);
+            $variant->addPrice($price);
+            $variant->addRouting($routing);
+            if ($colourFeature)
+            {
+                $colourFeatureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(2);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($colourFeature);
+                $variantToFeature->setFeatureGroup($colourFeatureGroup);
+                $variant->addFeature($variantToFeature);
+            }
+            if ($colourGroupFeature)
+            {
+                $colourGroupFeatureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(470);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($colourGroupFeature);
+                $variantToFeature->setFeatureGroup($colourGroupFeatureGroup);
+                $variant->addFeature($variantToFeature);
+            }
+            if (strpos($header, '× 28mm') !== false)
+            {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(463);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3912);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '× 42mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(463);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3916);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '× 54mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(463);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3917);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '× 10mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(463);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4023);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '× 15mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(463);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4020);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            }
+            if (strpos($header, '900mm × 897mm') !== false)
+            {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4301);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5400);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '1800mm × 1200mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3933);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3934);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '1800mm × 650mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3933);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3948);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3600mm × 650mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3935);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3948);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '1800mm × 600mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3933);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4004);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3600mm × 600mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3935);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4004);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '1830mm × 580mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3941);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5728);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3680mm × 580mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4079);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5728);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '900mm × 760mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4301);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5729);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3680mm × 70mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4079);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5730);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3680mm × 150mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4079);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5731);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3600mm × 150mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3935);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5731);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '1800mm × 900mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3933);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3923);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, '3600mm × 900mm') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(464);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3935);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(465);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(3923);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            }
+            if (strpos($header, 'Island Worktop') !== false)
+            {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5727);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(468);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4111);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+
+            } elseif (strpos($header, 'Breakfast Bar') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5726);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(468);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4111);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Sink Module') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5411);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(468);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4111);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Worktop') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5405);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(468);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(4111);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+                if (strpos($header, '× 28mm') !== false)
+                {
+                    $additionalDepartment = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find(1153);
+                    $additionalProductToDepartment = new ProductToDepartment();
+                    $additionalProductToDepartment->setProduct($product);
+                    $additionalProductToDepartment->setDepartment($additionalDepartment);
+                    $additionalProductToDepartment->setDisplayOrder(2);
+                    $product->addDepartment($additionalProductToDepartment);
+                }
+            } elseif (strpos($header, 'Edging Strip') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5415);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Support Panel') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5410);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Hob Splashback') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5407);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Splashback') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5406);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Plinth') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5409);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Upstand') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5408);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Jointing Kit') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5414);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Joint Kit') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5414);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Adhesive') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5414);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Chopping Board') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5417);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Hot Rods') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5417);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Gun') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5414);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Care Kit') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5413);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            } elseif (strpos($header, 'Maia Installation DVD') !== false) {
+                $featureGroup = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\FeatureGroup")->find(523);
+                $feature = $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Product\\Feature")->find(5412);
+                $variantToFeature = new VariantToFeature();
+                $variantToFeature->setFeature($feature);
+                $variantToFeature->setFeatureGroup($featureGroup);
+                $variant->addFeature($variantToFeature);
+            }
+
             $product->addVariant($variant);
+            $image = new Image();
+            $image->setProduct($product);
+            $image->setLocale('en');
+            $image->setTitle($pageTitle);
+            $image->setImageType('product');
+            $image->setDisplayOrder(1);
+            $image->setOriginalPath($imagePath);
+            $image->setPublicPath($imagePath);
+            $product->addImage($image);
             $em->persist($product);
-            $em->flush();
+            if (($batchCount % $batchSize) === 0)
+            {
+                $em->flush();
+            }
+            $batchCount++;
             $output->writeln('...done!');
         }
-
+        $em->flush();
         $output->writeln('Finished!');
     }
 }
