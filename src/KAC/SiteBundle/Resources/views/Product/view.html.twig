@@ -122,7 +122,7 @@
                                                         {% endfor %}
                                                     </ul>
                                                 {% endif %}
-                                                {% set hobDepartmentIds = [936, 937, 1120, 939, 940, 951, 952, 1123, 1124, 953, 1125, 948, 1126, 949, 950, 1127, 1056, 177, 66, 941, 942, 943, 944, 68, 1057, 1058, 67, 80, 92, 1170] %}
+                                                {% set hobDepartmentIds = [25, 1121, 935, 1219, 68, 1057, 1058, 1122, 22, 69, 177, 65, 67, 80, 92, 1170, 66] %}
                                                 {% if product.cheaperAlternative %}
                                                     {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
                                                 {% elseif product.department.department.id in hobDepartmentIds %}
@@ -179,7 +179,8 @@
                                                 </ul>
                                             {% elseif (product.variant.deliveryBand == 3) or (product.variant.deliveryBand == 4) or (product.variant.deliveryBand == 5) %}
                                                 <ul class="tick-list mbm">
-                                                    <li><span class="colour-grey"><strong>FREE Kerbside Delivery</strong> to most UK areas</span></li>
+                                                    {#<li><span class="colour-grey"><strong>FREE Kerbside Delivery</strong> to most UK areas</span></li>#}
+                                                    <li><span class="colour-grey"><strong>FREE Delivery</strong> to most UK areas</span></li>
                                                 </ul>
                                             {% endif %}
                                             <p class="summary pan">Product Code: <strong>{{ variant.productCode }}</strong></p>
