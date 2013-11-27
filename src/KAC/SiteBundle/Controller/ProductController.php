@@ -824,7 +824,7 @@ class ProductController extends Controller {
             switch ($template)
             {
                 case 'price':
-                    $csv = "Parent Reference,Child Reference,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page\n";
+                    $csv = "Parent Reference,Child Reference,Sale Price (Inc VAT)\n";
                     break;
                 case 'bullets':
                     $csv = "Parent Reference,Child Reference,Product Summary\n";
@@ -967,20 +967,7 @@ class ProductController extends Controller {
                         case 'price':
                             $csv .= '"'.$productCode.'",'; // Parent Reference
                             $csv .= '"'.$productCode.'",'; // Child Reference
-                            if (($recommendedRetailPrice > 0) && ($recommendedRetailPrice > $listPrice))
-                            {
-                                $csv .= $recommendedRetailPrice.','; // Price (Inc VAT)
-                                $csv .= $listPrice.','; // Sale Price (Inc VAT)
-                                $csv .= '0,'; // RRP Price (Inc VAT)
-                                $displayOnSalePage = 'Y';
-                            } else {
-                                $csv .= $listPrice.','; // Price (Inc VAT)
-                                $csv .= $listPrice.','; // Sale Price (Inc VAT)
-                                $csv .= '0,'; // RRP Price (Inc VAT)
-                            }
-                            $csv .= ','; // Cost Price (Inc VAT)
-                            $csv .= '20,'; // VAT Rate
-                            $csv .= '"'.$displayOnSalePage.'"'; // Display On Sale Page
+                            $csv .= $listPrice; // Sale Price (Inc VAT)
                             $csv .= "\n";
                             break;
                         case 'bullets':
@@ -1014,7 +1001,8 @@ class ProductController extends Controller {
                             $csv .= '"'.$productCode.'",'; // Child Reference
                             $csv .= ','; // -
                             $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
-                            $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
+                            $csv .= '"'.$cleansedPageTitle.'",'; // Child Product Title
+                            //$csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                             $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
                             $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
                             $csv .= '"'.$description.'",'; // Product Description
