@@ -810,6 +810,7 @@ class ProductController extends Controller {
         $brands = $em->getRepository("KAC\SiteBundle\Entity\Brand\Description")->findBy(array(), array('name' => 'ASC'));
 
         $brandId = $request->query->get('brandId');
+        $template = $request->query->get('template');
         if ($brandId)
         {
             $brand = $em->getRepository("KAC\SiteBundle\Entity\Brand")->find($brandId);
@@ -820,7 +821,24 @@ class ProductController extends Controller {
                 ->setParameter('brand', $brand);
             $products = $productsQuery->getResult();
             $seoManager = $this->getSeoManager();
-            $csv = "VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Product Summary,Product Description,,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),,Meta Title,Meta Keywords,Meta Description,,Upselling 1 (Related Products),Upselling 2 (Other Colours)\n";
+            switch ($template)
+            {
+                case 'price':
+                    $csv = "Parent Reference,Child Reference,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page\n";
+                    break;
+                case 'bullets':
+                    $csv = "Parent Reference,Child Reference,Product Summary\n";
+                    break;
+                case 'descriptions':
+                    $csv = "Parent Reference,Child Reference,Product Description\n";
+                    break;
+                case 'seo':
+                    $csv = "Parent Reference,Child Reference,Parent Product Title,Child Product Title,Product Subtitle,Meta Title,Meta Keywords,Meta Description\n";
+                    break;
+                default:
+                    $csv = "VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Product Summary,Product Description,,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),,Meta Title,Meta Keywords,Meta Description,,Upselling 1 (Related Products),Upselling 2 (Other Colours)\n";
+                    break;
+            }
             foreach ($products as $product)
             {
                 if (($product->getStatus() == 'a') || ($product->getStatus() == 'h'))
@@ -944,65 +962,116 @@ class ProductController extends Controller {
                     } else {
                         $relatedProducts = false;
                     }
-                    $csv .= ','; // VS Parent ID
-                    $csv .= ','; // VS Child ID
-                    $csv .= ','; // -
-                    $csv .= '"'.$productCode.'",'; // Parent Reference
-                    $csv .= '"'.$productCode.'",'; // Child Reference
-                    $csv .= ','; // -
-                    $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
-                    $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
-                    $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
-                    $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
-                    $csv .= '"'.$description.'",'; // Product Description
-                    $csv .= ','; // -
-                    $csv .= '"'.$brandName.'",'; // Brand
-                    $csv .= ','; // -
-                    $csv .= ($departments ? '"'.$departments.'"' : '').','; // Categories
-                    $csv .= ','; // -
-                    $csv .= ($materialFinish ? '"'.$materialFinish.'"' : '').','; // Tag 1 (Finish)
-                    $csv .= ','; //
-                    $csv .= '"'.$productCode.'",'; // Model Number
-                    $csv .= '"'.str_replace('"', '', $product->getVariant()->getEan()).'",'; // EAN
-                    $csv .= '"'.$productCode.'",'; // MPN
-                    $csv .= ','; // ISBN
-                    $csv .= ','; // UPC
-                    $csv .= ','; // -
-                    if (($recommendedRetailPrice > 0) && ($recommendedRetailPrice > $listPrice))
+                    switch ($template)
                     {
-                        $csv .= $recommendedRetailPrice.','; // Price (Inc VAT)
-                        $csv .= $listPrice.','; // Sale Price (Inc VAT)
-                        $csv .= '0,'; // RRP Price (Inc VAT)
-                        $displayOnSalePage = 'Y';
-                    } else {
-                        $csv .= $listPrice.','; // Price (Inc VAT)
-                        $csv .= $listPrice.','; // Sale Price (Inc VAT)
-                        $csv .= '0,'; // RRP Price (Inc VAT)
+                        case 'price':
+                            $csv .= '"'.$productCode.'",'; // Parent Reference
+                            $csv .= '"'.$productCode.'",'; // Child Reference
+                            if (($recommendedRetailPrice > 0) && ($recommendedRetailPrice > $listPrice))
+                            {
+                                $csv .= $recommendedRetailPrice.','; // Price (Inc VAT)
+                                $csv .= $listPrice.','; // Sale Price (Inc VAT)
+                                $csv .= '0,'; // RRP Price (Inc VAT)
+                                $displayOnSalePage = 'Y';
+                            } else {
+                                $csv .= $listPrice.','; // Price (Inc VAT)
+                                $csv .= $listPrice.','; // Sale Price (Inc VAT)
+                                $csv .= '0,'; // RRP Price (Inc VAT)
+                            }
+                            $csv .= ','; // Cost Price (Inc VAT)
+                            $csv .= '20,'; // VAT Rate
+                            $csv .= '"'.$displayOnSalePage.'"'; // Display On Sale Page
+                            $csv .= "\n";
+                            break;
+                        case 'bullets':
+                            $csv = "Parent Reference,Child Reference,Product Summary\n";
+                            $csv .= '"'.$productCode.'",'; // Parent Reference
+                            $csv .= '"'.$productCode.'",'; // Child Reference
+                            $csv .= ($bullets ? '"'.$bullets.'"' : ''); // Product Summary
+                            $csv .= "\n";
+                            break;
+                        case 'descriptions':
+                            $csv = "Parent Reference,Child Reference,Product Description\n";
+                            $csv .= '"'.$productCode.'",'; // Parent Reference
+                            $csv .= '"'.$productCode.'",'; // Child Reference
+                            $csv .= '"'.$description.'"'; // Product Description
+                            $csv .= "\n";
+                            break;
+                        case 'seo':
+                            $csv = "Parent Reference,Child Reference,Parent Product Title,Child Product Title,Product Subtitle,Meta Title,Meta Keywords,Meta Description\n";
+                            $csv .= '"'.$productCode.'",'; // Parent Reference
+                            $csv .= '"'.$productCode.'",'; // Child Reference
+                            $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
+                            $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
+                            $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
+                            $csv .= '"'.$pageTitle.'",'; // Meta Title
+                            $csv .= '"'.$metaKeywords.'",'; // Meta Keywords
+                            $csv .= '"'.$metaDescription.'"'; // Meta Description
+                            $csv .= "\n";
+                            break;
+                        default:
+                            $csv .= ','; // VS Parent ID
+                            $csv .= ','; // VS Child ID
+                            $csv .= ','; // -
+                            $csv .= '"'.$productCode.'",'; // Parent Reference
+                            $csv .= '"'.$productCode.'",'; // Child Reference
+                            $csv .= ','; // -
+                            $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
+                            $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
+                            $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
+                            $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
+                            $csv .= '"'.$description.'",'; // Product Description
+                            $csv .= ','; // -
+                            $csv .= '"'.$brandName.'",'; // Brand
+                            $csv .= ','; // -
+                            $csv .= ($departments ? '"'.$departments.'"' : '').','; // Categories
+                            $csv .= ','; // -
+                            $csv .= ($materialFinish ? '"'.$materialFinish.'"' : '').','; // Tag 1 (Finish)
+                            $csv .= ','; //
+                            $csv .= '"'.$productCode.'",'; // Model Number
+                            $csv .= '"'.str_replace('"', '', $product->getVariant()->getEan()).'",'; // EAN
+                            $csv .= '"'.$productCode.'",'; // MPN
+                            $csv .= ','; // ISBN
+                            $csv .= ','; // UPC
+                            $csv .= ','; // -
+                            if (($recommendedRetailPrice > 0) && ($recommendedRetailPrice > $listPrice))
+                            {
+                                $csv .= $recommendedRetailPrice.','; // Price (Inc VAT)
+                                $csv .= $listPrice.','; // Sale Price (Inc VAT)
+                                $csv .= '0,'; // RRP Price (Inc VAT)
+                                $displayOnSalePage = 'Y';
+                            } else {
+                                $csv .= $listPrice.','; // Price (Inc VAT)
+                                $csv .= $listPrice.','; // Sale Price (Inc VAT)
+                                $csv .= '0,'; // RRP Price (Inc VAT)
+                            }
+                            $csv .= ','; // Cost Price (Inc VAT)
+                            $csv .= '20,'; // VAT Rate
+                            $csv .= '"'.$displayOnSalePage.'",'; // Display On Sale Page
+                            $csv .= ','; // -
+                            $csv .= '-1,'; // Stock Value
+                            $csv .= ','; // Stock Message
+                            $csv .= '0,'; // Weight (in KGs)
+                            $csv .= '0,'; // Export Weight (in KGs)
+                            $csv .= '"Y",'; // Child Active
+                            $csv .= '"Y",'; // Parent Active
+                            $csv .= '"N",'; // Archive (Delete)
+                            $csv .= ','; // -
+                            $csv .= '"'.$pageTitle.'",'; // Meta Title
+                            $csv .= '"'.$metaKeywords.'",'; // Meta Keywords
+                            $csv .= '"'.$metaDescription.'",'; // Meta Description
+                            $csv .= ','; // -
+                            //$csv .= ($relatedProducts ? '"'.$relatedProducts.'"' : '').','; // Upselling 1 (Related Products)
+                            $csv .= ','; // Upselling 1 (Related Products)
+                            $csv .= ''; // Upselling 2 (Other Colours)
+                            $csv .= "\n";
+                            break;
                     }
-                    $csv .= ','; // Cost Price (Inc VAT)
-                    $csv .= '20,'; // VAT Rate
-                    $csv .= '"'.$displayOnSalePage.'",'; // Display On Sale Page
-                    $csv .= ','; // -
-                    $csv .= '-1,'; // Stock Value
-                    $csv .= ','; // Stock Message
-                    $csv .= '0,'; // Weight (in KGs)
-                    $csv .= '0,'; // Export Weight (in KGs)
-                    $csv .= '"Y",'; // Child Active
-                    $csv .= '"Y",'; // Parent Active
-                    $csv .= '"N",'; // Archive (Delete)
-                    $csv .= ','; // -
-                    $csv .= '"'.$pageTitle.'",'; // Meta Title
-                    $csv .= '"'.$metaKeywords.'",'; // Meta Keywords
-                    $csv .= '"'.$metaDescription.'",'; // Meta Description
-                    $csv .= ','; // -
-                    $csv .= ($relatedProducts ? '"'.$relatedProducts.'"' : '').','; // Upselling 1 (Related Products)
-                    $csv .= ''; // Upselling 2 (Other Colours)
-                    $csv .= "\n";
                 }
             }
 
             $response = new Response();
-            $filename = $brand->getUrl().'-vs-export-'.date("Y-m-d-His").'.csv';
+            $filename = $brand->getUrl().'-vs-export-'.$template.'-'.date("Y-m-d-His").'.csv';
             $response->setStatusCode(200);
             $response->setCharset('UTF-8');
             $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
