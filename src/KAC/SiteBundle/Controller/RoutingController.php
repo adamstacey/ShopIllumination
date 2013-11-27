@@ -32,6 +32,40 @@ class RoutingController extends Controller
         // Tidy up URL
         $url = trim($url);
 
+        // Check for any maia routes first
+        if (strpos($url, 'maia-amm') !== false)
+        {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-ammonite')), '301');
+        } elseif (strpos($url, 'maia-cal') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-calcite')), '301');
+        } elseif (strpos($url, 'maia-fos') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-fossil')), '301');
+        } elseif (strpos($url, 'maia-met') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-meteorite')), '301');
+        } elseif (strpos($url, 'maia-pea') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-pearlstone')), '301');
+        } elseif (strpos($url, 'maia-san') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-sandstone')), '301');
+        } elseif (strpos($url, 'maia-gal') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-galaxy')), '301');
+        } elseif (strpos($url, 'maia-cap') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-cappuccino')), '301');
+        } elseif (strpos($url, 'maia-cri') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-cristallo')), '301');
+        } elseif (strpos($url, 'maia-ice') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-iceberg')), '301');
+        } elseif (strpos($url, 'maia-lat') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-latte')), '301');
+        } elseif (strpos($url, 'maia-lav') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-lava')), '301');
+        } elseif (strpos($url, 'maia-moc') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-mocha')), '301');
+        } elseif (strpos($url, 'maia-van') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-vanilla')), '301');
+        } elseif (strpos($url, 'maia-vul') !== false) {
+            return $this->redirect($this->get('router')->generate('routing', array('url' => 'maia-vulcano')), '301');
+        }
+
         // Try and find the routing
         $routingObject = $this->getDoctrine()->getRepository('KACSiteBundle:Routing')->findOneBy(array('url' => $url, 'locale' => 'en'));
         if (!$routingObject)
