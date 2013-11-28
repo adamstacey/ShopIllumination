@@ -431,12 +431,19 @@ $(document).ready(function() {
         var $templatePartContent = null;
 
         // Check if any extra data is needed
-        if ($("#formTemplatePart").val() == 'freeText') {
+        var $formTemplatePartValue = $("#formTemplatePart").val();
+        if ($formTemplatePartValue == 'freeText') {
             $templatePartContent = $("#formFreeText").val();
             $templatePartTypeName = $templatePartContent;
         } else if ($("#formTemplatePart").val() == '@VariantToFeature') {
             $templatePartContent = $("#formFeature").val();
             $templatePartTypeName = "Feature: " + $("#formFeature").find("option:selected").text();
+        } else {
+            if (($formTemplatePartValue == '”') || ($formTemplatePartValue == "'") || ($formTemplatePartValue == '°') || ($formTemplatePartValue == '°C') || ($formTemplatePartValue == '×') || ($formTemplatePartValue == '²') || ($formTemplatePartValue == '³') || ($formTemplatePartValue == 'A') || ($formTemplatePartValue == 'bar') || ($formTemplatePartValue == 'cl') || ($formTemplatePartValue == 'cm') || ($formTemplatePartValue == 'dB') || ($formTemplatePartValue == 'g') || ($formTemplatePartValue == 'kg') || ($formTemplatePartValue == 'kW') || ($formTemplatePartValue == 'kW/h') || ($formTemplatePartValue == 'L') || ($formTemplatePartValue == 'm') || ($formTemplatePartValue == 'm³') || ($formTemplatePartValue == 'm³/h') || ($formTemplatePartValue == 'mm') || ($formTemplatePartValue == 'Ø') || ($formTemplatePartValue == 'V') || ($formTemplatePartValue == 'WW')) {
+                $templatePartType = 'freeText';
+                $templatePartContent = $formTemplatePartValue;
+                $templatePartTypeName = $templatePartContent;
+            }
         }
 
         if ($templatePartTypeName != '') {
