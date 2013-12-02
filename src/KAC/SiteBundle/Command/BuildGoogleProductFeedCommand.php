@@ -26,7 +26,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // maia products
-        $maiaProducts = array();
+        /*$maiaProducts = array();
         $maiaProducts[] = array('price' => 1.99, 'worktopColour' => '', 'url' => 'maia-ammonite', 'productCode' => 'MAIADVD', 'deliveryBand' => 1, 'header' => 'Maia Installation DVD');
         $maiaProducts[] = array('price' => 119, 'worktopColour' => '', 'url' => 'maia-ammonite', 'productCode' => 'MAIAGUN250', 'deliveryBand' => 1, 'header' => '250ml Cartridge Gun');
         $maiaProducts[] = array('price' => 39, 'worktopColour' => '', 'url' => 'maia-ammonite', 'productCode' => 'MAIAGUN50', 'deliveryBand' => 1, 'header' => '50ml Cartridge Gun');
@@ -1456,7 +1456,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         $maiaProducts[] = array('price' => 45, 'worktopColour' => 'Vulcano', 'url' => 'maia-vulcano', 'productCode' => 'VUL/250GLUE', 'deliveryBand' => 1, 'header' => '50ml Adhesive Cartridge');
         $maiaProducts[] = array('price' => 35, 'worktopColour' => 'Vulcano', 'url' => 'maia-vulcano', 'productCode' => 'VUL/50JKIT', 'deliveryBand' => 1, 'header' => '50ml Cartridge Joint Kit');
         $maiaProducts[] = array('price' => 25, 'worktopColour' => 'Vulcano', 'url' => 'maia-vulcano', 'productCode' => 'VUL/50GLUE', 'deliveryBand' => 1, 'header' => '50ml Adhesive Cartridge');
-        $maiaProducts[] = array('price' => 59, 'worktopColour' => 'Vulcano', 'url' => 'maia-vulcano', 'productCode' => 'VUL/CB', 'deliveryBand' => 1, 'header' => 'Chopping Board');
+        $maiaProducts[] = array('price' => 59, 'worktopColour' => 'Vulcano', 'url' => 'maia-vulcano', 'productCode' => 'VUL/CB', 'deliveryBand' => 1, 'header' => 'Chopping Board');*/
 
         // Get filename
         $filename = $this->getContainer()->get('kernel')->getRootDir() . '/../' . $input->getArgument('filename');
@@ -1651,7 +1651,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         }
 
         // Add maia products
-        $maiaProductCount = 10000;
+        /*$maiaProductCount = 10000;
         foreach ($maiaProducts as $maiaProduct)
         {
             $maiaProductCount++;
@@ -1701,7 +1701,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 $xmlWriter->writeElement('g:adwords_labels', 'price 1000+');
             }
             $xmlWriter->endElement();
-        }
+        }*/
 
         $xmlWriter->endElement(); // Close channel
         $xmlWriter->endElement(); // Close rss
