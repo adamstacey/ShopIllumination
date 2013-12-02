@@ -34,6 +34,14 @@ class ContentController extends Controller
     }
 
     /**
+     * @Route("/the-distributor-take-back-scheme.html", name="content_the_distributor_take_back_scheme")
+     */
+    public function tehDistributorTakeBackSchemeAction(Request $request)
+    {
+        return $this->render('KACSiteBundle:Content:theDistributorTakeBackScheme.html.twig', array());
+    }
+
+    /**
      * @Route("/useful-links.html", name="content_useful_links")
      */
     public function usefulLinksAction(Request $request)
