@@ -988,7 +988,7 @@ class ProductController extends Controller {
                         case 'seo':
                             $csv .= '"'.$productCode.'",'; // Parent Reference
                             $csv .= '"'.$productCode.'",'; // Child Reference
-                            $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
+                            $csv .= '"'.$cleansedHeader.'",'; // Parent Product Title
                             $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                             $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
                             $csv .= '"'.$pageTitle.'",'; // Meta Title
@@ -1003,8 +1003,8 @@ class ProductController extends Controller {
                             $csv .= '"'.$productCode.'",'; // Parent Reference
                             $csv .= '"'.$productCode.'",'; // Child Reference
                             $csv .= ','; // -
-                            $csv .= '"'.$cleansedPageTitle.'",'; // Parent Product Title
-                            $csv .= '"'.$cleansedPageTitle.'",'; // Child Product Title
+                            $csv .= '"'.$cleansedHeader.'",'; // Parent Product Title
+                            $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                             //$csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                             $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
                             $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Product Summary
