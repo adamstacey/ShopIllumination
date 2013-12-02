@@ -814,11 +814,13 @@ class ProductController extends Controller {
         if ($brandId)
         {
             $brand = $em->getRepository("KAC\SiteBundle\Entity\Brand")->find($brandId);
-        }
-        if ($brand)
-        {
-            $productsQuery = $em->createQuery("SELECT p FROM KAC\SiteBundle\Entity\Product p WHERE p.brand = :brand")
-                ->setParameter('brand', $brand);
+            if ($brand)
+            {
+                $productsQuery = $em->createQuery("SELECT p FROM KAC\SiteBundle\Entity\Product p WHERE p.brand = :brand")
+                    ->setParameter('brand', $brand);
+            } else {
+                $productsQuery = $em->createQuery("SELECT p FROM KAC\SiteBundle\Entity\Product p");
+            }
             $products = $productsQuery->getResult();
             $seoManager = $this->getSeoManager();
             switch ($template)
@@ -933,6 +935,7 @@ class ProductController extends Controller {
                     {
                         $header = str_replace('"', '', $product->getDescription()->getHeader());
                     }
+                    $header .= ($colour ? ' '.$colour : '');
                     $cleansedHeader = str_replace($brandName, '', $header);
                     $cleansedHeader = str_replace($productCode, '', $cleansedHeader);
                     $cleansedHeader = str_replace('  ', ' ', trim($cleansedHeader));
