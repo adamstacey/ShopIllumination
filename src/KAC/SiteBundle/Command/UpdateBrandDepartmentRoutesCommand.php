@@ -20,71 +20,19 @@ use KAC\SiteBundle\Entity\DepartmentTmp;
 use KAC\SiteBundle\Indexer\ProductIndexer;
 use KAC\SiteBundle\Repository\DepartmentRepository;
 
-class UpdateRoutesCommand extends ContainerAwareCommand
+class UpdateBrandDepartmentRoutesCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('admin:fix:routes')
-            ->setDescription('Generate routes.');
+            ->setName('admin:fix:brandDepartmentRoutes')
+            ->setDescription('Generate brand department routes.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $seo = $this->getContainer()->get('kac_site.manager.seo');
-
-        // Generate the brand routes
-        $output->writeln('####################################');
-        $output->writeln('UPDATE THE BRAND ROUTES');
-        $output->writeln('####################################');
-        // Fetch the brands
-        $brands = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand")->findAll();
-        foreach ($brands as $brand)
-        {
-            // Check if a route already exists
-            $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\Routing")->findOneBy(array(
-                'brand' => $brand,
-            ));
-
-            // If no routes were found create a new route
-            if (!$route)
-            {
-                $route = new BrandRouting();
-                $route->setBrand($brand);
-                $route->setLocale('en');
-                $route->setUrl($seo->generateUrl($brand->getDescription()->getPageTitle()));
-                $em->persist($route);
-                $em->flush();
-            }
-            $output->writeln('Updated route for: '.$route->getUrl());
-        }
-
-        // Generate the department routes
-        $output->writeln('####################################');
-        $output->writeln('UPDATE THE DEPARTMENT ROUTES');
-        $output->writeln('####################################');
-        // Fetch the departments
-        $departments = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->findAll();
-        foreach ($departments as $department)
-        {
-            // Check if a route already exists
-            $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Department\\Routing")->findOneBy(array(
-                'department' => $department,
-            ));
-            // If no routes were found create a new route
-            if (!$route)
-            {
-                $url = $seo->createUrl($department->getDescription()->getPageTitle());
-                $route = new DepartmentRouting();
-                $route->setDepartment($department);
-                $route->setLocale('en');
-                $route->setUrl($url);
-                $em->persist($route);
-                $em->flush();
-            }
-            $output->writeln('Updated route for: '.$route->getUrl());
-        }
 
         // Generate the brands_with_departments routes
         $output->writeln('####################################');
@@ -165,25 +113,6 @@ class UpdateRoutesCommand extends ContainerAwareCommand
                     $department = $product->getDepartment()->getDepartment();
                 }
             }
-        }
-
-        // Cleanse the routing
-        $output->writeln('####################################');
-        $output->writeln('CLEANING THE CURRENT REDIRECTS');
-        $output->writeln('####################################');
-        $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findAll();
-        foreach ($redirects as $redirect)
-        {
-            $output->writeln('Checking redirect for: '.$redirect->getRedirectTo());
-            $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Routing")->findOneBy(array(
-                'url' => $redirect->getRedirectTo(),
-            ));
-            if (!$route)
-            {
-                $output->writeln('Removing redirect for: '.$redirect->getRedirectTo());
-                $em->remove($redirect);
-            }
-            $em->flush();
         }
 
         $em->flush();
