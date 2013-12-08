@@ -3,8 +3,10 @@ namespace KAC\SiteBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Brand;
+use KAC\SiteBundle\Entity\Brand\Routing as BrandRouting;
+use KAC\SiteBundle\Entity\Brand\DepartmentRouting as BrandDepartmentRouting;
+use KAC\SiteBundle\Entity\Department\Routing as DepartmentRouting;
 use KAC\SiteBundle\Entity\BrandToDepartment;
-use KAC\SiteBundle\Entity\Product\Routing;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Entity\Redirect;
@@ -43,174 +45,146 @@ class UpdateRoutesCommand extends ContainerAwareCommand
         $batchSize = 20;
 
         // Generate the brand routes
+        $output->writeln('####################################');
+        $output->writeln('UPDATE THE BRAND ROUTES');
+        $output->writeln('####################################');
         // Fetch the brands
         $brands = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand")->findAll();
-        foreach($brands as $brand)
+        foreach ($brands as $brand)
         {
             // Check if a route already exists
-            $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\Routing")->findBy(array(
-                'brand' => $brand->getId(),
+            $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\Routing")->findOneBy(array(
+                'brand' => $brand,
             ));
 
             // If no routes were found create a new route
-            if(count($routes) <= 0)
+            if (!$route)
             {
-                $route = new Brand\Routing();
+                $route = new BrandRouting();
                 $route->setBrand($brand);
                 $route->setLocale('en');
                 $route->setUrl($seo->generateUrl($brand->getDescription()->getPageTitle()));
-
                 $em->persist($route);
-
-                $i++;
-            }
-
-            if (($i % $batchSize) === 0) {
                 $em->flush();
             }
+            $output->writeln('Updated route for: '.$route->getUrl());
         }
 
         // Generate the department routes
-        // Fetch the brands
+        $output->writeln('####################################');
+        $output->writeln('UPDATE THE DEPARTMENT ROUTES');
+        $output->writeln('####################################');
+        // Fetch the departments
         $departments = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->findAll();
-        foreach($departments as $department)
+        foreach ($departments as $department)
         {
-            if($department->getStatus() !== 'a')
-            {
-                break;
-            }
-
             // Check if a route already exists
-            $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Department\\Routing")->findBy(array(
-                'department' => $department->getId(),
+            $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Department\\Routing")->findOneBy(array(
+                'department' => $department,
             ));
-
             // If no routes were found create a new route
-            if(count($routes) <= 0)
+            if (!$route)
             {
-                $route = new Department\Routing();
+                $url = $seo->createUrl($department->getDescription()->getPageTitle());
+                $route = new DepartmentRouting();
                 $route->setDepartment($department);
                 $route->setLocale('en');
-                $route->setUrl($seo->createUrl($department->getDescription()->getPageTitle()));
-
+                $route->setUrl($url);
                 $em->persist($route);
-
-                $i++;
-            }
-
-            if (($i % $batchSize) === 0) {
                 $em->flush();
             }
+            $output->writeln('Updated route for: '.$route->getUrl());
         }
 
         // Generate the brands_with_departments routes
+        $output->writeln('####################################');
+        $output->writeln('UPDATING BRANDS WITH DEPARTMENTS ROUTES');
+        $output->writeln('####################################');
+        // Remove the routes to start with
+        $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting")->findAll();
+        foreach ($routes as $route)
+        {
+            $em->remove($route);
+        }
+        $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
+            'object_type' => 'brand_with_department',
+        ));
+        foreach ($redirects as $redirect)
+        {
+            $em->remove($redirect);
+        }
+        $em->flush();
         // Fetch the brands
         $brands = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand")->findAll();
-        foreach($brands as $brand)
+        foreach ($brands as $brand)
         {
-            foreach($brand->getDepartments() as $departmentJoin)
+            $products = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->findBy(array(
+                'brand' => $brand,
+            ));
+            foreach ($products as $product)
             {
-                $department = $departmentJoin->getDepartment();
-
-                // Check if a route already exists
-                $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting")->findBy(array(
-                    'brand' => $brand->getId(),
-                    'department' => $department->getId(),
-                ));
-
-                // If no routes were found create a new route
-                if(count($routes) <= 0)
+                $department = false;
+                if ($product->getDepartment())
                 {
-                    $route = new Brand\DepartmentRouting();
-                    $route->setBrand($brand);
-                    $route->setDepartment($department);
-                    $route->setLocale('en');
-                    $route->setUrl($seo->generateUrl($brand->getRouting()->getUrl().'/'.$department->getRouting()->getUrl()));
-
-                    $em->persist($route);
-
-                    $i++;
+                    $department = $product->getDepartment()->getDepartment();
                 }
 
-                if (($i % $batchSize) === 0) {
-                    $em->flush();
-                }
-            }
-        }
-
-        /**
-         * @var $route Brand\DepartmentRouting
-         */
-        // Add redirects for the brand_to_department urls
-        $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting")->findAll();
-        foreach($routes as $route)
-        {
-            $brands = array();
-            $departments = array();
-
-            // Get all brand URLs
-            foreach($route->getBrand()->getRoutings() as $brandRoute)
-            {
-                $brands[] = $brandRoute->getUrl();
-            }
-            $brandRedirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
-                'objectType' => 'brand',
-                'objectId' => $route->getBrand()->getId()
-            ));
-            foreach($brandRedirects as $redirect)
-            {
-                $brands[] = $redirect->getRedirectFrom();
-            }
-
-            // Get all department URLs
-            foreach($route->getDepartment()->getRoutings() as $departmentRoute)
-            {
-                $departments[] = $departmentRoute->getUrl();
-            }
-            $brandRedirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
-                'objectType' => 'department',
-                'objectId' => $route->getDepartment()->getId()
-            ));
-            foreach($brandRedirects as $redirect)
-            {
-                $departments[] = $redirect->getRedirectFrom();
-            }
-
-            foreach($brands as $brandUrl)
-            {
-                foreach($departments as $departmentUrl)
+                if ($department)
                 {
-                    $url = $seo->generateUrl('brand/'.$brandUrl.'/'.$departmentUrl);
-
-                    // Check if a redirect already exists
-                    $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
-                        'redirectFrom' => $url,
+                    // Check if a route already exists
+                    $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting")->findOneBy(array(
+                        'brand' => $brand,
+                        'department' => $department,
                     ));
 
                     // If no routes were found create a new route
-                    if(count($redirects) <= 0)
+                    if ($route)
                     {
-                        $redirect = new Redirect();
-                        $redirect->setObjectId($route->getBrand()->getId());
-                        $redirect->setSecondaryId($route->getDepartment()->getId());
-                        $redirect->setObjectType($route->getObjectType());
-                        $redirect->setRedirectCode(301);
-                        $redirect->setRedirectFrom($url);
-                        $redirect->setRedirectTo($route->getUrl());
+                        $url = $seo->generateUrl($brand->getRouting()->getUrl().'/'.$department->getRouting()->getUrl());
+                        $route = new BrandDepartmentRouting();
+                        $route->setBrand($brand);
+                        $route->setDepartment($department);
+                        $route->setLocale('en');
+                        $route->setUrl($url);
+                        $output->writeln('Adding Brand Department Route: '.$url);
+                        $em->persist($route);
 
+                        $redirect = new Redirect();
+                        $redirect->setObjectId($brand->getId());
+                        $redirect->setSecondaryId($department->getId());
+                        $redirect->setObjectType('brand_with_department');
+                        $redirect->setRedirectCode(301);
+                        $redirect->setRedirectFrom('brand/'.$url);
+                        $redirect->setRedirectTo($url);
+                        $em->flush();
 
                         $em->persist($redirect);
 
                         $i++;
                     }
-
-                    if (($i % $batchSize) === 0) {
-                        $em->flush();
-                    }
                 }
             }
         }
 
+        // Cleanse the routing
+        $output->writeln('####################################');
+        $output->writeln('CLEANING THE CURRENT REDIRECTS');
+        $output->writeln('####################################');
+        $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findAll();
+        foreach ($redirects as $redirect)
+        {
+            $output->writeln('Checking redirect for: '.$redirect->getRedirectTo());
+            $route = $em->getRepository("KAC\\SiteBundle\\Entity\\Routing")->findOneBy(array(
+                'url' => $redirect->getRedirectTo(),
+            ));
+            if (!$route)
+            {
+                $output->writeln('Removing redirect for: '.$redirect->getRedirectTo());
+                $em->remove($redirect);
+            }
+            $em->flush();
+        }
+        
         $em->flush();
     }
 }
