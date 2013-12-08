@@ -138,7 +138,7 @@ class UpdateRoutesCommand extends ContainerAwareCommand
                     ));
 
                     // If no routes were found create a new route
-                    if ($route)
+                    if (!$route)
                     {
                         $url = $seo->generateUrl($brand->getRouting()->getUrl().'/'.$department->getRouting()->getUrl());
                         $route = new BrandDepartmentRouting();
