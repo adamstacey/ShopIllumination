@@ -110,7 +110,6 @@ class UpdateBrandDepartmentRoutesCommand extends ContainerAwareCommand
                             }
                         }
                     }
-                    $department = $product->getDepartment()->getDepartment();
                 }
             }
         }
