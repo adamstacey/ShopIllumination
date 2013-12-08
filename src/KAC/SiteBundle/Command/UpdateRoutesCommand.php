@@ -107,7 +107,7 @@ class UpdateRoutesCommand extends ContainerAwareCommand
             $em->remove($route);
         }
         $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
-            'object_type' => 'brand_with_department',
+            'objectType' => 'brand_with_department',
         ));
         foreach ($redirects as $redirect)
         {
@@ -184,7 +184,7 @@ class UpdateRoutesCommand extends ContainerAwareCommand
             }
             $em->flush();
         }
-        
+
         $em->flush();
     }
 }
