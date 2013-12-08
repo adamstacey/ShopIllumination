@@ -110,8 +110,14 @@ class RoutingController extends Controller
                             $content = $twig->render('KACSiteBundle:Includes:error404.html.twig');
                             return new Response($content, 404, array('Content-Type', 'text/html'));
                         }
-
                         return $this->forward('KACSiteBundle:Product:viewWithVariant', array('id' => $routingObject->getVariant()->getId()), $request->query->all());
+                        break;
+                    default:
+                        $redirectObject = $this->getDoctrine()->getRepository('KACSiteBundle:Redirect')->findOneBy(array('redirectFrom' => $url));
+                        if ($redirectObject)
+                        {
+                            return $this->redirect($this->get('router')->generate('routing', array('url' => $redirectObject->getRedirectTo())), $redirectObject->getRedirectCode());
+                        }
                         break;
                 }
             }
