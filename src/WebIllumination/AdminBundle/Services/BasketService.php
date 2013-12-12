@@ -971,6 +971,51 @@ class BasketService {
                 }
                 $nextDay += $weekendDaysToAdd;
 
+                // Check for Xmas 2013
+                $startDate = date("d/m/Y", strtotime("+$nextDay day"));
+                switch($startDate)
+                {
+                    case '20/12/2013':
+                        $nextDay += 13;
+                        break;
+                    case '21/12/2013':
+                        $nextDay += 12;
+                        break;
+                    case '22/12/2013':
+                        $nextDay += 11;
+                        break;
+                    case '23/12/2013':
+                        $nextDay += 10;
+                        break;
+                    case '24/12/2013':
+                        $nextDay += 9;
+                        break;
+                    case '25/12/2013':
+                        $nextDay += 8;
+                        break;
+                    case '26/12/2013':
+                        $nextDay += 7;
+                        break;
+                    case '27/12/2013':
+                        $nextDay += 6;
+                        break;
+                    case '28/12/2013':
+                        $nextDay += 5;
+                        break;
+                    case '29/12/2013':
+                        $nextDay += 4;
+                        break;
+                    case '30/12/2013':
+                        $nextDay += 3;
+                        break;
+                    case '31/12/2013':
+                        $nextDay += 2;
+                        break;
+                    case '01/01/2014':
+                        $nextDay += 1;
+                        break;
+                }
+
                 // Check that start date does not fall on a weekend
                 if (date("l", strtotime("+$nextDay day")) == 'Saturday')
                 {
