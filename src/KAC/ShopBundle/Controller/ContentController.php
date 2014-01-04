@@ -90,7 +90,6 @@ class ContentController extends Controller
 	        	$email->setSubject($department.' Enquiry');
 	        	$email->setFrom(array($emailAddress => $name));
 	        	$email->setTo(array($departmentEmailAddress => 'Kitchen Appliance Centre - '.$department));
-	        	$email->setBcc(array('acfstacey@gmail.com' => 'Adam Stacey'));
 	        	$email->setBody($this->renderView('KACShopBundle:System:message.html.twig', array('name' => $name, 'emailAddress' => $emailAddress, 'contactNumber' => $contactNumber, 'message' => $message, 'title' => $department.' Enquiry')), 'text/html');
 				$email->addPart($this->renderView('KACShopBundle:System:message.txt.twig', array('name' => $name, 'emailAddress' => $emailAddress, 'contactNumber' => $contactNumber, 'message' => $message)), 'text/plain');
 	    		$this->get('mailer')->send($email);
