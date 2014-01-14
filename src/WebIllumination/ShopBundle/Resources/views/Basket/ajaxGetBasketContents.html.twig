@@ -30,11 +30,19 @@
 					{% endif %}
 				</td>
 				<td width="63">
-                    <div class="add-to-basket fr" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids[0] }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
-                        <input id="quantity-{{ product.variantId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" data-variant-id="{{ product.variantId }}" class="quantity integer" type="number" value="{{ product.quantity }}" />
-                        <button type="button" class="action-increase-quantity increase-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">+</button>
-                        <button type="button" class="action-decrease-quantity decrease-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">-</button>
-                    </div>
+                    {% if "maia" in product.header|lower %}
+                        <div class="add-to-basket fr" data-id="{{ product.productId }}" data-basket-url="{{ path('basket_ajax_add_non_product_to_basket') }}">
+                            <input id="quantity-{{ product.productId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" data-variant-id="{{ product.productId }}" class="quantity integer" type="number" value="{{ product.quantity }}" />
+                            <button type="button" class="action-increase-quantity increase-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.productId }}">+</button>
+                            <button type="button" class="action-decrease-quantity decrease-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.productId }}">-</button>
+                        </div>
+                    {% else %}
+                        <div class="add-to-basket fr" data-product-id="{{ product.productId }}" data-variant-id="{{ product.variantId }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+                            <input id="quantity-{{ product.variantId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" data-variant-id="{{ product.variantId }}" class="quantity integer" type="number" value="{{ product.quantity }}" />
+                            <button type="button" class="action-increase-quantity increase-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">+</button>
+                            <button type="button" class="action-decrease-quantity decrease-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">-</button>
+                        </div>
+                    {% endif %}
 				</td>
 				<td width="1" class="tac">{{ product.subTotal|currency('GBP', false, true, '')|raw }}</td>
 				<td width="1" class="tac"><a href="Javascript:void(0);"><img width="10" height="10" data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Remove" /></a></td>

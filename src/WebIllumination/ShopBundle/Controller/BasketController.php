@@ -576,14 +576,26 @@ class BasketController extends Controller
         // Check if product already exists in the basket
         foreach ($basket['products'] as $key => $product)
         {
-            if ($product['variantId'] == $variantId)
-    		{
-    			if ($product['selectedOptions'] == $selectedOptions)
-    			{
-    				$basket['products'][$key]['quantity'] = $quantity;
-    				$basket['products'][$key]['subTotal'] = $basket['products'][$key]['quantity'] * $basket['products'][$key]['unitCost'];
-    			}
-    		}
+            if ($product['variantId'])
+            {
+                if ($product['variantId'] == $variantId)
+                {
+                    if ($product['selectedOptions'] == $selectedOptions)
+                    {
+                        $basket['products'][$key]['quantity'] = $quantity;
+                        $basket['products'][$key]['subTotal'] = $basket['products'][$key]['quantity'] * $basket['products'][$key]['unitCost'];
+                    }
+                }
+            } else {
+                if ($product['productId'] == $productId)
+                {
+                    if ($product['selectedOptions'] == $selectedOptions)
+                    {
+                        $basket['products'][$key]['quantity'] = $quantity;
+                        $basket['products'][$key]['subTotal'] = $basket['products'][$key]['quantity'] * $basket['products'][$key]['unitCost'];
+                    }
+                }
+            }
     	}
 
     	// Update the basket session
