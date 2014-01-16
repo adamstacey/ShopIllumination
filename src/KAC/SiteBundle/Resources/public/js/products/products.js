@@ -82,10 +82,13 @@ $(document).ready(function() {
 
     $(document).on("click", ".actionAddNonProductToBasket", function() {
         var quantity = $(this).attr("data-quantity");
+        $el = $(this).parent();
+        if (!quantity) {
+            quantity = $el.find("input.quantity").val();
+        }
         if (!quantity) {
             quantity = 1;
         }
-        $el = $(this).parent();
 
         $("#purchasingLoading" + $el.attr("data-id")).show();
         $.ajax({
