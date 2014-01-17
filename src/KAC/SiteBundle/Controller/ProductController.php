@@ -829,7 +829,7 @@ class ProductController extends Controller {
                     $csv = "Parent Reference,Child Reference,Sale Price (Inc VAT)\n";
                     break;
                 case 'bullets':
-                    $csv = "Parent Reference,Child Reference,Custom Description #1\n";
+                    $csv = "Parent Reference,Child Reference,Custom Description 1\n";
                     break;
                 case 'descriptions':
                     $csv = "Parent Reference,Child Reference,Product Description\n";
@@ -838,7 +838,7 @@ class ProductController extends Controller {
                     $csv = "Parent Reference,Child Reference,Parent Product Title,Child Product Title,Product Subtitle,Meta Title,Meta Keywords,Meta Description\n";
                     break;
                 default:
-                    $csv = "VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Custom Description #1,Product Description,,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),,Meta Title,Meta Keywords,Meta Description,,Upselling 1 (Related Products),Upselling 2 (Other Colours)\n";
+                    $csv = "VS Parent ID,VS Child ID,,Parent Reference,Child Reference,,Parent Product Title,Child Product Title,Product Subtitle,Custom Description 1,Product Description,,Brand,,Categories,,Tag 1 (Finish),,Model Number,EAN,MPN,ISBN,UPC,,Price (Inc VAT),Sale Price (Inc VAT),RRP Price (Inc VAT),Cost Price (Inc VAT),VAT Rate,Display On Sale Page,,Stock Value,Stock Message,Weight (in KGs),Export Weight (in KGs),Child Active,Parent Active,Archive (Delete),,Meta Title,Meta Keywords,Meta Description,,Upselling 1 (Related Products),Upselling 2 (Other Colours)\n";
                     break;
             }
             foreach ($products as $product)
@@ -976,7 +976,7 @@ class ProductController extends Controller {
                         case 'bullets':
                             $csv .= '"'.$productCode.'",'; // Parent Reference
                             $csv .= '"'.$productCode.'",'; // Child Reference
-                            $csv .= ($bullets ? '"'.$bullets.'"' : ''); // Custom Description #1
+                            $csv .= ($bullets ? '"'.$bullets.'"' : ''); // Custom Description 1
                             $csv .= "\n";
                             break;
                         case 'descriptions':
@@ -1007,7 +1007,7 @@ class ProductController extends Controller {
                             $csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                             //$csv .= '"'.$cleansedHeader.'",'; // Child Product Title
                             $csv .= ($keyMessage ? '"'.$keyMessage.'"' : '').','; // Product Subtitle
-                            $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Custom Description #1
+                            $csv .= ($bullets ? '"'.$bullets.'"' : '').','; // Custom Description 1
                             $csv .= '"'.$description.'",'; // Product Description
                             $csv .= ','; // -
                             $csv .= '"'.$brandName.'",'; // Brand
