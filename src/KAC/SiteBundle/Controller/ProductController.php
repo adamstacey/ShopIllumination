@@ -1059,7 +1059,7 @@ class ProductController extends Controller {
             }
 
             $response = new Response();
-            $filename = $brand->getUrl().'-vs-export-'.$template.'-'.date("Y-m-d-His").'.csv';
+            $filename = ($brand ? $brand->getUrl() : 'full').'-vs-export-'.$template.'-'.date("Y-m-d-His").'.csv';
             $response->setStatusCode(200);
             $response->setCharset('UTF-8');
             $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
